@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>估價 L1｜總則＋估價作業程序</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:#1e293b; --sub:#64748b; --line:#e2e8f0; --line-strong:#94a3b8;
+    --neutral:#334155; --neutral-bg:#f1f5f9;
+    --accent:#8B4438; --accent-bg:#F1E2DD;
+    --accent2:#9C7A34; --accent2-bg:#EFE6D0;
+  }
+  body {
+    font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    width: 1400px;
+    margin: 0 auto;
+    background: #f4f5f7;
+    color: var(--ink);
+    padding: 22px 32px 36px;
+  }
+  h1.page-title {
+    font-size: 30px;
+    color: #fff;
+    background: var(--ink);
+    padding: 16px 24px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  h1.page-title .sub {
+    font-size: 15px;
+    font-weight: normal;
+    opacity: 0.9;
+  }
+  .tip-banner {
+    background: var(--neutral-bg);
+    border: 2px solid var(--line-strong);
+    color: var(--neutral);
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 15px;
+    margin-bottom: 18px;
+    font-weight: bold;
+  }
+  section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  h2.sec-title {
+    font-size: 20px;
+    color: var(--ink);
+    border-left: 6px solid var(--ink);
+    padding-left: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2.sec-title .star { color: var(--accent); font-size: 15px; }
+  .law-tag {
+    display: inline-block;
+    background: var(--neutral-bg);
+    color: var(--neutral);
+    border: 1px solid var(--line-strong);
+    font-size: 13px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-weight: bold;
+    margin: 2px 4px 2px 0;
+  }
+  .law-tag.sub-law { background: #f8fafc; color: var(--sub); border-color: var(--line); }
+  .law-tag.hi { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+  .law-tag.hi2 { background: var(--accent2-bg); color: var(--accent2); border-color: var(--accent2); }
+  .exam-star { color: var(--accent); font-size: 14px; margin-left: 4px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .card {
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 2px solid var(--line-strong);
+    background: #fff;
+  }
+  .card-title {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink);
+  }
+  .card p { font-size: 14.5px; line-height: 1.75; }
+  .card.hi { border-color: var(--accent); background: var(--accent-bg); }
+  .card.hi .card-title { color: var(--accent); }
+  .card.hi2 { border-color: var(--accent2); background: var(--accent2-bg); }
+  .card.hi2 .card-title { color: var(--accent2); }
+  .card.pending { border-style: dashed; border-color: var(--accent2); background: #fffdf8; }
+  .badge {
+    font-size: 12px;
+    background: var(--neutral);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  .badge.pending { background: var(--accent2); }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin-top: 4px; }
+  table th { background: var(--ink); color: #fff; padding: 8px 10px; text-align: left; }
+  table td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f9fafb; }
+  .mnemo-char {
+    display: inline-block;
+    min-width: 1.5em;
+    height: 1.5em;
+    line-height: 1.42em;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid var(--accent2);
+    background: var(--accent2-bg);
+    color: var(--accent2);
+    font-weight: 800;
+    margin: 0 1px;
+  }
+  .mnemo-char.hi { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+  .flow { display: flex; flex-direction: column; gap: 3px; }
+  .flow-step { display: flex; align-items: center; gap: 14px; }
+  .flow-num {
+    flex-shrink: 0; width: 30px; height: 30px;
+    background: var(--ink); color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 14px;
+  }
+  .flow-step.key .flow-num { background: var(--accent); }
+  .flow-box {
+    flex: 1; background: var(--neutral-bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 14px; font-size: 14.5px;
+  }
+  .flow-step.key .flow-box { background: var(--accent-bg); border-color: var(--accent); font-weight: bold; color: var(--accent); }
+  .flow-box .law-tag { margin-left: 6px; }
+  .flow-arrow { text-align: center; color: var(--sub); font-size: 16px; margin-left: 15px; }
+  .warn-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 10px 16px; font-size: 14.5px; margin-top: 10px; font-weight: bold;
+  }
+  .warn-box.hi { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .warn-box.hi2 { background: var(--accent2-bg); border-color: var(--accent2); color: var(--accent2); }
+  .info-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 10px 16px; font-size: 14px; margin-top: 10px;
+  }
+  .example-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); border-radius: 10px;
+    padding: 12px 18px; font-size: 14.5px; line-height: 1.6; color: var(--neutral);
+  }
+  .diagram-wrap {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 18px 18px; margin-top: 12px;
+  }
+  .diagram-caption { font-size: 13.5px; color: var(--sub); text-align: center; margin-bottom: 6px; }
+  .nested-wrap {
+    margin: 12px 0 0 20px; padding: 10px 0 4px 16px; border-left: 3px dashed var(--line-strong);
+  }
+  .nested-label { font-size: 13px; font-weight: bold; color: var(--sub); margin-bottom: 8px; }
+  .qa-item { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .qa-item:last-child { border-bottom: none; }
+  .qa-q { font-weight: bold; color: var(--ink); font-size: 14.5px; margin-bottom: 4px; }
+  .qa-a { font-size: 14px; color: var(--neutral); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">
+  估價 L1｜總則＋估價作業程序
+  <span class="sub">不動產估價技術規則 §1–§17・依上課逐字稿＋講義校正</span>
+</h1>
+
+<div class="tip-banner">📌 這科全範圍僅 134 條，前三章（總則／作業程序／比較法）年年必考，條文白話、投資報酬率高，務必背熟用字。</div>
+
+<!-- ① 總則框架總覽 -->
+<section>
+  <h2 class="sec-title">① 第一章總則框架總覽 <span class="law-tag">§1–§7</span></h2>
+  <table>
+    <tr><th style="width:10%">條號</th><th style="width:24%">主題</th><th>內容重點</th></tr>
+    <tr><td><span class="law-tag hi">§1</span></td><td>法源依據</td><td>本規則依<b>不動產估價師法 §19 I</b> 訂定</td></tr>
+    <tr><td><span class="law-tag hi">§2</span></td><td>用詞定義（17 款）</td><td>價格種類、租金種類、日期、標的、地區、因素、最有效使用 → 詳見 ②</td></tr>
+    <tr><td><span class="law-tag">§3</span></td><td>蒐集影響價格資料</td><td>口號性規定，考出機率低（房地供需、環境變遷、人口、公共設施…等資料）</td></tr>
+    <tr><td><span class="law-tag">§4</span></td><td>蒐集比較標的案例與資料</td><td>蒐集<b>交易／收益／成本</b>資料並求證可靠性；可向當事人、四鄰、地政士、地政機關、金融機構、司法機關、媒體等<b>有關單位</b>蒐集</td></tr>
+    <tr><td><span class="law-tag">§5</span></td><td>估價原則</td><td><b>客觀公正</b>，運用邏輯方法及經驗法則進行調查、勘察、整理、比較、分析及調整</td></tr>
+    <tr><td><span class="law-tag hi2">§6</span></td><td>價格種類與估價條件</td><td>切合價格日期當時之價值；以<b>特定價格</b>估價者應敘明估價條件，並<b>同時估計正常價格</b></td></tr>
+    <tr><td><span class="law-tag">§7</span></td><td>估價面積之認定</td><td>已登記者以<b>登記面積</b>為準；未登記或以部分面積估價者，應調查註明之</td></tr>
+  </table>
+</section>
+
+<!-- ② 用詞定義 17 款 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ② 用詞定義 17 款 <span class="law-tag hi">§2</span></h2>
+
+  <div class="nested-label" style="margin-bottom:8px;">▸ 價格四兄弟（第 1–4 款）</div>
+  <div class="grid-4">
+    <div class="card hi">
+      <div class="card-title">① 正常價格</div>
+      <p>具市場性之不動產，與<b>有意願</b>之買賣雙方，依專業知識<b>謹慎行動</b>，<b>不受任何脅迫</b>，經適當市場行銷及正常交易條件形成之合理<b>價值</b>，並以貨幣金額表示者。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">② 限定價格</div>
+      <p>具市場性之不動產，在下列<b>限定條件之一</b>所形成之價值：<br>(一) 所有權以外其他權利與所有權<b>合併</b>為目的<br>(二) 不動產<b>合併</b>為目的<br>(三) 違反經濟合理性之不動產<b>分割</b>為前提</p>
+    </div>
+    <div class="card">
+      <div class="card-title">③ 特定價格</div>
+      <p>具市場性之不動產，基於<b>特定條件</b>（尚未實現、具一定不確定性）下形成之價值。<br><span class="law-tag hi2">§6 II</span> 以特定價格估價者，應<b>同時估計正常價格</b>。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">④ 特殊價格</div>
+      <p>對<b>不具市場性</b>之不動產所估計之價值（例：總統府、公園）。</p>
+    </div>
+  </div>
+
+  <div class="warn-box hi" style="margin-top:14px;">
+    ⚠️ 易混淆考點：<b>限定價格 3 個條件</b>（所有權以外權利合併／不動產合併／違反經濟合理性分割）　vs　<b>限定租金只有 2 個條件</b>（續訂租約／不動產合併），少了「違反經濟合理性分割」這一項。
+  </div>
+
+  <div class="nested-label" style="margin:16px 0 8px;">▸ 租金兩兄弟（第 5–6 款）—— 買賣改租賃，其餘邏輯相同</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">⑤ 正常租金</div>
+      <p>具市場性之不動產，於有意願之<b>租賃雙方</b>，依專業知識謹慎行動，不受脅迫，經適當市場行銷及正常租賃條件形成之合理租賃價值。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑥ 限定租金</div>
+      <p>基於<b>①續訂租約</b> 或 <b>②不動產合併</b>為目的形成之租賃價值（僅 2 個條件）。</p>
+    </div>
+  </div>
+
+  <div class="nested-label" style="margin:16px 0 8px;">▸ 日期兩兄弟（第 7–8 款）</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">⑦ 價格日期</div>
+      <p>表示不動產<b>價格之基準日期</b>。不動產價格隨時變動，估價結果必須定調是哪一天的價格。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑧ 勘察日期</div>
+      <p>赴<b>勘估標的現場</b>從事調查分析之日期。與價格日期是兩個不同的日期，務必分清楚。</p>
+    </div>
+  </div>
+
+  <div class="nested-label" style="margin:16px 0 8px;">▸ 標的兩兄弟（第 9–10 款）</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">⑨ 勘估標的</div>
+      <p>不動產估價師接受委託所估價之<b>土地、建築改良物（建物）、農作改良物及其權利</b>——客戶委託你估的那個東西。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑩ 比較標的</div>
+      <p>可供與勘估標的間就<b>情況、價格日期、區域因素、個別因素</b>之差異進行比較之標的（比較法核心：4 個調整項目）。</p>
+    </div>
+  </div>
+
+  <div class="nested-label" style="margin:16px 0 8px;">▸ 地區三兄弟（第 11–13 款）</div>
+  <div class="grid-3">
+    <div class="card hi2">
+      <div class="card-title">⑪ 同一供需圈</div>
+      <p>比較標的與勘估標的間能成立<b>替代關係</b>，且<b>價格互為影響之最適範圍</b>——範圍最大，但不一定參考價值最高。</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">⑫ 近鄰地區</div>
+      <p>勘估標的或比較標的<b>周圍</b>，供相同或類似用途之不動產形成<b>同質性較高</b>之地區——同一供需圈內參考價值最高的圈。</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">⑬ 類似地區</div>
+      <p>同一供需圈內，<b>近鄰地區以外</b>而與勘估標的<b>使用性質相近</b>之其他地區。</p>
+    </div>
+  </div>
+
+  <div class="diagram-wrap">
+    <div class="diagram-caption">📐 範圍大小示意：同一供需圈（最大）包住近鄰地區＋類似地區，近鄰地區與類似地區彼此不重疊</div>
+    <svg viewBox="0 0 560 236" style="width:100%;max-width:960px;display:block;margin:0 auto;">
+      <text x="280" y="16" font-size="13.5" font-weight="bold" fill="#9C7A34" text-anchor="middle">⑪ 同一供需圈（範圍最大・能替代＋價格互相影響）</text>
+
+      <ellipse cx="280" cy="126" rx="255" ry="78" fill="#FBF8F1" stroke="#9C7A34" stroke-width="2" stroke-dasharray="7 4"/>
+
+      <circle cx="160" cy="132" r="58" fill="#F1E2DD" stroke="#8B4438" stroke-width="2"/>
+      <text x="160" y="98" font-size="12.5" font-weight="bold" fill="#8B4438" text-anchor="middle">⑫ 近鄰地區</text>
+      <text x="160" y="111" font-size="9" fill="#8B4438" text-anchor="middle">（周圍・同質性最高）</text>
+
+      <circle cx="140" cy="148" r="23" fill="#8B4438"/>
+      <text x="140" y="145" font-size="10" fill="#fff" text-anchor="middle">勘估</text>
+      <text x="140" y="156" font-size="10" fill="#fff" text-anchor="middle">標的</text>
+
+      <circle cx="190" cy="161" r="20" fill="#9C7A34"/>
+      <text x="190" y="158" font-size="9" fill="#fff" text-anchor="middle">比較</text>
+      <text x="190" y="168" font-size="9" fill="#fff" text-anchor="middle">標的</text>
+
+      <circle cx="390" cy="100" r="18" fill="#fff" stroke="#9C7A34" stroke-width="1.8"/>
+      <text x="390" y="97" font-size="9" fill="#9C7A34" text-anchor="middle">比較</text>
+      <text x="390" y="107" font-size="9" fill="#9C7A34" text-anchor="middle">標的</text>
+
+      <circle cx="450" cy="150" r="18" fill="#fff" stroke="#9C7A34" stroke-width="1.8"/>
+      <text x="450" y="147" font-size="9" fill="#9C7A34" text-anchor="middle">比較</text>
+      <text x="450" y="157" font-size="9" fill="#9C7A34" text-anchor="middle">標的</text>
+
+      <text x="350" y="222" font-size="13" font-weight="bold" fill="#9C7A34" text-anchor="middle">⑬ 類似地區（供需圈內・近鄰以外・使用性質相近）</text>
+    </svg>
+  </div>
+
+  <div class="example-box" style="margin-top:10px;">
+    🌰 舉例：估台北市大安區的商辦 → 同一供需圈可能是整個台北市（替代關係＋價格互相影響的最大範圍）；近鄰地區是大安區內同樣是商辦、同質性高的區域；類似地區則是供需圈內大安區以外、但使用性質相近的地區（如內湖、松山）。
+  </div>
+
+  <div class="nested-label" style="margin:16px 0 8px;">▸ 因素三兄弟（第 14–16 款）</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">⑭ 一般因素</div>
+      <p>對不動產市場及價格水準發生<b>全面影響</b>之<b>自然、政治、社會、經濟</b>等共同因素。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑮ 區域因素</div>
+      <p>影響<b>近鄰地區</b>不動產價格水準之因素。<br>例：交通設施、公用設施、生活機能、天災公害、使用管制、未來發展。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑯ 個別因素</div>
+      <p>不動產因受<b>本身條件</b>之影響，產生價格差異之因素。<br>例：宗地條件、臨路條件、接近條件（距車站）、環境條件、行政條件。</p>
+    </div>
+  </div>
+
+  <div class="nested-label" style="margin:16px 0 8px;">▸ 第 17 款（★全文建議逐字背）</div>
+  <div class="card hi">
+    <div class="card-title">⑰ 最有效使用</div>
+    <p>指<b>客觀上</b>（注意：不是主觀）具有良好意識及<b>通常之使用能力者</b>，在<b>合法、實質可能、正當合理、財務可行</b>之前提下，所得以獲致最高利益之使用。</p>
+  </div>
+  <div class="warn-box hi2">📝 老師特別提醒：這款考選擇題常把「客觀」改成「主觀」考陷阱，也常考「最高強使用能力者」偷換「通常之使用能力者」，兩處都要咬字精準。</div>
+</section>
+
+<!-- ③ 總則其餘條文細節 -->
+<section>
+  <h2 class="sec-title">③ 總則其餘條文細節 <span class="law-tag">§3–§5、§7</span></h2>
+  <table>
+    <tr><th style="width:12%">條號</th><th>細節</th></tr>
+    <tr>
+      <td><span class="law-tag">§4 I</span></td>
+      <td>應經常蒐集比較標的相關<b>交易、收益、成本</b>案例及資料，並詳予求證其可靠性 —— 分別對應日後的<b>比較法／收益法／成本法</b>，等於提前預告三大估價法。</td>
+    </tr>
+    <tr>
+      <td><span class="law-tag">§4 II</span></td>
+      <td>資料得向當事人、其他不動產估價師、不動產經紀人員、地政士、地政機關、金融機構、公有土地管理機關、司法機關、媒體或<b>有關單位</b>蒐集之。</td>
+    </tr>
+    <tr>
+      <td><span class="law-tag">§5</span></td>
+      <td>應力求<b>客觀公正</b>，運用邏輯方法及經驗法則，進行調查、勘察、整理、比較分析及調整之估價工作。</td>
+    </tr>
+    <tr>
+      <td><span class="law-tag hi2">§6 I</span></td>
+      <td>不動產估價應切合<b>價格日期當時</b>之價值；價格種類含正常／限定／特定／特殊價格；租金種類含正常／限定租金。</td>
+    </tr>
+    <tr>
+      <td><span class="law-tag hi2">§6 II</span></td>
+      <td>不動產估價應<b>註明其價格種類</b>；以特定價格估價者，應敘明其估價條件，並<b>同時估計其正常價格</b>。</td>
+    </tr>
+    <tr>
+      <td><span class="law-tag">§7</span></td>
+      <td>面積之認定：已辦理登記者以<b>登記之面積</b>為準；未辦理登記或以部分面積為估價者，應<b>調查註明之</b>。</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ④ 估價經濟原則 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ④ 不動產估價之經濟原則</h2>
+  <div class="warn-box hi2">📖 條文中沒有明文列出，考選擇題常考「舉案例判斷符合哪個原則」，理解定義即可，不需死背條號。</div>
+  <div class="grid-3" style="margin-top:12px;">
+    <div class="card">
+      <div class="card-title">① 供需原則</div>
+      <p>應考慮市場<b>供需情形</b>：供過於求價格下跌，供不應求價格上漲。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">② 競爭原則</div>
+      <p>應考慮市場<b>競爭狀況</b>：競爭力越強，價格越高。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">③ 變動原則</div>
+      <p>不動產價格會不斷變動，估價時需掌握<b>價格日期</b>這個基準點。</p>
+    </div>
+    <div class="card hi">
+      <div class="card-title">④ 替代原則</div>
+      <p>會受到同類型或效用相似不動產之影響，具替代性時價格趨於一致。<b>★三大估價法（比較／收益／成本）的共同基礎。</b></p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑤ 預測原則</div>
+      <p>應考慮<b>未來</b>發展潛力與景氣變化：發展潛力越高、景氣越繁榮，價格越高。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑥ 均衡原則</div>
+      <p>應考慮不動產<b>內部構成要素</b>是否搭配均衡，以發揮最有效使用。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑦ 適合原則</div>
+      <p>應考慮不動產與其<b>外部環境</b>是否搭配均衡，以發揮最有效使用。（衍生：進化原則／退化原則）</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑧ 外部性原則</div>
+      <p>會受到外在環境之<b>正面或負面</b>影響（例：捷運站為正面、殯儀館為負面）。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑨ 貢獻原則</div>
+      <p>對不動產某一部分進行估價時，應考慮該部分對<b>全體不動產的貢獻</b>（例：老公寓加裝電梯，帶動整體價值提升）。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑩ 收益分配原則</div>
+      <p>總收益中扣除支付其他生產要素之成本後所剩之收益，即為<b>不動產的純收益</b>——收益法估價的基礎概念。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑪ 收益遞增遞減原則</div>
+      <p>每增加一單位生產因素投資，收益隨之遞增，但增加到某一點後，收益反而不增反減（<b>邊際點</b>）——用於評估最適投資規模。</p>
+    </div>
+    <div class="card hi">
+      <div class="card-title">⑫ 最有效使用原則</div>
+      <p>與 §2 第 17 款定義相同：客觀上具有良好意識及通常使用能力者，在合法、實質可能、正當合理、財務可行前提下，獲致最高利益之使用。</p>
+    </div>
+  </div>
+
+  <div class="nested-label" style="margin:16px 0 8px;">▸ 講義清單另列出下列 2 個原則，但逐字稿當堂未展開講解，先補上一般定義，待對照官方法條／新版講義後再核實</div>
+  <div class="grid-2">
+    <div class="card pending">
+      <div class="card-title">⑬ 機會成本原則 <span class="badge pending">待覆核</span></div>
+      <p>估價時應考慮該不動產若移作其他用途或投資標的，所能獲得之<b>最高替代收益</b>（機會成本），作為衡量其經濟價值之參考。</p>
+    </div>
+    <div class="card pending">
+      <div class="card-title">⑭ 合法原則 <span class="badge pending">待覆核</span></div>
+      <p>不動產之使用應在<b>法令容許範圍內</b>估價，違反法令之使用方式不予採認——與最有效使用「合法」前提互相呼應，是否為獨立原則待查官方法條。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 估價作業程序總覽 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑤ 估價作業程序總覽 <span class="law-tag hi">§8</span> <span class="mnemo-char hi">機</span><span class="mnemo-char hi">計</span><span class="mnemo-char hi">收</span><span class="mnemo-char hi">狀</span><span class="mnemo-char">整</span><span class="mnemo-char">運</span><span class="mnemo-char">決</span><span class="mnemo-char">製</span></h2>
+  <div class="grid-2">
+    <div class="card hi">
+      <div class="card-title">外業</div>
+      <p>確定<span class="mnemo-char hi">基</span>本事項 → 擬定<span class="mnemo-char hi">計</span>畫 → <span class="mnemo-char hi">蒐</span>集資料 → 確認<span class="mnemo-char hi">狀</span>態</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">內業</div>
+      <p><span class="mnemo-char">整</span>理比較分析 → <span class="mnemo-char">運</span>用方法推算 → <span class="mnemo-char">決</span>定價格 → <span class="mnemo-char">製</span>作報告書</p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 各程序詳解 -->
+<section>
+  <h2 class="sec-title">⑥ 各程序詳解 <span class="law-tag">§9–§16</span></h2>
+
+  <div class="nested-label">▸ 一、確定估價基本事項 <span class="law-tag">§9</span></div>
+  <div class="grid-4" style="margin-bottom:14px;">
+    <div class="card"><p>① 勘估標的內容</p></div>
+    <div class="card"><p>② 價格日期</p></div>
+    <div class="card"><p>③ 價格種類及條件</p></div>
+    <div class="card"><p>④ 估價目的</p></div>
+  </div>
+
+  <div class="nested-label">▸ 二、擬定估價計畫 <span class="law-tag">§10</span></div>
+  <div class="grid-5" style="margin-bottom:14px;">
+    <div class="card"><p><span class="mnemo-char">步</span> 確定作業步驟</p></div>
+    <div class="card"><p><span class="mnemo-char">時</span> 預估所需時間</p></div>
+    <div class="card"><p><span class="mnemo-char">人</span> 預估所需人力</p></div>
+    <div class="card"><p><span class="mnemo-char">經</span> 預估作業經費</p></div>
+    <div class="card"><p><span class="mnemo-char">進</span> 擬定作業進度表</p></div>
+  </div>
+
+  <div class="nested-label">▸ 三、蒐集資料 <span class="law-tag">§11、§12</span></div>
+  <table style="margin-bottom:14px;">
+    <tr><th style="width:16%">條號</th><th>內容</th></tr>
+    <tr>
+      <td><span class="law-tag">§11</span><br>蒐集勘估標的資料</td>
+      <td>
+        (1) 勘估標的之標示、權利、法定用途、使用管制等<b>基本資料</b><br>
+        (2) 影響勘估標的價格之<b>一般、區域、個別因素</b>資料<br>
+        (3) 勘估標的相關<b>交易、收益、成本</b>資料
+      </td>
+    </tr>
+    <tr>
+      <td><span class="law-tag">§12</span><br>蒐集比較實例原則</td>
+      <td>
+        (1) 實例價格屬正常價格、可調整為正常價格，或與勘估標的<b>價格種類相同</b>者<br>
+        (2) 與勘估標的位於同一供需圈內之<b>近鄰或類似地區</b>者<br>
+        (3) 與勘估標的<b>使用性質或使用管制相同或相近</b>者<br>
+        (4) 實例價格形成日期與勘估標的之<b>價格日期接近</b>者
+      </td>
+    </tr>
+  </table>
+
+  <div class="nested-label">▸ 四、確認勘估標的狀態 <span class="law-tag">§13</span></div>
+  <div class="grid-4" style="margin-bottom:6px;">
+    <div class="card"><p>① 確認基本資料及權利狀態</p></div>
+    <div class="card"><p>② 調查勘估標的及比較標的之使用現況</p></div>
+    <div class="card"><p>③ 確認影響價格之各項資料</p></div>
+    <div class="card"><p>④ 作成紀錄及攝製照片或影像檔</p></div>
+  </div>
+  <div class="warn-box hi2" style="margin-bottom:14px;">⚠️ §13 II 特殊情況：委託人<b>未領勘</b>、無法確認標的範圍或無法入內勘察者，應於估價報告書中<b>敘明之</b>。</div>
+
+  <div class="nested-label">▸ 五、整理比較分析資料 <span class="law-tag">§5</span></div>
+  <div class="card" style="margin-bottom:14px;"><p>力求客觀公正，運用邏輯方法及經驗法則，進行調查、勘察、整理、比較分析及調整（與 §5 估價原則呼應）。</p></div>
+
+  <div class="nested-label">▸ 六、運用估價方法推算勘估標的價格 <span class="law-tag hi">§14</span></div>
+  <table style="margin-bottom:6px;">
+    <tr><th style="width:16%">方法</th><th style="width:26%">依據</th><th>推算結果</th></tr>
+    <tr><td>比較法</td><td>交易經驗</td><td>比較價格</td></tr>
+    <tr><td>收益法</td><td>投資計算</td><td>收益價格</td></tr>
+    <tr><td>成本法</td><td>重製花費</td><td>成本價格</td></tr>
+  </table>
+  <div class="warn-box hi" style="margin-bottom:14px;">🔑 原則：應兼採<b>兩種以上</b>估價方法推算價格；但書：情況特殊不能採兩種以上者，應於估價報告書中<b>敘明</b>，不在此限。</div>
+
+  <div class="nested-label">▸ 七、決定勘估標的價格 <span class="law-tag hi">§15</span></div>
+  <div class="flow" style="margin-bottom:10px;">
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-box">不同估價方法所得價格進行<b>綜合比較</b></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step key"><div class="flow-num">2</div><div class="flow-box">金額<b>顯著差異</b>者 → 重新檢討（些微合理差異不用）</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-box">考量資料可靠性、估價種類目的與條件差異、價格形成因素相近程度</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-box">決定勘估標的價格，並將<b>決定理由詳予敘明</b></div></div>
+  </div>
+  <div class="info-box" style="margin-bottom:14px;">📖 §15 II（收益法學完後再回來看）：以契約約定租金作為不動產證券化受益證券信託利益分配基礎者，折現現金流量分析法之收益價格應賦予<b>較大權重</b>；但不動產證券化標的進行清算時，不在此限。</div>
+
+  <div class="nested-label">▸ 八、製作估價報告書 <span class="law-tag hi2">§16、§17</span></div>
+  <div class="card" style="margin-bottom:10px;"><p>§16 I：估價報告書應<b>簽名或蓋章</b>後交付委託人。</p></div>
+  <div class="nested-label" style="margin-bottom:6px;">§16 II 應載明事項（15 款，「其他」一項貫穿全部＝都是必要事項）</div>
+  <div class="grid-3" style="margin-bottom:10px;">
+    <div class="card"><p>1. 委託人<br>2. 勘估標的基本資料<br>3. 價格日期及勘察日期<br>4. 價格種類<br>5. 估價條件</p></div>
+    <div class="card"><p>6. 估價目的<br>7. 估價金額<br>8. 所有權、他項權利及其他負擔<br>9. 使用現況<br>10. 法定使用管制或其他管制</p></div>
+    <div class="card"><p>11. 價格形成之主要因素分析<br>12. 估價方法、估算過程及價格決定理由<br>13. 依本規則規定應敘明之情況<br>14. 其他與估價相關之必要事項<br>15. 估價師姓名及證照字號</p></div>
+  </div>
+  <div class="info-box" style="margin-bottom:10px;">§16 III：應檢附必要圖說資料。§16 IV：因行政執行或強制執行委託估價案件，報告書格式依相關規定辦理，不受前二項限制。</div>
+  <div class="warn-box hi2">§17 報告書之要求：事實描述應<b>真實確切</b>，用語應<b>明確肯定</b>；有難以確定之事項，應在報告書中說明其可能影響勘估標的權利或價值之情形（不得含糊帶過）。</div>
+</section>
+
+<!-- ⑦ 高頻考點速查卡 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑦ 高頻考點速查卡</h2>
+  <div class="qa-item">
+    <div class="qa-q">Q. 限定價格跟限定租金的條件數量差在哪？</div>
+    <div class="qa-a">限定價格 3 個條件（多了「違反經濟合理性之分割」），限定租金只有 2 個條件（續訂租約／不動產合併）。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 最有效使用是「主觀」還是「客觀」？是「最高強」還是「通常」使用能力？</div>
+    <div class="qa-a">是<b>客觀</b>上具有良好意識及<b>通常之</b>使用能力者——選擇題最愛把這兩處換成相反用字。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 估特定價格時要注意什麼？</div>
+    <div class="qa-a">§6 II 規定，以特定價格估價者應敘明估價條件，並<b>同時估計正常價格</b>，不可只給特定價格。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 估價方法一定要用一種嗎？</div>
+    <div class="qa-a">§14 原則上應兼採<b>兩種以上</b>估價方法；但情況特殊不能採兩種以上者，須於報告書中敘明，不在此限。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 同一供需圈、近鄰地區、類似地區怎麼分？</div>
+    <div class="qa-a">同一供需圈＝替代關係＋價格互為影響的最廣範圍；近鄰地區＝周圍、相同或類似用途、同質性較高；類似地區＝供需圈內近鄰以外、使用性質相近的其他地區。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 兩組口訣是什麼？</div>
+    <div class="qa-a">作業程序（§8）：<b>機計收狀整運決製</b>。擬定計畫（§10）：<b>步時人經進</b>。</div>
+  </div>
+</section>
+
+<!-- ⑧ 考古題對應 -->
+<section>
+  <h2 class="sec-title">⑧ 考古題對應</h2>
+  <div class="info-box">
+    📋 資料來源：110–114 年近 5 年四科考古題重點清單研究（2026-07-10 彙整）。原始逐年逐題清單的 Artifact 網址後來被覆蓋成別的內容，目前只保留得下這份文字摘要，沒有逐年出處可查，先如實標註。
+  </div>
+  <table style="margin-top:10px;">
+    <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:16%">涵蓋狀態</th></tr>
+    <tr>
+      <td>一般／區域／個別因素辨識</td>
+      <td>②用詞定義（第 14–16 款）、③總則其餘條文</td>
+      <td><span class="badge">已涵蓋</span></td>
+    </tr>
+    <tr>
+      <td>價格種類辨識（正常／限定／特定／特殊）</td>
+      <td>②用詞定義（第 1–6 款）</td>
+      <td><span class="badge">已涵蓋</span></td>
+    </tr>
+  </table>
+  <div class="warn-box hi2" style="margin-top:10px;">⚠️ 這兩項是估價科「不分堂次、反覆考」的必背核心之一，不是 L1 專屬考點；比較法調整計算、成本法折舊、收益資本化率、土地開發分析法等其他必考重點屬於後面堂次（L2–L5），不在本堂筆記範圍內。</div>
+</section>
+
+</body>
+</html>
