@@ -1,693 +1,509 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>收益法 完整筆記</title>
+<title>估價 L3｜收益法</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --ink:#1a1a1a; --sub:#6b7280; --line:#e5e7eb; --line-strong:#94a3b8;
-    --accent:#8B4438; --accent-bg:#f1e2dd;
-    --accent2:#9C7A34; --accent2-bg:#efe6d0;
+    --ink:#1e293b; --sub:#64748b; --line:#e2e8f0; --line-strong:#94a3b8;
+    --neutral:#334155; --neutral-bg:#f1f5f9;
+    --accent:#8B4438; --accent-bg:#F1E2DD;
+    --accent2:#9C7A34; --accent2-bg:#EFE6D0;
   }
   body {
-    font-family: 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-    background: #f4f5f7; color: var(--ink); padding: 32px; width: 1400px;
+    font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    width: 1400px;
+    margin: 0 auto;
+    background: #f4f5f7;
+    color: var(--ink);
+    padding: 18px 28px 30px;
   }
-  h1.main-title { text-align:center; font-size:30px; font-weight:900; color:var(--ink); margin-bottom:6px; letter-spacing:3px; }
-  .subtitle { text-align:center; font-size:14px; color:var(--sub); margin-bottom:36px; letter-spacing:1px; }
-  .section-title { font-size:16px; font-weight:800; color:#fff; background:var(--ink); display:inline-block; padding:6px 20px; border-radius:20px; margin-bottom:16px; letter-spacing:1px; }
-  .block { background:#fff; border-radius:16px; padding:24px 28px; margin-bottom:24px; box-shadow:0 2px 12px rgba(0,0,0,0.07); }
-
-  /* ===== 直式分數 ===== */
-  .frac {
-    display: inline-flex;
-    flex-direction: column;
+  h1.page-title {
+    font-size: 28px;
+    color: #fff;
+    background: var(--ink);
+    padding: 13px 22px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    display: flex;
     align-items: center;
-    vertical-align: middle;
-    margin: 0 3px;
-    line-height: 1.2;
+    justify-content: space-between;
   }
-  .frac .num {
-    border-bottom: 2px solid currentColor;
-    padding-bottom: 2px;
+  h1.page-title .sub {
+    font-size: 14px;
+    font-weight: normal;
+    opacity: 0.9;
+  }
+  .tip-banner {
+    background: var(--neutral-bg);
+    border: 2px solid var(--line-strong);
+    color: var(--neutral);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14.5px;
+    margin-bottom: 14px;
+    font-weight: bold;
+  }
+  section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  h2.sec-title {
+    font-size: 19px;
+    color: var(--ink);
+    border-left: 6px solid var(--ink);
+    padding-left: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2.sec-title .star { color: var(--accent); font-size: 14px; }
+  .law-tag {
+    display: inline-block;
+    background: var(--neutral-bg);
+    color: var(--neutral);
+    border: 1px solid var(--line-strong);
+    font-size: 12.5px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-weight: bold;
+    margin: 2px 3px 2px 0;
+  }
+  .law-tag.hi { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+  .law-tag.hi2 { background: var(--accent2-bg); color: var(--accent2); border-color: var(--accent2); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 9px; }
+  .card {
+    border-radius: 12px;
+    padding: 10px 13px;
+    border: 2px solid var(--line-strong);
+    background: #fff;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink);
+  }
+  .card p { font-size: 14px; line-height: 1.65; }
+  .card.hi { border-color: var(--accent); background: var(--accent-bg); }
+  .card.hi .card-title { color: var(--accent); }
+  .card.hi2 { border-color: var(--accent2); background: var(--accent2-bg); }
+  .card.hi2 .card-title { color: var(--accent2); }
+  .badge {
+    font-size: 11.5px;
+    background: var(--neutral);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
+  table th { background: var(--ink); color: #fff; padding: 7px 9px; text-align: left; }
+  table td { padding: 7px 9px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f9fafb; }
+  .mnemo-char {
+    display: inline-block;
+    min-width: 1.5em;
+    height: 1.5em;
+    line-height: 1.42em;
     text-align: center;
-    white-space: nowrap;
+    border-radius: 50%;
+    border: 2px solid var(--accent2);
+    background: var(--accent2-bg);
+    color: var(--accent2);
+    font-weight: 800;
+    margin: 0 1px;
   }
-  .frac .den {
-    padding-top: 2px;
-    text-align: center;
-    white-space: nowrap;
+  .mnemo-char.hi { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+  .flow { display: flex; flex-direction: column; gap: 3px; }
+  .flow-step { display: flex; align-items: center; gap: 12px; }
+  .flow-num {
+    flex-shrink: 0; width: 28px; height: 28px;
+    background: var(--ink); color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 13.5px;
   }
-  /* 大分數（主公式用）*/
-  .frac-lg { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 4px; line-height:1.3; }
-  .frac-lg .num { border-bottom:2.5px solid currentColor; padding-bottom:3px; text-align:center; font-size:15px; white-space:nowrap; }
-  .frac-lg .den { padding-top:3px; text-align:center; font-size:15px; white-space:nowrap; }
+  .flow-step.key .flow-num { background: var(--accent); }
+  .flow-box {
+    flex: 1; background: var(--neutral-bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 13px; font-size: 14px;
+  }
+  .flow-step.key .flow-box { background: var(--accent-bg); border-color: var(--accent); font-weight: bold; color: var(--accent); }
+  .flow-box .law-tag { margin-left: 6px; }
+  .flow-arrow { text-align: center; color: var(--sub); font-size: 15px; margin-left: 14px; }
+  .warn-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 14px; margin-top: 8px; font-weight: bold;
+  }
+  .warn-box.hi { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .warn-box.hi2 { background: var(--accent2-bg); border-color: var(--accent2); color: var(--accent2); }
+  .info-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 13.5px; margin-top: 8px;
+  }
+  .example-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); border-radius: 10px;
+    padding: 10px 16px; font-size: 14px; line-height: 1.6; color: var(--neutral);
+  }
+  .nested-label { font-size: 12.5px; font-weight: bold; color: var(--sub); margin-bottom: 6px; }
+  .qa-item { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .qa-item:last-child { border-bottom: none; }
+  .qa-q { font-weight: bold; color: var(--ink); font-size: 14px; margin-bottom: 3px; }
+  .qa-a { font-size: 13.5px; color: var(--neutral); line-height: 1.65; }
 
-  /* 標記：熱門度改為方框字＋框線層次，不用色相分類 */
-  .hot { display:inline-block; background:#fff; color:var(--ink); font-size:11px; font-weight:800; padding:2px 8px; border:1.5px solid var(--ink); border-radius:10px; margin-left:6px; vertical-align:middle; }
-  .warm { display:inline-block; background:#fff; color:var(--sub); font-size:11px; font-weight:700; padding:2px 8px; border:1.5px solid var(--line-strong); border-radius:10px; margin-left:6px; vertical-align:middle; }
-  .cold { display:inline-block; background:#fff; color:var(--sub); font-size:11px; font-weight:600; padding:2px 8px; border:1px solid var(--line); border-radius:10px; margin-left:6px; vertical-align:middle; }
-  .law { display:inline-block; background:var(--ink); color:#fff; font-size:11px; font-weight:700; padding:1px 7px; border-radius:6px; margin-right:4px; }
+  /* 直式分數 */
+  .frac { display: inline-flex; flex-direction: column; align-items: stretch; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
+  .frac .num { border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
+  .frac .den { padding-top: 2px; text-align: center; white-space: nowrap; }
 
-  /* 比較卡：過去 vs 未來，中性灰階＋框線層次區分 */
-  .compare-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px; }
-  .compare-card { border-radius:12px; padding:18px 20px; background:#f8fafc; border:2px solid var(--line); }
-  .compare-card.past { border-color:var(--line-strong); }
-  .compare-card.future { border-color:var(--ink); }
-  .compare-card h3 { font-size:16px; font-weight:800; margin-bottom:8px; color:var(--ink); }
-  .compare-card p { font-size:13px; line-height:1.7; color:#444; }
+  /* Σ 堆疊上下限 */
+  .sigma { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 3px; line-height: 1; }
+  .sigma .bound-top, .sigma .bound-bottom { font-size: 11px; white-space: nowrap; }
+  .sigma .symbol { font-size: 22px; line-height: 0.85; }
 
-  /* 方法卡：兩種方法，中性灰階漸層區分深淺 */
-  .method-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:12px; }
-  .method-card { border-radius:14px; padding:22px 24px; color:#fff; position:relative; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.18); }
-  .method-card::before { content:''; position:absolute; top:-20px; right:-20px; width:80px; height:80px; border-radius:50%; background:rgba(255,255,255,0.12); }
-  .method-card.direct { background:linear-gradient(135deg,#1a1a1a,#3a3a3a); }
-  .method-card.dcf { background:linear-gradient(135deg,#374151,#4a4a4a); }
-  .method-card .card-num { font-size:11px; opacity:.85; margin-bottom:4px; }
-  .method-card h3 { font-size:20px; font-weight:900; margin-bottom:10px; }
-  .method-card .formula-box { background:rgba(0,0,0,0.2); border-radius:8px; padding:14px; font-size:22px; font-weight:700; text-align:center; margin:10px 0; display:flex; align-items:center; justify-content:center; gap:6px; min-height:60px; }
-  .method-card p { font-size:13px; opacity:.9; line-height:1.7; }
-  .method-card .tag { display:inline-block; background:rgba(255,255,255,0.25); border-radius:8px; padding:3px 10px; font-size:12px; margin-top:8px; }
-  .method-card .var-list { margin-top:12px; background:rgba(0,0,0,0.15); border-radius:8px; padding:10px 12px; font-size:12px; line-height:1.8; }
-
-  /* DCF：中性灰階 */
-  .dcf-example { background:#f8fafc; border-radius:12px; padding:20px 24px; margin-top:16px; border-left:5px solid var(--ink); }
-  .dcf-example h4 { font-size:15px; font-weight:800; color:var(--ink); margin-bottom:12px; }
-  .dcf-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:10px; }
-  .dcf-item { background:#fff; border-radius:10px; padding:14px; text-align:center; border:1.5px solid var(--line); }
-  .dcf-item .label { font-size:12px; color:var(--sub); margin-bottom:6px; }
-  .dcf-item .val { font-size:14px; font-weight:700; color:var(--ink); margin-bottom:4px; }
-  .dcf-item .formula { font-size:12px; color:var(--ink); display:flex; align-items:center; justify-content:center; gap:3px; }
-  .dcf-total { text-align:center; font-size:15px; font-weight:800; color:var(--ink); padding:10px; background:#f1f2f4; border-radius:8px; margin-top:4px; }
-
-  /* SOP：中性灰階 */
-  .sop-row { display:flex; gap:0; margin-top:16px; align-items:stretch; }
-  .sop-item { flex:1; text-align:center; padding:16px 6px; position:relative; }
-  .sop-item:not(:last-child)::after { content:'→'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); font-size:18px; color:var(--ink); font-weight:900; z-index:1; }
-  .sop-circle { width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#1a1a1a,#4a4a4a); color:#fff; font-size:22px; font-weight:900; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; box-shadow:0 3px 10px rgba(0,0,0,0.25); }
-  .sop-label { font-size:12px; font-weight:700; color:var(--ink); margin-bottom:3px; }
-  .sop-sub { font-size:11px; color:var(--sub); line-height:1.4; }
-  .sop-law { font-size:10px; color:var(--sub); font-weight:700; margin-top:3px; }
-
-  /* 折舊卡：§40 提存費＝陶紅（最熱門易混淆）／§41 提存率＝赭黃／償債基金＝中性 */
-  .dep-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:14px; }
-  .dep-card { border-radius:12px; padding:18px; border:2px solid transparent; }
-  .dep-card.hot-card { background:var(--accent-bg); border-color:var(--accent); }
-  .dep-card.warm-card { background:var(--accent2-bg); border-color:var(--accent2); }
-  .dep-card.cold-card { background:#f8fafc; border-color:var(--line); }
-  .dep-card h4 { font-size:14px; font-weight:800; margin-bottom:10px; }
-  .dep-card.hot-card h4 { color:var(--accent); }
-  .dep-card.warm-card h4 { color:var(--accent2); }
-  .dep-card.cold-card h4 { color:var(--sub); }
-  .dep-formula { font-size:15px; font-weight:700; text-align:center; padding:12px; border-radius:8px; margin:8px 0; display:flex; align-items:center; justify-content:center; gap:4px; min-height:56px; }
-  .dep-card.hot-card .dep-formula { background:#fff; color:var(--accent); border:1.5px solid var(--accent); }
-  .dep-card.warm-card .dep-formula { background:#fff; color:var(--accent2); border:1.5px solid var(--accent2); }
-  .dep-card.cold-card .dep-formula { background:#f1f2f4; color:var(--sub); }
-  .dep-card p { font-size:12px; color:#555; line-height:1.7; }
-  .dep-card .legend { font-size:11px; color:#888; margin-top:6px; line-height:1.6; }
-
-  /* 例題框 */
-  .example-box { background:#f8fafc; border-radius:10px; padding:12px 16px; border-left:4px solid var(--line-strong); margin-top:10px; font-size:12px; color:var(--ink); line-height:1.7; }
-  .example-box strong { color:var(--ink); }
-
-  /* 資本化率：常考(風險溢酬法／市場萃取法)＝赭黃，其餘中性 */
-  .rate-list { display:flex; flex-direction:column; gap:10px; margin-top:14px; }
-  .rate-item { display:flex; align-items:flex-start; gap:14px; background:#f8fafc; border-radius:10px; padding:14px 18px; border-left:5px solid var(--line-strong); }
-  .rate-item.starred { border-left-color:var(--accent2); background:var(--accent2-bg); }
-  .rate-num { width:32px; height:32px; border-radius:50%; background:var(--ink); color:#fff; font-size:15px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
-  .rate-item.starred .rate-num { background:var(--accent2); }
-  .rate-content h4 { font-size:14px; font-weight:800; color:var(--ink); margin-bottom:3px; }
-  .rate-content p { font-size:12px; color:#555; line-height:1.6; }
-  .rate-formula-box { display:inline-flex; align-items:center; gap:5px; background:#f1f2f4; color:var(--ink); font-size:13px; font-weight:700; padding:6px 12px; border-radius:8px; margin-top:6px; }
-
-  /* 各類標的：中性灰階 */
-  .target-3col { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; }
-  .target-card { border-radius:12px; padding:16px 18px; background:#f8fafc; border:1.5px solid var(--line); }
-  .target-card h4 { font-size:14px; font-weight:800; color:var(--ink); margin-bottom:8px; }
-  .target-card .sub-case { margin-top:8px; background:#f1f2f4; border-radius:6px; padding:10px 12px; font-size:12px; color:var(--ink); line-height:1.8; display:flex; flex-direction:column; gap:4px; }
-  .target-card .sub-case.orange { background:#eceef0; border-left:3px solid var(--line-strong); padding-left:9px; color:var(--ink); }
-
-  /* 費用 */
-  .fee-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px; }
-  .fee-item { background:#f8fafc; border-radius:10px; padding:12px 14px; border:1.5px solid var(--line); text-align:center; }
-  .fee-item .icon { font-size:20px; margin-bottom:4px; }
-  .fee-item .name { font-size:13px; font-weight:700; color:var(--ink); }
-
-  /* §35：第一項＝赭黃（常考重點） */
-  .data-list { margin-top:12px; display:flex; flex-direction:column; gap:8px; }
-  .data-item { display:flex; gap:10px; align-items:flex-start; }
-  .data-tag { min-width:44px; background:var(--ink); color:#fff; font-size:11px; font-weight:700; padding:3px 6px; border-radius:6px; text-align:center; flex-shrink:0; margin-top:1px; }
-  .data-tag.red { background:var(--accent2); }
-  .data-body { font-size:13px; color:#333; line-height:1.6; }
-
-  .notice { background:#f8fafc; border-radius:10px; padding:14px 18px; border-left:5px solid var(--line-strong); margin-top:12px; font-size:13px; color:var(--ink); line-height:1.7; }
-  .notice strong { color:var(--ink); }
-  .tip { background:#f8fafc; border-radius:10px; padding:12px 16px; border-left:4px solid var(--ink); margin-top:10px; font-size:13px; color:var(--ink); line-height:1.7; }
-  .legend-row { display:flex; gap:16px; margin-bottom:24px; align-items:center; flex-wrap:wrap; }
-  .legend-item { display:flex; align-items:center; gap:6px; font-size:13px; color:#444; }
-  .legend-dot { width:14px; height:14px; border-radius:4px; background:#fff; }
-
-  /* 複雜分數（§41用）*/
-  .big-frac-wrap { display:flex; align-items:center; justify-content:center; gap:8px; }
-  .big-frac { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; }
-  .big-frac .b-num { border-bottom:3px solid currentColor; padding-bottom:4px; text-align:center; white-space:nowrap; font-size:14px; }
-  .big-frac .b-den { padding-top:4px; text-align:center; white-space:nowrap; font-size:14px; display:flex; align-items:center; gap:4px; }
+  /* 計算範例卡 */
+  .calc-card { background: var(--neutral-bg); border: 1.5px solid var(--line-strong); border-radius: 10px; padding: 10px 16px; margin-top: 8px; }
+  .calc-card .q { font-size: 14px; font-weight: bold; color: var(--ink); margin-bottom: 6px; }
+  .calc-card .steps { font-size: 13.5px; color: var(--neutral); line-height: 1.9; }
+  .calc-card .ans { display:inline-block; margin-top: 4px; background: var(--ink); color:#fff; padding: 2px 10px; border-radius: 6px; font-size: 13px; font-weight: bold; }
 </style>
 </head>
 <body>
 
-<h1 class="main-title">收益法 完整筆記</h1>
-<p class="subtitle">不動產經紀人考試 ｜ 估價規則第 28–47 條 ｜ 整合課程逐字稿＋Notion 筆記</p>
+<h1 class="page-title">
+  估價 L3｜收益法
+  <span class="sub">不動產估價技術規則 §28–§47・依上課逐字稿（完整版 43,102 字）＋講義校正</span>
+</h1>
 
-<div class="legend-row">
-  <div class="legend-item"><div class="legend-dot" style="border:2px solid var(--ink);"></div> 最熱門（必考）</div>
-  <div class="legend-item"><div class="legend-dot" style="border:1.5px solid var(--line-strong);"></div> 常考</div>
-  <div class="legend-item"><div class="legend-dot" style="border:1px solid var(--line);"></div> 冷門（了解即可）</div>
-  <div class="legend-item" style="margin-left:auto; background:#f8fafc; padding:6px 14px; border-radius:8px; border:1.5px solid var(--ink); font-weight:700;">⭐ 老師特別強調</div>
-</div>
+<div class="tip-banner">📌 收益法看的是「未來能幫你賺多少錢」，公式其實都是 P＝A/R 的變形。真正的難點只有兩處：折舊提存費／提存率的四個公式，以及決定收益資本化率的五種方法。把這兩塊拆清楚背熟，題目考得很直觀，不會考證明推導。</div>
 
-<!-- 01 核心概念 -->
-<div class="block">
-  <div class="section-title">01 核心大觀念：收益法看「未來」</div>
-  <div class="compare-row">
-    <div class="compare-card past">
-      <h3>⏪ 比較法（上一堂）</h3>
-      <p>根據<strong>過去的成交資料</strong>，找相似標地做四個調整，求得比較價格。<br>→ 看的是「過去」</p>
+<!-- ① 核心概念 -->
+<section>
+  <h2 class="sec-title">① 核心概念：收益法看「未來」 <span class="law-tag hi">§28</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">⏪ 比較法（上一堂）</div>
+      <p>根據<b>過去的成交資料</b>，找相同或相似之比較標的，經<b>四個調整、三個方法</b>，求得比較價格。</p>
     </div>
-    <div class="compare-card future">
-      <h3>⏩ 收益法（本堂）</h3>
-      <p>透過折現方式，回推這項不動產<strong>未來能幫我賺多少錢</strong>，算出現在的收益價格。<br>→ 看的是「未來」</p>
+    <div class="card hi">
+      <div class="card-title">⏩ 收益法（本堂）</div>
+      <p>看的是<b>未來</b>——這項不動產未來能幫我賺多少錢（淨收益），透過折現方式回推現在的收益價格。收益法<b>沒有</b>四個調整，只有<b>兩個方法</b>。</p>
     </div>
   </div>
-  <div class="tip" style="margin-top:14px;">
-    <strong>收益法之意義 §28</strong><br>
-    第一項：收益法得採直接資本化法、折現現金流量分析法等方法。<br>
-    第二項：依前項方法所求得之價格為收益價格。
-  </div>
-</div>
+  <div class="info-box">§28 I：收益法得採<b>直接資本化法</b>、<b>折現現金流量分析法</b>等方法。II：依前項方法所求得之價格，為<b>收益價格</b>（呼應：比較法求比較價格、成本法求成本價格）。</div>
+</section>
 
-<!-- 02 兩大方法 -->
-<div class="block">
-  <div class="section-title">02 兩大方法 <span class="law">§28</span></div>
-  <div class="method-row">
-    <div class="method-card direct">
-      <div class="card-num">§29 定義 ／ §30 公式</div>
-      <h3>直接資本化法</h3>
-      <div class="formula-box">
-        P =
-        <span class="frac-lg">
-          <span class="num">A</span>
-          <span class="den">R</span>
-        </span>
+<!-- ② 兩大方法 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ② 兩大方法 <span class="law-tag hi">§29–30</span> <span class="law-tag hi2">§31–32</span></h2>
+  <div class="grid-2">
+    <div class="card hi">
+      <div class="card-title">直接資本化法</div>
+      <p>取勘估標的<b>未來平均一年期間</b>之客觀淨收益，除以價格日期當時適當之收益資本化率，即得收益價格。算的是<b>平均值</b>，不細分各期。</p>
+      <div class="example-box" style="margin-top:8px;">
+        P ＝ <span class="frac"><span class="num">A</span><span class="den">R</span></span>　　A＝未來平均一年期間之客觀淨收益；R＝收益資本化率
       </div>
-      <p>取勘估標地<strong>未來平均一年</strong>的客觀淨收益（A），除以當時適當的收益資本化率（R）。</p>
-      <div class="var-list">
-        A = 勘估標的未來平均一年期間之客觀淨收益<br>
-        R = 收益資本化率
-      </div>
-      <span class="tag">📊 算的是平均值</span>
-      <div class="var-list" style="margin-top:10px; font-size:12px;">
-        <strong>精選題：</strong>收益價格 1000 萬，淨收益 60 萬，求 r？<br>
-        1000 =
-        <span class="frac" style="font-size:12px;">
-          <span class="num">60</span>
-          <span class="den">r</span>
-        </span>
-        　⟹　<strong>r = 6%</strong>
+      <div class="calc-card" style="margin-top:8px;">
+        <div class="q">精選題：收益價格 1000 萬，未來平均一年客觀淨收益 60 萬，收益資本化率為何？</div>
+        <div class="steps">1000 ＝ <span class="frac"><span class="num">60</span><span class="den">R</span></span>　→　R ＝ <span class="frac"><span class="num">60</span><span class="den">1000</span></span> ＝ <b>6%</b></div>
       </div>
     </div>
-    <div class="method-card dcf">
-      <div class="card-num">§31 定義 ／ §32 公式</div>
-      <h3>折現現金流量分析法 DCF</h3>
-      <div class="formula-box" style="font-size:14px; flex-wrap:wrap; gap:4px;">
-        P = Σ
-        <span class="frac-lg">
-          <span class="num">CF<sub>k</sub></span>
-          <span class="den">(1+Y)<sup>k</sup></span>
-        </span>
-        +
-        <span class="frac-lg">
-          <span class="num">Pn'</span>
-          <span class="den">(1+Y)<sup>n</sup></span>
-        </span>
-      </div>
-      <p>適用以<strong>投資為目的</strong>的不動產評估。每期淨收益＋期末價值分別折現後加總。</p>
-      <div class="var-list">
-        P = 收益價格<br>
-        CFk = 各期淨收益<br>
-        k = 折現期數（第幾期）<br>
-        Y = 折現率<br>
-        Pn' = 期末價值（最後賣出的錢）<br>
-        n = 持有總期數
-      </div>
-      <span class="tag">💰 算的是每一期</span>
-    </div>
-  </div>
-</div>
-
-<!-- 03 DCF 折現觀念 -->
-<div class="block">
-  <div class="section-title">03 DCF 折現觀念與計算實例</div>
-  <div class="tip">未來的 50 萬 ≠ 現在的 50 萬。第幾期就要折現幾次。期末價值也要按持有年數折現。</div>
-  <div class="dcf-example" style="margin-top:14px;">
-    <h4>📌 賴哥投資案（老師例題）</h4>
-    <p style="font-size:13px;color:#444;margin-bottom:12px;">賴哥投資別墅，每年淨收益 200 萬，預計第二年底以 2000 萬賣出，折現率 10%</p>
-    <div class="dcf-row">
-      <div class="dcf-item">
-        <div class="label">第一年收益（CF₁）</div>
-        <div class="val">200 萬</div>
-        <div class="formula">
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">200</span>
-            <span class="den">(1+10%)¹</span>
-          </span>
-        </div>
-      </div>
-      <div class="dcf-item">
-        <div class="label">第二年收益（CF₂）</div>
-        <div class="val">200 萬</div>
-        <div class="formula">
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">200</span>
-            <span class="den">(1+10%)²</span>
-          </span>
-        </div>
-      </div>
-      <div class="dcf-item">
-        <div class="label">期末價值（Pn'）</div>
-        <div class="val">2000 萬</div>
-        <div class="formula">
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">2000</span>
-            <span class="den">(1+10%)²</span>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="dcf-total">收益價格 P = 三者折現後相加</div>
-  </div>
-</div>
-
-<!-- 04 估價程序 口訣 6步 -->
-<div class="block">
-  <div class="section-title">04 收益法估價程序口訣 <span class="law">§34</span> <span class="hot">⭐ 老師強調</span></div>
-  <div style="text-align:center; font-size:26px; font-weight:900; color:var(--accent); letter-spacing:8px; margin:16px 0 6px;">
-    「收・推・推・計・決・計」
-  </div>
-  <p style="text-align:center; font-size:13px; color:var(--sub); margin-bottom:20px;">共六步，注意有兩個「推」！</p>
-  <div class="sop-row">
-    <div class="sop-item">
-      <div class="sop-circle">收</div>
-      <div class="sop-label">蒐集資料</div>
-      <div class="sop-sub">總收入、總費用<br>資本化率/折現率</div>
-      <div class="sop-law">§35</div>
-    </div>
-    <div class="sop-item">
-      <div class="sop-circle">推</div>
-      <div class="sop-label">推算有效總收入</div>
-      <div class="sop-sub">扣除空置損失<br>及其他損失</div>
-      <div class="sop-law">§36–37</div>
-    </div>
-    <div class="sop-item">
-      <div class="sop-circle">推</div>
-      <div class="sop-label">推算總費用</div>
-      <div class="sop-sub">地稅、房稅、保險<br>管理、維修費等</div>
-      <div class="sop-law">§38–41</div>
-    </div>
-    <div class="sop-item">
-      <div class="sop-circle">計</div>
-      <div class="sop-label">計算淨收益</div>
-      <div class="sop-sub">有效總收入<br>− 總費用</div>
-      <div class="sop-law">§42</div>
-    </div>
-    <div class="sop-item">
-      <div class="sop-circle">決</div>
-      <div class="sop-label">決定資本化率</div>
-      <div class="sop-sub">或折現率<br>（五種方法）</div>
-      <div class="sop-law">§43</div>
-    </div>
-    <div class="sop-item">
-      <div class="sop-circle">計</div>
-      <div class="sop-label">計算收益價格</div>
-      <div class="sop-sub">
-        P =
-        <span class="frac" style="font-size:11px; color:var(--ink);">
-          <span class="num">A</span>
-          <span class="den">R</span>
-        </span>
-        或 DCF
-      </div>
-      <div class="sop-law">§44–47</div>
-    </div>
-  </div>
-</div>
-
-<!-- 05 蒐集資料 §35 -->
-<div class="block">
-  <div class="section-title">05 蒐集資料 <span class="law">§35</span> <span class="hot">⭐ 最近三年</span></div>
-  <div class="data-list">
-    <div class="data-item">
-      <div class="data-tag red">第一項</div>
-      <div class="data-body">收益法估價應蒐集勘估標地及與其特性相同或相似之比較標的<strong>最近三年間</strong>總收入、總費用及收益資本化率或折現率等資料。</div>
-    </div>
-    <div class="data-item">
-      <div class="data-tag">第二項</div>
-      <div class="data-body">前項蒐集最近三年間之資料有困難時，應於估價報告書中敘明。</div>
-    </div>
-    <div class="data-item">
-      <div class="data-tag">第三項</div>
-      <div class="data-body">蒐集第一項資料時，應就其合理性進行綜合研判，以確定資料之可用性，並得依其持續性、穩定性及成長情形加以調整。</div>
-    </div>
-    <div class="data-item">
-      <div class="data-tag">第四項</div>
-      <div class="data-body">前條蒐集總收入資料，得就其不動產之租金估計之，以確認總收入之合理性。</div>
-    </div>
-  </div>
-</div>
-
-<!-- 06 淨收益與費用 -->
-<div class="block">
-  <div class="section-title">06 推算收入與費用 <span class="law">§36–42</span></div>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:12px;">
-    <div>
-      <p style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:8px;"><span class="law">§33</span> 客觀淨收益定義</p>
-      <div class="tip">以「<strong>最有效使用</strong>」為基準，原則上採用<strong>契約租金</strong>。若契約租金未知，改採<strong>市場經濟租金</strong>。</div>
-      <p style="font-size:13px; font-weight:800; color:var(--ink); margin:12px 0 8px;"><span class="law">§36</span> 推算有效總收入</p>
-      <div class="tip">有效總收入 = 總收入 − 閒置損失 − 其他損失<br><span style="font-size:12px; color:#666;">例：100 − 10 = 90</span></div>
-      <p style="font-size:13px; font-weight:800; color:var(--ink); margin:12px 0 8px;"><span class="law">§42</span> 計算淨收益</p>
-      <div class="tip">淨收益 = 有效總收入 − 總費用<br>應扣除<strong>不屬於不動產所產生</strong>之其他淨收益。</div>
-    </div>
-    <div>
-      <p style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:8px;"><span class="law">§38</span> 總費用項目</p>
-      <div class="fee-grid">
-        <div class="fee-item"><div class="icon">🏛️</div><div class="name">地價稅</div></div>
-        <div class="fee-item"><div class="icon">📋</div><div class="name">地租</div></div>
-        <div class="fee-item"><div class="icon">🏠</div><div class="name">房屋稅</div></div>
-        <div class="fee-item"><div class="icon">🛡️</div><div class="name">保險費</div></div>
-        <div class="fee-item"><div class="icon">📦</div><div class="name">管理費</div></div>
-        <div class="fee-item"><div class="icon">🔧</div><div class="name">維修費</div></div>
-      </div>
-      <div class="notice" style="margin-top:10px; font-size:12px;">
-        <strong>§39 重置提撥費：</strong>電梯等耐用年數內需更換設備，依各設備有效使用年限分年攤提。<br>
-        <strong>§38 第二項：</strong>不動產證券化為估價目的者，DCF 法之總費用應依信託計畫資料推算。
+    <div class="card hi2">
+      <div class="card-title">折現現金流量分析法（DCF）</div>
+      <p>適用於<b>以投資為目的</b>之不動產評估。各期<b>淨收益都算清楚</b>（不平均），連同<b>期末價值</b>依各自發生的期數分別折現後加總。</p>
+      <div class="example-box" style="margin-top:8px;">
+        P ＝ <span class="sigma"><span class="bound-top">n′</span><span class="symbol">Σ</span><span class="bound-bottom">k＝1</span></span> <span class="frac"><span class="num">CFₖ</span><span class="den">(1＋y)ᵏ</span></span> ＋ <span class="frac"><span class="num">Pn′</span><span class="den">(1＋y)ⁿ′</span></span>
+        <br>CFₖ＝第 k 期淨收益；y＝折現率；Pn′＝期末價值（出售價金）；k＝1～n′（折現現金流量分析期間）
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- 07 折舊提存 -->
-<div class="block">
-  <div class="section-title">07 折舊提存 <span class="law">§40–41</span> <span class="hot">⭐ 重要考點</span></div>
-  <div class="tip" style="margin-bottom:14px;">勘估標地包含<strong>建物</strong>時，必須考慮折舊。以下兩大類，各有子公式，二擇一使用。</div>
-  <div class="dep-row">
-
-    <!-- 熱門：提存費 -->
-    <div class="dep-card hot-card">
-      <h4>§40 等數折舊型【提存費】 <span class="hot">最熱門</span></h4>
-      <div class="dep-formula">
-        C × (1 − S) ×
-        <span class="frac" style="color:var(--accent); font-size:16px;">
-          <span class="num">1</span>
-          <span class="den">N</span>
-        </span>
-      </div>
-      <p class="legend">C = 總成本（重建成本）<br>S = 殘餘價格率（通常 10%）<br>N = 經濟耐用年數</p>
-      <div style="margin-top:8px; font-size:12px; color:#555;">→ 加在<strong>總費用</strong>中</div>
-      <div class="example-box">
-        <strong>精選題：</strong>耐用年數 50 年，殘餘價格率 10%，每年折舊為？<br>
-        → C × (1−10%) ×
-        <span class="frac" style="font-size:12px; color:var(--accent);">
-          <span class="num">1</span>
-          <span class="den">50</span>
-        </span>
-      </div>
+<!-- ③ DCF觀念與精選題 -->
+<section>
+  <h2 class="sec-title">③ DCF 折現觀念與精選題示範</h2>
+  <div class="info-box">📖 折現觀念：未來的錢≠現在的錢。第幾期發生的收益，就要折現幾次；期末出售的價金（Pn′）跟出售當期的收益，折現次數<b>相同</b>。</div>
+  <div class="calc-card" style="margin-top:8px;">
+    <div class="q">L 哥是著名的房產投資客，預計購買一棟別墅，每年可獲得 200 萬元淨收益，預計在第二年底出手，屆時可賣得 2000 萬元。若折現率為 10%，請問合理價格為多少？</div>
+    <div class="steps">
+      第一期淨收益折現一次、第二期淨收益折現兩次；期末價值發生在第二年底出售時，與第二期收益同樣折現兩次：<br>
+      P ＝ <span class="frac"><span class="num">200</span><span class="den">(1＋10%)¹</span></span> ＋ <span class="frac"><span class="num">200</span><span class="den">(1＋10%)²</span></span> ＋ <span class="frac"><span class="num">2000</span><span class="den">(1＋10%)²</span></span>
     </div>
-
-    <!-- 等數提存率 -->
-    <div class="dep-card warm-card">
-      <h4>§41 等數折舊型【提存率】 <span class="warm">熱門中的冷門</span></h4>
-      <div class="dep-formula">
-        <span style="font-style:italic; font-weight:900; font-size:17px;">d</span>
-        <span style="font-size:17px; margin:0 4px;">=</span>
-        <span class="big-frac" style="color:var(--accent2);">
-          <span class="b-num">
-            <span class="frac" style="color:var(--accent2); font-size:13px;">
-              <span class="num">1 − s</span>
-              <span class="den">N</span>
-            </span>
-          </span>
-          <span class="b-den">
-            1 −
-            <span class="frac" style="color:var(--accent2); font-size:13px; margin-left:4px;">
-              <span class="num">(1 − s) × n</span>
-              <span class="den">N</span>
-            </span>
-          </span>
-        </span>
-      </div>
-      <p class="legend">s = 殘餘價格率<br>N = 經濟耐用年數<br>n = 已經歷年數（屋齡）</p>
-      <div style="margin-top:8px; font-size:12px; color:#555;">→ 加在<strong>分母資本化率</strong>中</div>
-      <div class="example-box">
-        <strong>精選題：</strong>耐用 60 年、屋齡 20 年、殘值率 10%<br>
-        → 代入公式：(1−10%) ×
-        <span class="frac" style="font-size:11px; color:var(--accent2);">
-          <span class="num">1</span>
-          <span class="den">60</span>
-        </span>
-        ÷ [ 1 − (1−10%) ×
-        <span class="frac" style="font-size:11px; color:var(--accent2);">
-          <span class="num">20</span>
-          <span class="den">60</span>
-        </span>
-        ]
-      </div>
-    </div>
-
-    <!-- 冷門：償債基金 -->
-    <div class="dep-card cold-card">
-      <h4>§40/41 償債基金型 <span class="cold">冷門</span></h4>
-      <div class="dep-formula" style="flex-direction:column; gap:8px; font-size:13px;">
-        <div>
-          提存費：C(1−S) ×
-          <span class="frac" style="color:var(--sub); font-size:13px;">
-            <span class="num">i</span>
-            <span class="den">(1+i)ᴺ − 1</span>
-          </span>
-        </div>
-        <div>
-          提存率：
-          <span class="frac" style="color:var(--sub); font-size:13px;">
-            <span class="num">i</span>
-            <span class="den">(1+i)ᴺ − 1</span>
-          </span>
-        </div>
-      </div>
-      <div style="margin-top:8px; font-size:12px; color:#555;">老師建議：<strong>背公式即可</strong></div>
-    </div>
-
+    <span class="ans">關鍵：期末價值跟「該期收益」折現次數相同，不是額外多折一次</span>
   </div>
-  <div class="notice">
-    <strong>⭐ 關鍵提醒：</strong>只有<strong>建物</strong>才有折舊，所以「折舊提存率」只加在<strong>建物的收益資本化率</strong>旁。土地不折舊！
-  </div>
-</div>
+</section>
 
-<!-- 08 五種資本化率 -->
-<div class="block">
-  <div class="section-title">08 五種收益資本化率決定方法 <span class="law">§43</span> <span class="hot">⭐ 選擇＋申論必考</span></div>
-  <div class="tip" style="margin-bottom:14px;">老師說這五種<strong>全部都要記住</strong>！</div>
-  <div class="rate-list">
-
-    <div class="rate-item starred">
-      <div class="rate-num">1</div>
-      <div class="rate-content">
-        <h4>風險溢酬法 <span class="hot">常考</span></h4>
-        <p>以當地金融市場普遍之<strong>無風險利率為基礎</strong>，加計以下五個因素決定之：</p>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-          <div style="background:#fff; border:1.5px solid var(--ink); border-radius:8px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">① 銀行定期<br>存款利率</div>
-          <div style="background:#fff; border:1.5px solid var(--ink); border-radius:8px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">② 政府公債<br>利率</div>
-          <div style="background:#fff; border:1.5px solid var(--ink); border-radius:8px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">③ 不動產投資<br>之風險性</div>
-          <div style="background:#fff; border:1.5px solid var(--ink); border-radius:8px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">④ 貨幣變動<br>狀況</div>
-          <div style="background:#fff; border:1.5px solid var(--ink); border-radius:8px; padding:6px 12px; font-size:12px; font-weight:700; color:var(--ink);">⑤ 不動產價格<br>之變動趨勢</div>
-        </div>
-      </div>
+<!-- ④ 客觀淨收益 -->
+<section>
+  <h2 class="sec-title">④ 客觀淨收益之認定 <span class="law-tag">§33</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">第一項｜認定基準</div>
+      <p>客觀淨收益應以勘估標的作<b>最有效使用</b>之客觀淨收益為基準，並參酌鄰近類似不動產在最有效使用情況下推算之。</p>
     </div>
-
-    <div class="rate-item starred">
-      <div class="rate-num">2</div>
-      <div class="rate-content">
-        <h4>市場萃取法 <span class="hot">常考</span></h4>
-        <p>從市場實際交易案例反推。以已知收益（A）除以已知價格（P）求得 R。</p>
-        <div class="rate-formula-box">
-          P =
-          <span class="frac" style="color:var(--accent2);">
-            <span class="num">A</span>
-            <span class="den">R</span>
-          </span>
-          　→　R =
-          <span class="frac" style="color:var(--accent2);">
-            <span class="num">A</span>
-            <span class="den">P</span>
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="rate-item">
-      <div class="rate-num">3</div>
-      <div class="rate-content">
-        <h4>加權平均資金成本法（WACC）</h4>
-        <p>依不同資金來源（自備款、貸款）的比例與利率加權計算。r = Σ Wi × Ki</p>
-        <div class="example-box" style="margin-top:6px;">
-          <strong>精選題：</strong>小杜買商場，自備款 300 萬（利率5%），貸款 700 萬（利率10%）<br>
-          r =
-          <span class="frac" style="font-size:12px; color:var(--ink);">
-            <span class="num">300</span>
-            <span class="den">1000</span>
-          </span>
-          × 5% +
-          <span class="frac" style="font-size:12px; color:var(--ink);">
-            <span class="num">700</span>
-            <span class="den">1000</span>
-          </span>
-          × 10% = <strong>1.5% + 7% = 8.5%</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="rate-item">
-      <div class="rate-num">4</div>
-      <div class="rate-content">
-        <h4>債務保障比率法</h4>
-        <div class="rate-formula-box">R = 債務保障比率 × 貸款常數 × 貸款成數</div>
-      </div>
-    </div>
-
-    <div class="rate-item">
-      <div class="rate-num">5</div>
-      <div class="rate-content">
-        <h4>有效總收入乘數法</h4>
-        <div class="rate-formula-box">
-          R =
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">淨收益率</span>
-            <span class="den">有效總收入乘數</span>
-          </span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- 09 各類標的計算 -->
-<div class="block">
-  <div class="section-title">09 各類標的收益價格 <span class="law">§44–46</span></div>
-  <div class="target-3col">
-
-    <div class="target-card">
-      <h4>🌱 土地收益價格 §44</h4>
-      <div class="sub-case">
-        <strong>土地無建物者：</strong>
-        <span style="display:flex; align-items:center; gap:4px; margin-top:2px;">
-          P =
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">a</span>
-            <span class="den">r</span>
-          </span>
-        </span>
-      </div>
-      <div class="sub-case" style="margin-top:6px;">
-        <strong>土地有建物者：</strong>
-        <span style="display:flex; align-items:center; gap:4px; margin-top:2px;">
-          P =
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">a₁ − a₂</span>
-            <span class="den">r</span>
-          </span>
-        </span>
-        <span style="font-size:10px; color:#666;">a₁=房地淨收益, a₂=建物淨收益</span>
-      </div>
-      <div class="sub-case orange" style="margin-top:6px;">
-        <strong>建物已扣折舊：</strong> P × r = a<br>
-        <strong>建物未扣折舊：</strong> P × (r+d) = a
-      </div>
-    </div>
-
-    <div class="target-card">
-      <h4>🏗️ 建物收益價格 §45</h4>
-      <div class="sub-case">
-        <strong>淨收益已扣折舊提存費：</strong>
-        <span style="display:flex; align-items:center; gap:4px; margin-top:2px;">
-          P =
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">建物淨收益</span>
-            <span class="den">r</span>
-          </span>
-        </span>
-      </div>
-      <div class="sub-case" style="margin-top:6px;">
-        <strong>淨收益未扣折舊提存費：</strong>
-        <span style="display:flex; align-items:center; gap:4px; margin-top:2px;">
-          P =
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">建物淨收益</span>
-            <span class="den">r + d</span>
-          </span>
-        </span>
-        <span style="font-size:10px; color:#666;">r = 建物收益資本化率，d = 折舊提存率</span>
-      </div>
-    </div>
-
-    <div class="target-card">
-      <h4>🏠 房地收益價格 §46</h4>
-      <div class="sub-case">
-        <strong>第一項：</strong>
-        <span style="display:flex; align-items:center; gap:4px; margin-top:2px;">
-          P =
-          <span class="frac" style="color:var(--ink);">
-            <span class="num">房地淨收益</span>
-            <span class="den">房地綜合 R</span>
-          </span>
-        </span>
-      </div>
-      <div class="sub-case orange" style="margin-top:6px;">
-        <strong>第二項：46條重點公式</strong><br>
-        房地綜合 R =<br>
-        土地 r × 土地價值比率<br>
-        ＋ (建物 r + d) × 建物價值比率
-      </div>
-    </div>
-
-  </div>
-  <div class="notice" style="margin-top:16px;">
-    <strong>⭐ 核心原則：</strong>只有建物會折舊 → 折舊提存率 d 只加在<strong>建物端的資本化率</strong>，土地端不用加。
-  </div>
-</div>
-
-<!-- 10 考試策略 -->
-<div class="block">
-  <div class="section-title">10 考試策略 ＆ 冷熱門總整理</div>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;">
-    <div class="tip">
-      <strong>✅ 優先攻克（高頻）</strong><br>
-      1. 口訣「收・推・推・計・決・計」共六步<br>
-      2. 直接資本化法 P=A/R 及反推 r=A/P<br>
-      3. 等數折舊型【提存費】公式 C×(1-S)×1/N<br>
-      4. 五種資本化率決定方法（全背）<br>
-      5. §35 資料收集最近三年<br>
-      6. §46 房地綜合 R 加權公式
-    </div>
-    <div class="notice">
-      <strong>⚠️ 可先略過（低頻）</strong><br>
-      • 償債基金型公式（背公式即可）<br>
-      • 等數折舊型提存率（熱門中的冷門）<br>
-      • 第 47 條「一定期間收益價格」極冷門<br><br>
-      這是 <strong>60 分就及格</strong>的考試，<br>把時間花在刀口上！
+    <div class="card hi">
+      <div class="card-title">第二、三項｜計算依據</div>
+      <p>各期淨收益原則上以<b>契約租金</b>為計算基礎（但因情況特殊不宜採用，並於估價報告書中敘明者，不在此限）；<b>契約租金不明</b>時，改以<b>市場經濟租金</b>估計之。</p>
     </div>
   </div>
-</div>
+</section>
+
+<!-- ⑤ 估價程序口訣 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑤ 收益法估價程序口訣 <span class="law-tag hi">§34</span> <span class="mnemo-char hi">收</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">計</span><span class="mnemo-char hi">決</span><span class="mnemo-char hi">計</span></h2>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-box"><span class="mnemo-char hi">收</span>集<b>總收入、總費用</b>及<b>收益資本化率或折現率</b>等資料 <span class="law-tag">§35</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-box"><span class="mnemo-char hi">推</span>算<b>有效總收入</b> <span class="law-tag">§36–37</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-box"><span class="mnemo-char hi">推</span>算<b>總費用</b> <span class="law-tag">§38–41</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-box"><span class="mnemo-char hi">計</span>算<b>淨收益</b>（有效總收入－總費用） <span class="law-tag">§42</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step key"><div class="flow-num">5</div><div class="flow-box"><span class="mnemo-char hi">決</span>定<b>收益資本化率或折現率</b> <span class="law-tag hi">§43</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step key"><div class="flow-num">6</div><div class="flow-box"><span class="mnemo-char hi">計</span>算<b>收益價格</b>（土地／建物／房地） <span class="law-tag hi">§44–47</span></div></div>
+  </div>
+</section>
+
+<!-- ⑥ 蒐集資料+有效總收入 -->
+<section>
+  <h2 class="sec-title">⑥ 蒐集資料與推算有效總收入 <span class="law-tag hi">§35</span> <span class="law-tag">§36–37</span></h2>
+  <div class="grid-2">
+    <div class="card hi">
+      <div class="card-title">§35｜蒐集資料</div>
+      <p>應蒐集勘估標的及相同或相似比較標的<b>最近三年間</b>之總收入、總費用、收益資本化率或折現率等資料。蒐集三年間資料有困難者，應於估價報告書中敘明；並應就資料<b>合理性</b>綜合研判以確定可用性，得依其<b>持續性、穩定性及成長情形</b>調整。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">§36–37｜推算有效總收入</div>
+      <p>有效總收入＝<b>總收入</b>（價格日期當時按法定用途出租或營運、正常情況下所得之租金或收入）－<b>閒置期間或其他原因造成之收入損失</b>。推算時應與<b>往年資料、相關產業或替代性比較標的、目前或未來可能之計劃收入</b>互相比較。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 總費用（一） -->
+<section>
+  <h2 class="sec-title">⑦ 推算總費用（一）：費用項目與重置提撥費 <span class="law-tag hi">§38</span> <span class="law-tag">§39</span></h2>
+  <div class="grid-3">
+    <div class="card"><p>🏛️ 地價稅</p></div>
+    <div class="card"><p>📋 地租</p></div>
+    <div class="card"><p>🏠 房屋稅</p></div>
+    <div class="card"><p>🛡️ 保險費</p></div>
+    <div class="card"><p>📦 管理費</p></div>
+    <div class="card"><p>🔧 維修費</p></div>
+  </div>
+  <div class="warn-box hi2">營運性不動產者，另加計<b>營運費用</b>。以不動產證券化為估價目的者，DCF 法之總費用應依信託計畫資料推算（§38 II，邊角規定，不太考）。</div>
+  <div class="info-box">
+    <b>§39｜重置提撥費：</b>推估不動產構成項目中（<b>電梯</b>是最經典的例子）於<b>耐用年數內需重置部分</b>之提撥費，按其有效使用年期耗損比率<b>分年攤提</b>——不是等到真的要換的那年一次收取，而是每年、每期平均分攤，才不會讓中途換屋主的人一次繳一大筆錢。
+  </div>
+</section>
+
+<!-- ⑧ 折舊提存費/率 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑧ 推算總費用（二）：折舊提存費／提存率 <span class="law-tag hi">§40</span> <span class="law-tag hi">§40–1</span> <span class="law-tag hi2">§41</span></h2>
+  <div class="warn-box">勘估標的包含<b>建物</b>者才需考慮折舊（土地不會折舊）。總費用中<b>已扣除</b>折舊提存費者，後面決定 R 時不用再加；<b>未扣除</b>者，則要在 R 上加計折舊提存率——<b>費、率二擇一</b>，不會同時出現（§40）。</div>
+  <div class="grid-2" style="margin-top:10px;">
+    <div class="card hi">
+      <div class="card-title">折舊提存費・等數折舊型 <span class="badge">最愛考</span></div>
+      <div class="example-box" style="margin-top:6px;">
+        C × (1－s) × <span class="frac"><span class="num">1</span><span class="den">N</span></span>
+      </div>
+      <p style="margin-top:6px;">C＝建物總成本；s＝殘餘價格率（通常 10%）；N＝經濟耐用年數。加在<b>總費用</b>中。</p>
+      <div class="calc-card" style="margin-top:8px;">
+        <div class="q">精選題：耐用年數 60 年、殘餘價格率 10%，每年折舊率為何？</div>
+        <div class="steps">總體折舊率＝1－10%＝90%；每年折舊率＝90%÷60（不用套公式，用折舊概念直接推）</div>
+      </div>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">折舊提存率・等數折舊型 <span class="badge">熱門中的冷門</span></div>
+      <div class="example-box" style="margin-top:6px;">
+        d ＝ <span class="frac"><span class="num">(1－s)×1/N</span><span class="den">1－(1－s)×n/N</span></span>
+      </div>
+      <p style="margin-top:6px;">比提存費多一個 <b>n＝已經歷年數（屋齡）</b>——有 n 的是提存率，只有 N（沒有 n）的是提存費。加在<b>收益資本化率／折現率</b>上。</p>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:9px;">
+    <div class="card">
+      <div class="card-title">折舊提存費・償債基金型 <span class="badge">冷門</span></div>
+      <div class="example-box" style="margin-top:6px;">
+        C × (1－s) × <span class="frac"><span class="num">i</span><span class="den">(1＋i)ᴺ－1</span></span>
+      </div>
+      <p style="margin-top:6px;">比等數折舊型多一個 <b>i＝利率</b>（複利概念）。老師：近十年沒考過計算題，會考也只是默寫公式。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">折舊提存率・償債基金型 <span class="badge">最冷門</span></div>
+      <div class="example-box" style="margin-top:6px;">
+        d ＝ <span class="frac"><span class="num">i</span><span class="den">(1＋i)ⁿ′－1</span></span>
+      </div>
+      <p style="margin-top:6px;">同時有 <b>i</b> 與 <b>n′</b>（注意不是 N）。四個公式中最不愛考，時間不夠可以放到最後準備。</p>
+    </div>
+  </div>
+  <div class="info-box">📖 老師的背誦口訣：先判斷「費」還是「率」（看有沒有小 n）；再判斷「等數折舊型」還是「償債基金型」（看有沒有 i）。</div>
+</section>
+
+<!-- ⑨ 淨收益 -->
+<section>
+  <h2 class="sec-title">⑨ 計算淨收益 <span class="law-tag">§42</span></h2>
+  <div class="card">
+    <p><b>淨收益＝有效總收入－總費用。</b>若為營運性不動產之淨收益，應扣除<b>不屬於該不動產所產生</b>之其他淨收益。</p>
+  </div>
+</section>
+
+<!-- ⑩ 五種資本化率決定方法 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑩ 決定收益資本化率或折現率：五種方法 <span class="law-tag hi">§43</span></h2>
+  <div class="tip-banner">老師強調：這五種方法<b>全部都要記住</b>，選擇、申論都愛考。</div>
+  <div class="grid-3">
+    <div class="card hi">
+      <div class="card-title">① 風險溢酬法</div>
+      <p>綜合評估以下五因素決定（口訣：<b>兩定、兩動、一風險</b>）：銀行定期存款利率、政府公債利率／貨幣變動狀況、不動產價格變動趨勢／不動產投資風險性。並選擇最具一般性財貨之投資報酬率為基準，比較流通性、風險性、增值性及管理難易度。</p>
+    </div>
+    <div class="card hi">
+      <div class="card-title">② 市場萃取法</div>
+      <p>選擇相同或相似比較標的，以其<b>淨收益除以價格</b>所得商數決定（直接資本化公式反推）。</p>
+      <div class="example-box" style="margin-top:6px;">R ＝ <span class="frac"><span class="num">A</span><span class="den">P</span></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">③ 加權平均資金成本法（WACC）</div>
+      <p>依各資金來源（自備款、貸款等）佔總資金比率（Wᵢ），乘以各自利率或要求報酬率（Kᵢ），加總而得；<b>各資金來源比率合計須為 1</b>（ΣWᵢ＝1）。</p>
+      <div class="example-box" style="margin-top:6px;">R ＝ <span class="sigma"><span class="bound-top">n</span><span class="symbol">Σ</span><span class="bound-bottom">i＝1</span></span> (Wᵢ × Kᵢ)</div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:9px;">
+    <div class="card">
+      <div class="card-title">④ 債務保障比率法</div>
+      <div class="example-box" style="margin-top:6px;">R ＝ 債務保障比率 × 貸款常數 × 貸款資金佔不動產價格之比率</div>
+      <div class="example-box" style="margin-top:6px;">◆ 補充｜貸款常數公式：貸款常數 ＝ <span class="frac"><span class="num">(1＋r)ⁿ × r</span><span class="den">(1＋r)ⁿ－1</span></span>　　n＝每期期數；r＝貸款利率</div>
+      <p style="margin-top:6px;">題目通常給其中三項，代入求剩下一項。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⑤ 有效總收入乘數法</div>
+      <div class="example-box" style="margin-top:6px;">R ＝ <span class="frac"><span class="num">淨收益率</span><span class="den">有效總收入乘數</span></span></div>
+    </div>
+  </div>
+  <div class="calc-card" style="margin-top:10px;">
+    <div class="q">精選題（加權平均資金成本法）：小渡準備買房當包租公，準備 300 萬自備款，剩下 700 萬選擇貸款。自備款要求報酬率 5%，貸款利率 10%，收益資本化率為何？</div>
+    <div class="steps">
+      資金來源共兩個，總資金 300＋700＝1000 萬：<br>
+      R ＝ <span class="frac"><span class="num">300</span><span class="den">1000</span></span> × 5% ＋ <span class="frac"><span class="num">700</span><span class="den">1000</span></span> × 10% ＝ 1.5% ＋ 7% ＝ <b>8.5%</b>
+    </div>
+  </div>
+  <div class="warn-box">§43 II：如有採取其他方法計算之必要者，應於估價報告書中敘明。</div>
+</section>
+
+<!-- ⑪ 各類標的收益價格 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑪ 計算收益價格：土地／建物／房地 <span class="law-tag hi">§44</span> <span class="law-tag hi">§45</span> <span class="law-tag hi">§46</span></h2>
+  <div class="info-box">📖 觀念解析：一棟透天厝，土地＋建物合計的價值，通常會大於土地與建物各自價值的加總（1＋1＞2，「團結力量大」）。多出來的那份效益該歸給誰？§44～46 各自代表一種立場：</div>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card hi">
+      <div class="card-title">§44｜土地貢獻說</div>
+      <p>多出的效益<b>全部歸給土地</b>：土地淨收益＝房地淨收益－建物淨收益。</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">§45｜建物貢獻說</div>
+      <p>多出的效益<b>全部歸給建物</b>：建物淨收益＝房地淨收益－土地淨收益。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">§46｜聯合貢獻說</div>
+      <p>不偏袒任何一方，按<b>土地／建物各自價值比例</b>合理分配這份效益。</p>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-top:12px;">
+    <div class="card">
+      <div class="card-title">🌱 §44｜土地收益價格</div>
+      <p><b>地上無建物：</b> P ＝ <span class="frac"><span class="num">a</span><span class="den">r</span></span></p>
+      <p style="margin-top:6px;"><b>地上有建物：</b> P ＝ <span class="frac"><span class="num">a房地－a建物</span><span class="den">r</span></span></p>
+      <div class="example-box" style="margin-top:6px; font-size:13px;">建物淨收益已扣折舊提存費：a建物＝P建物×r<br>未扣除者：a建物（折舊前）＝P建物×(r＋折舊提存率)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏗️ §45｜建物收益價格</div>
+      <p><b>淨收益已扣折舊提存費：</b> P ＝ <span class="frac"><span class="num">a建物</span><span class="den">r</span></span>，a建物＝a房地－a土地</p>
+      <p style="margin-top:6px;"><b>淨收益未扣除者：</b> P ＝ <span class="frac"><span class="num">a建物</span><span class="den">r＋d</span></span></p>
+      <div class="example-box" style="margin-top:6px; font-size:13px;">第 2 項（邊角規定）：前項土地之淨收益，得先以比較法求取土地比較價格後，再乘以土地收益資本化率得之。</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏠 §46｜房地收益價格</div>
+      <p><b>第一項：</b> P ＝ <span class="frac"><span class="num">a房地</span><span class="den">R房地綜合</span></span></p>
+      <div class="example-box" style="margin-top:6px; font-size:13px;">
+        <b>第二項（求 R 房地綜合）：</b><br>
+        已扣折舊提存費：R＝R土地×土地價值比率＋R建物×建物價值比率<br>
+        未扣除者：R＝R土地×土地價值比率＋(R建物＋折舊提存率)×建物價值比率
+      </div>
+      <p style="margin-top:6px; font-size:12.5px; color:var(--sub);">第三項：土地／建物價值比率應參酌當地市場調查資料計算之。</p>
+    </div>
+  </div>
+  <div class="warn-box hi">⭐ 核心提醒：折舊只發生在<b>建物</b>，折舊提存率一律加在<b>建物端的收益資本化率</b>旁，土地端不加。§44–46 三條公式全部是 P＝A/R 的變形，記熟這個公式原則，題目怎麼問都能推出來。</div>
+  <div class="info-box">§47：另有「一定期間收益價格」公式（結構近似 DCF），老師明講近十年幾乎沒考過，時間不夠可略過，有餘力再背公式即可。</div>
+</section>
+
+<!-- ⑫ 高頻考點速查卡 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑫ 高頻考點速查卡</h2>
+  <div class="qa-item">
+    <div class="qa-q">Q. 收益法跟比較法最大的差異是什麼？</div>
+    <div class="qa-a">比較法看<b>過去</b>成交資料求比較價格；收益法看<b>未來</b>收益（折現）求收益價格，且<b>沒有</b>四個調整，只有直接資本化法、DCF 兩個方法。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 直接資本化法跟 DCF 怎麼選？</div>
+    <div class="qa-a">直接資本化法算<b>未來平均一年</b>之客觀淨收益（§29–30，P＝A/R）；DCF 適用於<b>以投資為目的</b>之不動產評估，各期淨收益＋期末價值分別折現後加總（§31–32）。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 折舊提存費／提存率什麼時候用哪一個？</div>
+    <div class="qa-a">二擇一：總費用中<b>已扣除</b>折舊提存費者，決定 R 時不用再加；<b>未扣除</b>者，要在 R 上加計折舊提存率。折舊只發生在<b>建物</b>，土地不折舊。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 四個折舊公式怎麼分辨？</div>
+    <div class="qa-a">看有沒有 C／n／i：提存費有 C、提存率沒有 C；等數折舊型沒有 i、償債基金型有 i；提存費公式只有 N，提存率公式多一個 n（或 n′）。最愛考的是提存費等數折舊型 C×(1－s)×1/N。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 土地貢獻說、建物貢獻說、聯合貢獻說差在哪？</div>
+    <div class="qa-a">§44 用<b>土地貢獻說</b>（房地－建物＝土地）；§45 用<b>建物貢獻說</b>（房地－土地＝建物）；§46 用<b>聯合貢獻說</b>（按價值比例加權分配）。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 五種收益資本化率決定法怎麼記？</div>
+    <div class="qa-a">風險溢酬法（兩定兩動一風險）、市場萃取法（R＝A/P）、加權平均資金成本法（WACC，Σ（i＝1～n）Wᵢ×Kᵢ，ΣWᵢ＝1）、債務保障比率法（R＝債務保障比率×貸款常數×貸款成數）、有效總收入乘數法（R＝淨收益率÷有效總收入乘數）。</div>
+  </div>
+</section>
+
+<!-- ⑬ 考古題對應 -->
+<section>
+  <h2 class="sec-title">⑬ 考古題對應</h2>
+  <div class="info-box">
+    📋 資料來源：105–114 年近 10 年四科考古題重點清單研究（`四科考古題重點清單_近10年.html`，Artifact `9478fc98`）。
+  </div>
+  <table style="margin-top:8px;">
+    <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:16%">涵蓋狀態</th></tr>
+    <tr>
+      <td>收益資本化率決定方法（估價六大必背核心之一）</td>
+      <td>⑩決定收益資本化率或折現率：五種方法</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 六大核心・十年全中</span></td>
+    </tr>
+    <tr>
+      <td>直接資本化法／DCF 計算</td>
+      <td>②兩大方法、③DCF精選題</td>
+      <td><span class="badge">初步比對（推論相關）</span></td>
+    </tr>
+    <tr>
+      <td>折舊提存費／提存率</td>
+      <td>⑧折舊提存費／提存率</td>
+      <td><span class="badge" style="background:#64748b;">查無直接證據</span></td>
+    </tr>
+  </table>
+  <div class="warn-box hi2">⚠️ 三列證據強度不同，優先順序以此為準：① 收益資本化率決定方法是研究確認「105–114 十年全數命中」的六大核心之一，證據最紮實，優先背誦；② 直接資本化法／DCF 計算沒有獨立考古題證據，只是與①同屬收益法計算核心而推論相關，證據較弱；③ 折舊提存費／提存率原本誤與②併列同一證據來源，經查證研究資料只找到「成本法折舊計算」（§65-68，屬 L4）被列為高頻考點，並無收益法本身折舊提存費／提存率的考古題證據支持，已拆分並如實標註。三項皆尚未逐年比對具體年份原文並插入 `.examhit` 標籤。⑧章節內「最愛考／冷門」等標籤是依老師上課逐字稿口述強調程度而來，非考古題研究結果，仍可參考。</div>
+</section>
 
 </body>
 </html>
