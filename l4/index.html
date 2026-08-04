@@ -159,6 +159,8 @@
     padding: 10px 16px; font-size: 14px; line-height: 1.6; color: var(--neutral);
   }
   .nested-label { font-size: 12.5px; font-weight: bold; color: var(--sub); margin-bottom: 6px; }
+  .sub-box { background: rgba(255,255,255,.65); border: 1px solid var(--line-strong); border-radius: 8px; padding: 7px 10px; margin-top: 8px; }
+  .sub-box-title { font-weight: bold; font-size: 13.5px; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
   .qa-item { padding: 8px 0; border-bottom: 1px solid var(--line); }
   .qa-item:last-child { border-bottom: none; }
   .qa-q { font-weight: bold; color: var(--ink); font-size: 14px; margin-bottom: 3px; }
@@ -203,27 +205,23 @@
 <!-- ① 成本法之意義 -->
 <section>
   <h2 class="sec-title">① 成本法之意義 <span class="law-tag hi">§48</span></h2>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">第一項｜定義</div>
-      <p>成本法指求取勘估標的於<b>價格日期</b>之<b>重建成本或重置成本</b>，扣減其<b>累積折舊額</b>或其他應扣除部分，以推算勘估標的價格之方法。</p>
-    </div>
-    <div class="card">
-      <div class="card-title">第二項｜成本價格</div>
-      <p>依前項方法所求得之價格，稱為<b>成本價格</b>（比較法→比較價格、收益法→收益價格、成本法→成本價格）。成本法主要用於估建物。</p>
-    </div>
+  <div class="card">
+    <div class="card-title">定義</div>
+    <p>成本法指求取勘估標的於<b>價格日期</b>之<b>重建成本或重置成本</b>，扣減其<b>累積折舊額</b>或其他應扣除部分，以推算勘估標的價格之方法。</p>
   </div>
+  <h3 class="sub-title">兩種成本</h3>
   <div class="grid-2" style="margin-top:10px;">
     <div class="card hi">
-      <div class="card-title">第四項｜重建成本 Reproduction Cost</div>
+      <div class="card-title">重建成本 Reproduction Cost</div>
       <p>使用與勘估標的<b>相同或極類似</b>之建材標準、設計配置及施工品質，於價格日期<b>重新複製</b>建築所需之成本。</p>
+      <div class="warn-box hi" style="margin-top:8px;">建物估價以求取重建成本為<b>原則</b>。</div>
     </div>
     <div class="card hi2">
-      <div class="card-title">第五項｜重置成本 Replacement Cost</div>
+      <div class="card-title">重置成本 Replacement Cost</div>
       <p>與勘估標的<b>相同效用</b>之建物，以<b>現代的建材標準</b>設計或配置，於價格日期建築所需之成本。</p>
+      <div class="warn-box hi2" style="margin-top:8px;">建物使用之材料目前已無生產，或施工方法已改變者，得採重置成本替代之（<b>例外</b>）。</div>
     </div>
   </div>
-  <div class="warn-box hi" style="margin-top:8px;">第三項：建物估價以求取<b>重建成本為原則</b>；但建物使用之材料目前已無生產，或施工方法已改變者，得採<b>重置成本替代之</b>（例外）。</div>
   <div class="example-box" style="margin-top:8px;">🌰 白話理解：老房子每個房間都要挖孔牽網路線——完全照原樣複製叫「重建成本」；但現在只要一台 WiFi 機就有相同效用，不用逐孔複製，這種「求效用相同、用現代標準」的算法叫「重置成本」。原則上以重建成本為原則，但實務上重置成本通常更省錢、更常用。</div>
 </section>
 
@@ -232,15 +230,15 @@
   <h2 class="sec-title"><span class="star">★★</span> ② 耐用年數與折舊種類 <span class="law-tag">§65</span></h2>
   <div class="grid-2">
     <div class="card hi">
-      <div class="card-title">經濟耐用年數（第二項）</div>
+      <div class="card-title">經濟耐用年數</div>
       <p>建物因<b>功能或效益衰退</b>至「<b>不值得使用</b>」所經歷之年數。例：透天雖然還能住，但土地拿去蓋大樓效益更高，就屬不值得繼續使用。</p>
     </div>
     <div class="card">
-      <div class="card-title">物理耐用年數（第三項）</div>
+      <div class="card-title">物理耐用年數</div>
       <p>建物因<b>自然耗損或外力破壞</b>至結構脆弱而「<b>不堪使用</b>」所經歷之年數。磚造、鋼筋混凝土、木屋的物理耐用年數本來就不同。</p>
     </div>
   </div>
-  <div class="info-box">第一項：折舊額計算<b>以經濟耐用年數為主</b>，必要時以物理耐用年數計算。第四項：建物<b>經歷年數大於經濟耐用年數</b>時（例：加強磚造原估 35 年，實際已用 45 年還很正常），做法是<b>重新調整經濟耐用年數</b>，而不是縮短經歷年數。</div>
+  <div class="info-box">折舊額計算<b>以經濟耐用年數為主</b>，必要時以物理耐用年數計算；建物<b>經歷年數大於經濟耐用年數</b>時（例：加強磚造原估 35 年，實際已用 45 年還很正常），做法是<b>重新調整經濟耐用年數</b>，而不是縮短經歷年數。</div>
 
   <h3 class="sub-title">折舊三種分類<span class="badge">條文無明文規定，但實務常考</span></h3>
   <div class="grid-3">
@@ -263,7 +261,7 @@
 <section>
   <h2 class="sec-title"><span class="star">★★★</span> ③ 殘餘價格率 Residual Value Rate <span class="law-tag hi">§67</span></h2>
   <div class="card hi">
-    <div class="card-title">第三項｜定義</div>
+    <div class="card-title">定義</div>
     <p>建物於<b>經濟耐用年數屆滿後</b>，其所剩餘之結構材料及內部設備，仍能於市場出售之價格，佔建物<b>總成本</b>之比率。</p>
   </div>
   <div class="formula-box hi" style="margin-top:10px;">
@@ -271,7 +269,7 @@
   </div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">第一項｜上限</div>
+      <div class="card-title">上限</div>
       <p>殘餘價格率由<b>全聯會公告</b>，並以<b>不超過 10%</b> 為限（木屋跟鋼筋混凝土的殘餘價格率當然不同）。</p>
     </div>
     <div class="card">
@@ -284,30 +282,30 @@
 
 <!-- ④ 成本法程序 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ④ 成本法程序 <span class="law-tag hi">§49</span> <span class="mnemo-char hi">收</span><span class="mnemo-char hi">況</span><span class="mnemo-char hi">調</span><span class="mnemo-char hi">選</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">總</span><span class="mnemo-char hi">累</span><span class="mnemo-char hi">計</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ④ 成本法程序 <span class="law-tag hi">§49</span>（口訣：收況調選推總累計）</h2>
   <div class="flow">
-    <div class="flow-step"><div class="flow-num">1</div><div class="flow-box"><span class="mnemo-char hi">收</span>集資料 <span class="law-tag">§50–§51</span></div></div>
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-box">收集資料 <span class="law-tag">§50–§51</span></div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><div class="flow-num">2</div><div class="flow-box"><span class="mnemo-char hi">況</span>現況勘察（條文無特別規定，把程序記熟即可）</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-box">現況勘察（條文無特別規定，把程序記熟即可）</div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><div class="flow-num">3</div><div class="flow-box"><span class="mnemo-char hi">調</span>查、整理、比較、分析各項成本及相關費用等資料 <span class="law-tag">§52</span></div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-box">調查、整理、比較、分析各項成本及相關費用等資料 <span class="law-tag">§52</span></div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><div class="flow-num">4</div><div class="flow-box"><span class="mnemo-char hi">選</span>擇適當方法推算<b>營造或施工費</b> <span class="law-tag">§53–§56</span></div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-box">選擇適當方法推算<b>營造或施工費</b> <span class="law-tag">§53–§56</span></div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><div class="flow-num">5</div><div class="flow-box"><span class="mnemo-char hi">推</span>算其他各項費用及利潤 <span class="law-tag">§57–§61</span></div></div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-box">推算其他各項費用及利潤 <span class="law-tag">§57–§61</span></div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><div class="flow-num">6</div><div class="flow-box"><span class="mnemo-char hi">總</span>計算<b>總成本</b> <span class="law-tag">§62–§64</span></div></div>
+    <div class="flow-step"><div class="flow-num">6</div><div class="flow-box">總計算<b>總成本</b> <span class="law-tag">§62–§64</span></div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step key"><div class="flow-num">7</div><div class="flow-box"><span class="mnemo-char hi">累</span>計算建物<b>累積折舊額</b> <span class="law-tag hi">§65–§68</span></div></div>
+    <div class="flow-step key"><div class="flow-num">7</div><div class="flow-box">累計算建物<b>累積折舊額</b> <span class="law-tag hi">§65–§68</span></div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step key"><div class="flow-num">8</div><div class="flow-box"><span class="mnemo-char hi">計</span>計算<b>成本價格</b> <span class="law-tag hi">§69</span></div></div>
+    <div class="flow-step key"><div class="flow-num">8</div><div class="flow-box">計算<b>成本價格</b> <span class="law-tag hi">§69</span></div></div>
   </div>
   <div class="info-box">📖 每個程序其實就是後面條文的骨架：先把「意義、重建/重置、耐用年數、折舊、殘餘價格率」等基礎觀念建立，剩下條文全在規定「收況調選推總累計」每一步驟的細項。架構清楚，成本法其實沒有想像中難。</div>
 </section>
 
 <!-- ⑤ 收集資料 -->
 <section>
-  <h2 class="sec-title">⑤ 收集資料（收） <span class="law-tag">§50</span> <span class="law-tag">§51</span></h2>
+  <h2 class="sec-title">⑤ 收集資料 <span class="law-tag">§50</span> <span class="law-tag">§51</span></h2>
   <div class="nested-label">§50：除依第 11 條規定收集資料外，另得視需要申請或收集下列資料——口訣「兩個書、三個圖、兩個照」</div>
   <div class="grid-3">
     <div class="card">
@@ -339,17 +337,17 @@
 
 <!-- ⑥ 計算總成本組成 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑥ 總成本組成（調） <span class="law-tag hi">§52</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑥ 總成本組成（調查、整理、比較、分析各項成本及相關費用等資料） <span class="law-tag hi">§52</span></h2>
   <div class="formula-box hi">總成本 ＝ <span class="mnemo-char hi">營</span> ＋ <span class="mnemo-char hi">規</span> ＋ <span class="mnemo-char hi">廣</span> ＋ <span class="mnemo-char hi">管</span> ＋ <span class="mnemo-char hi">稅</span> ＋ <span class="mnemo-char hi">資</span> ＋ <span class="mnemo-char hi">利</span></div>
   <div class="grid-2">
-    <div class="card"><p><b>第一項：</b>勘估標的之總成本應包括之各項成本及相關費用如上七款。</p></div>
-    <div class="card"><p><b>第二項：</b>勘估標的為土地或包含土地者，應加計價格日期當時之<b>土地價格</b>。<br><b>第三項：</b>計算過程應核實填寫於成本價格計算表內。</p></div>
+    <div class="card"><p>勘估標的之總成本應包括之各項成本及相關費用如上七款。</p></div>
+    <div class="card"><p>勘估標的為土地或包含土地者，應加計價格日期當時之<b>土地價格</b>。<br>計算過程應核實填寫於成本價格計算表內。</p></div>
   </div>
 </section>
 
 <!-- ⑦ 營造施工費 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑦ 營造施工費（選） <span class="law-tag hi">§53</span> <span class="law-tag">§54</span> <span class="law-tag">§55</span> <span class="law-tag">§56</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑦ 營造施工費（選擇適當方法推算） <span class="law-tag hi">§53</span> <span class="law-tag">§54</span> <span class="law-tag">§55</span> <span class="law-tag">§56</span></h2>
   <div class="nested-label">§53：營造或施工費項目——直接、間接之材料／人工費，加上「營之下」的管稅資利</div>
   <div class="grid-4">
     <div class="card hi2"><p>① 直接材料費　② 直接人工費<br>③ 間接材料費　④ 間接人工費</p></div>
@@ -358,82 +356,69 @@
     <div class="card hi"><p style="font-size:13px;">§54 先把方法分兩大類：<b>直接法</b>與<b>間接法</b>，各自再分兩種（見下方樹狀）。</p></div>
   </div>
 
-  <h3 class="sub-title">§54 方法分類：直接法 vs 間接法</h3>
+  <h3 class="sub-title">§54 方法分類 vs §55–56 各自兩種細分法</h3>
   <div class="grid-2">
     <div class="card">
       <div class="card-title">① 直接法</div>
       <p>就勘估標的構成部分或全體，調查其使用材料之<b>種類、品級、數量</b>及所需<b>勞力工別、時間</b>等，以價格日期之各種<b>單價</b>為基礎計算——土法煉鋼，每項都算清楚再乘單價。</p>
+      <div class="sub-box">
+        <div class="sub-box-title">淨計法 <span class="badge">必背</span></div>
+        <p>所需各種建築材料及人工<b>數量</b>，逐一乘以價格日期之單價、工資，並加計管稅資利——最精細、最繁瑣。</p>
+      </div>
+      <div class="sub-box">
+        <div class="sub-box-title">單位工程法</div>
+        <p>建築細部工程之各項目<b>單價</b>乘以該工程<b>施工數量</b>並合計之——比淨計法簡化，算到「項目」就好。</p>
+      </div>
     </div>
     <div class="card hi2">
       <div class="card-title">② 間接法</div>
       <p>同一供需圈內近鄰或類似地區中，選擇與勘估標的類似之<b>比較標的或標準建物</b>，經比較條件差異並作價格調整，以求取營造施工費——接近比較法概念，實務較常用。</p>
+      <div class="sub-box">
+        <div class="sub-box-title">工程造價比較法 <span class="badge">必背</span></div>
+        <p>按工程概算項目逐項比較勘估標的與比較標的／標準建物之差異，依工程價格及數量比率調整。</p>
+      </div>
+      <div class="sub-box">
+        <div class="sub-box-title">單位面積（體積）比較法 <span class="badge">最常用</span></div>
+        <p>以類似比較標的或標準建物之<b>單位面積營造施工費單價</b>為基礎，經比較調整後，乘以勘估標的<b>面積或體積總數</b>——最直觀、最方便。</p>
+      </div>
     </div>
   </div>
-
-  <h3 class="sub-title">§55 直接法的兩種（§55）／§56 間接法的兩種</h3>
-  <div class="grid-4">
-    <div class="card hi">
-      <div class="card-title">淨計法 <span class="badge">必背</span></div>
-      <p>所需各種建築材料及人工<b>數量</b>，逐一乘以價格日期之單價、工資，並加計管稅資利——最精細、最繁瑣。</p>
-    </div>
-    <div class="card">
-      <div class="card-title">單位工程法</div>
-      <p>建築細部工程之各項目<b>單價</b>乘以該工程<b>施工數量</b>並合計之——比淨計法簡化，算到「項目」就好。</p>
-    </div>
-    <div class="card hi">
-      <div class="card-title">工程造價比較法 <span class="badge">必背</span></div>
-      <p>按工程概算項目逐項比較勘估標的與比較標的／標準建物之差異，依工程價格及數量比率調整。</p>
-    </div>
-    <div class="card hi2">
-      <div class="card-title">單位面積（體積）比較法 <span class="badge">最常用</span></div>
-      <p>以類似比較標的或標準建物之<b>單位面積營造施工費單價</b>為基礎，經比較調整後，乘以勘估標的<b>面積或體積總數</b>——最直觀、最方便。</p>
-    </div>
-  </div>
-  <div class="info-box">§56 第二項：標準建物指按<b>營造或施工費標準</b>所營造或施工的建物。第三項：營造或施工費標準表由全聯會按主體構造及地區公告，未公告前依直轄市、縣（市）政府之地價調查用建築改良物標準單價表為準（冷門，看過即可）。</div>
+  <div class="info-box">§56 標準建物指按<b>營造或施工費標準</b>所營造或施工的建物；營造或施工費標準表由全聯會按主體構造及地區公告，未公告前依直轄市、縣（市）政府之地價調查用建築改良物標準單價表為準（冷門，看過即可）。</div>
 </section>
 
 <!-- ⑧ 推算其他各項費用及利潤 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑧ 其他各項費用及利潤（推） <span class="law-tag hi">§57</span> <span class="law-tag hi">§58</span> <span class="law-tag">§59</span> <span class="law-tag hi">§60</span> <span class="law-tag hi">§61</span></h2>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">規劃設計費 §57</div>
-      <p>按內政部<b>建築師酬金標準表</b>及直轄市／縣（市）政府<b>建造執照工程造價表</b>計算；或按<b>實際營造施工費 2%～3%</b> 推估（★最愛考）。</p>
-    </div>
-    <div class="card">
-      <div class="card-title">廣告、銷售、管理、稅捐 §61</div>
-      <p>應按<b>總成本</b>乘以相關費率計算，費率由全聯會第四號公報定期公告（⚠️ 是「總成本」，不是總銷售金額——下一堂土開法的基數才是總銷售金額，兩者要分清楚）。</p>
-    </div>
-  </div>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑧ 其他各項費用及利潤 <span class="law-tag hi">§57</span> <span class="law-tag hi">§58</span> <span class="law-tag">§59</span> <span class="law-tag hi">§60</span> <span class="law-tag hi">§61</span></h2>
 
   <table style="margin-top:8px;">
-    <tr><th>項目</th><th>費率（全聯會第四號公報）</th></tr>
-    <tr><td>廣告費、銷售費</td><td>總成本 × <b>3%～7%</b></td></tr>
-    <tr><td>管理費（含公共基金）</td><td>總成本 × <b>4%～5%</b></td></tr>
-    <tr><td>管理費（不含公共基金）</td><td>總成本 × <b>1.5%～3%</b></td></tr>
-    <tr><td>稅捐</td><td>總成本 × <b>0.5%～1.2%</b></td></tr>
+    <tr><th>項目</th><th>費率／計算方式</th></tr>
+    <tr><td>規劃設計費 §57</td><td>建築師酬金標準表／工程造價表；或實際營造施工費 × <b>2%～3%</b>（★最愛考）</td></tr>
+    <tr><td>廣告費、銷售費 §61</td><td>總成本 × <b>3%～7%</b></td></tr>
+    <tr><td>管理費（含公共基金）§61</td><td>總成本 × <b>4%～5%</b></td></tr>
+    <tr><td>管理費（不含公共基金）§61</td><td>總成本 × <b>1.5%～3%</b></td></tr>
+    <tr><td>稅捐 §61</td><td>總成本 × <b>0.5%～1.2%</b></td></tr>
   </table>
+  <div class="warn-box" style="margin-top:8px;">⚠️ §61 費率基數是「<b>總成本</b>」，不是總銷售金額——下一堂土開法的基數才是總銷售金額，兩者要分清楚。費率皆由全聯會第四號公報定期公告。</div>
 
   <div class="grid-2" style="margin-top:10px;">
     <div class="card hi">
       <div class="card-title">資本利息 §58</div>
-      <p>按<b>分期投入資本數額</b>及<b>資本使用年數</b>，按<b>自有資金</b>及<b>借貸資金分別計</b>（第一項）；比例依<b>銀行一般放款成數</b>定之。</p>
+      <p>按<b>分期投入資本數額</b>及<b>資本使用年數</b>，按<b>自有資金</b>及<b>借貸資金分別計</b>；比例依<b>銀行一般放款成數</b>定之。</p>
       <div class="formula-box hi" style="margin-top:6px; font-size:14.5px;">資本利息 ＝（營＋規＋廣＋管＋稅）× 利率</div>
       <p style="margin-top:4px;">§59：自有資金利率<b>不高於一年期定存、不低於活存</b>；借貸資金以<b>銀行短期放款利率</b>計算；<b>預售收入不計息</b>。</p>
     </div>
     <div class="card hi2">
       <div class="card-title">開發或建築利潤 §60</div>
-      <p>視工程規模、開發年數、經濟景氣等因素，按前述各項合計額乘以<b>適當利潤率</b>計算（第一項）。</p>
+      <p>視工程規模、開發年數、經濟景氣等因素，按前述各項合計額乘以<b>適當利潤率</b>計算。</p>
       <div class="formula-box hi2" style="margin-top:6px; font-size:14.5px;">開發利潤 ＝（營＋規＋廣＋管＋稅＋資）× 利潤率</div>
-      <p style="margin-top:4px;">⚠️ 跟資本利息公式只差一個「資」要不要加進去——資本利息不含資、開發利潤要把資也加進去。第三項：<b>建築工期</b>指自申請建造執照開始至建築完成達可交屋使用為止，<b>無間斷</b>所需之時間（跟下堂土開法比較會用到，先有印象）。</p>
+      <p style="margin-top:4px;">⚠️ 跟資本利息公式只差一個「資」要不要加進去——資本利息不含資、開發利潤要把資也加進去。<b>建築工期</b>指自申請建造執照開始至建築完成達可交屋使用為止，<b>無間斷</b>所需之時間（跟下堂土開法比較會用到，先有印象）。</p>
     </div>
   </div>
 </section>
 
 <!-- ⑨ 計算總成本例外情形 -->
 <section>
-  <h2 class="sec-title">⑨ 計算總成本之例外情形（總） <span class="law-tag">§62</span> <span class="law-tag hi">§63</span> <span class="law-tag">§64</span></h2>
+  <h2 class="sec-title">⑨ 計算總成本之例外情形 <span class="law-tag">§62</span> <span class="law-tag hi">§63</span> <span class="law-tag">§64</span></h2>
   <div class="grid-3">
     <div class="card">
       <div class="card-title">§62 得不予計入</div>
@@ -441,7 +426,7 @@
     </div>
     <div class="card hi">
       <div class="card-title">§63 未完工之建物</div>
-      <p>應依<b>實際完成部分</b>估價（★最愛考）；或以標準建物營造施工費標準表為基礎，參考<b>建物工程進度營造費用比例表</b>估算之（第二項：由全聯會公告）。</p>
+      <p>應依<b>實際完成部分</b>估價（★最愛考）；或以標準建物營造施工費標準表為基礎，參考<b>建物工程進度營造費用比例表</b>估算之（由全聯會公告）。</p>
     </div>
     <div class="card">
       <div class="card-title">§64 投資無正常報酬</div>
@@ -454,7 +439,7 @@
 <section>
   <h2 class="sec-title"><span class="star">★★★</span> ⑩ 累積折舊額三路徑（累｜計算題最難） <span class="law-tag hi">§68</span></h2>
   <div class="card hi">
-    <div class="card-title">第一項</div>
+    <div class="card-title">折舊方法選擇</div>
     <p>建物累積折舊額之計算，應視建物特性及市場動態，選擇<b>等數折舊、初期加速折舊或初期減速折舊</b>之折舊方法。</p>
   </div>
 
@@ -523,12 +508,12 @@
     <span><b>d</b>：定率法之折舊率</span>
     <span><b>i</b>：利率</span>
   </div>
-  <div class="info-box">§68 第二項：建物累積折舊額之計算，除考量物理與功能因素外，並得按個別建物之實際構成部分與使用狀態，考量經濟因素、觀察維修及整建情形，推估建物之<b>剩餘經濟耐用年數</b>，加計已經歷年數，求算耐用年數，並於估價報告書中<b>敘明</b>。</div>
+  <div class="info-box">§68 建物累積折舊額之計算，除考量物理與功能因素外，並得按個別建物之實際構成部分與使用狀態，考量經濟因素、觀察維修及整建情形，推估建物之<b>剩餘經濟耐用年數</b>，加計已經歷年數，求算耐用年數，並於估價報告書中<b>敘明</b>。</div>
 </section>
 
 <!-- ⑪ 計算成本價格 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑪ 計算成本價格（計） <span class="law-tag hi">§69</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑪ 計算成本價格 <span class="law-tag hi">§69</span></h2>
   <div class="grid-3">
     <div class="card">
       <div class="card-title">土地價格</div>
@@ -544,7 +529,7 @@
     </div>
   </div>
   <div class="warn-box hi" style="margin-top:8px;">⚠️ 題目常故意考「問累積折舊額」還是「問成本價格」——算累積折舊額直接回答就好；算成本價格要再拿建物總成本扣一次累積折舊額，不要少算一步。</div>
-  <div class="info-box">第二項：土地價格求取有困難者，得以<b>比較法或收益法</b>計算之，並於估價報告書中敘明；依比較法或收益法計算土地價格者，需考量土地部分「廣、管、稅、資、利」之合理性。<br>第三項：計算土地價格應考量以投入土地開發改良、因時間經過所造成之<b>減損</b>，並於土地總成本中扣除（建物叫「折舊」，土地叫「減損」，概念相同）。</div>
+  <div class="info-box">土地價格求取有困難者，得以<b>比較法或收益法</b>計算之，並於估價報告書中敘明；依比較法或收益法計算土地價格者，需考量土地部分「廣、管、稅、資、利」之合理性。<br>計算土地價格應考量以投入土地開發改良、因時間經過所造成之<b>減損</b>，並於土地總成本中扣除（建物叫「折舊」，土地叫「減損」，概念相同）。</div>
 </section>
 
 <!-- ⑫ 精選考古題示範 -->
