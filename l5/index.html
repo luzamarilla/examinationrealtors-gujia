@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>估價 L5｜土地開發分析法</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:#1e293b; --sub:#64748b; --line:#e2e8f0; --line-strong:#94a3b8;
+    --neutral:#334155; --neutral-bg:#f1f5f9;
+    --accent:#8B4438; --accent-bg:#F1E2DD;
+    --accent2:#9C7A34; --accent2-bg:#EFE6D0;
+  }
+  body {
+    font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    width: 1400px;
+    margin: 0 auto;
+    background: #f4f5f7;
+    color: var(--ink);
+    padding: 18px 28px 30px;
+  }
+  .page-header {
+    background: var(--ink);
+    color: white;
+    border-radius: 14px;
+    padding: 20px 30px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .page-header h1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+  .page-header .subtitle { font-size: 13.5px; opacity: .85; margin-top: 5px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 9px 18px;
+    text-align: center;
+    font-size: 12.5px;
+  }
+  .page-header .badge strong { font-size: 16px; display: block; }
+  .tip-banner {
+    background: var(--neutral-bg);
+    border: 2px solid var(--line-strong);
+    color: var(--neutral);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14.5px;
+    margin-bottom: 14px;
+    font-weight: bold;
+  }
+  section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  h2.sec-title {
+    font-size: 19px;
+    color: var(--ink);
+    border-left: 6px solid var(--ink);
+    padding-left: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2.sec-title .star { color: var(--accent); font-size: 14px; }
+  h3.sub-title { font-size: 15.5px; color: var(--ink); margin: 10px 0 6px; display:flex; align-items:center; gap:6px; }
+  .law-tag {
+    display: inline-block;
+    background: var(--neutral-bg);
+    color: var(--neutral);
+    border: 1px solid var(--line-strong);
+    font-size: 12.5px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-weight: bold;
+    margin: 2px 3px 2px 0;
+  }
+  .law-tag.hi { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+  .law-tag.hi2 { background: var(--accent2-bg); color: var(--accent2); border-color: var(--accent2); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 9px; }
+  .grid-7 { display: grid; grid-template-columns: repeat(7,1fr); gap: 7px; }
+  .card {
+    border-radius: 12px;
+    padding: 10px 13px;
+    border: 2px solid var(--line-strong);
+    background: #fff;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink);
+  }
+  .card p { font-size: 14px; line-height: 1.65; }
+  .card.hi { border-color: var(--accent); background: var(--accent-bg); }
+  .card.hi .card-title { color: var(--accent); }
+  .card.hi2 { border-color: var(--accent2); background: var(--accent2-bg); }
+  .card.hi2 .card-title { color: var(--accent2); }
+  .badge {
+    font-size: 11.5px;
+    background: var(--neutral);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
+  table th { background: var(--ink); color: #fff; padding: 7px 9px; text-align: left; }
+  table td { padding: 7px 9px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f9fafb; }
+  .mnemo-char {
+    display: inline-block;
+    min-width: 1.5em;
+    height: 1.5em;
+    line-height: 1.42em;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid var(--accent2);
+    background: var(--accent2-bg);
+    color: var(--accent2);
+    font-weight: 800;
+    margin: 0 1px;
+  }
+  .mnemo-char.hi { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+  .flow { display: flex; flex-direction: column; gap: 3px; }
+  .flow-step { display: flex; align-items: center; gap: 12px; }
+  .flow-num {
+    flex-shrink: 0; width: 28px; height: 28px;
+    background: var(--ink); color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 13.5px;
+  }
+  .flow-step.key .flow-num { background: var(--accent); }
+  .flow-box {
+    flex: 1; background: var(--neutral-bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 13px; font-size: 14px;
+  }
+  .flow-step.key .flow-box { background: var(--accent-bg); border-color: var(--accent); font-weight: bold; color: var(--accent); }
+  .flow-box .law-tag { margin-left: 6px; }
+  .flow-arrow { text-align: center; color: var(--sub); font-size: 15px; margin-left: 14px; }
+  .warn-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 14px; margin-top: 8px; font-weight: bold;
+  }
+  .warn-box.hi { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .warn-box.hi2 { background: var(--accent2-bg); border-color: var(--accent2); color: var(--accent2); }
+  .info-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 13.5px; margin-top: 8px;
+  }
+  .example-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); border-radius: 10px;
+    padding: 10px 16px; font-size: 14px; line-height: 1.6; color: var(--neutral);
+  }
+  .nested-label { font-size: 12.5px; font-weight: bold; color: var(--sub); margin-bottom: 6px; }
+  .qa-item { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .qa-item:last-child { border-bottom: none; }
+  .qa-q { font-weight: bold; color: var(--ink); font-size: 14px; margin-bottom: 3px; }
+  .qa-a { font-size: 13.5px; color: var(--neutral); line-height: 1.65; }
+
+  /* 直式分數 */
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
+  .frac .num { border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
+  .frac .den { padding-top: 2px; text-align: center; white-space: nowrap; }
+
+  /* 計算範例卡 */
+  .calc-card { background: var(--neutral-bg); border: 1.5px solid var(--line-strong); border-radius: 10px; padding: 10px 16px; margin-top: 8px; }
+  .calc-card .q { font-size: 14px; font-weight: bold; color: var(--ink); margin-bottom: 6px; }
+  .calc-card .steps { font-size: 13.5px; color: var(--neutral); line-height: 1.9; }
+  .calc-card .ans { display:inline-block; margin-top: 4px; background: var(--ink); color:#fff; padding: 2px 10px; border-radius: 6px; font-size: 13px; font-weight: bold; }
+
+  .formula-box {
+    background: var(--ink); color: #fff; border-radius: 10px; padding: 12px 18px;
+    font-size: 17px; text-align: center; margin: 8px 0; letter-spacing: 0.5px;
+  }
+  .formula-box.hi { background: var(--accent); }
+  .formula-box.hi2 { background: var(--accent2); }
+  .formula-note { font-size: 12.5px; color: var(--sub); margin-top: 4px; }
+  .var-list { display:flex; flex-wrap:wrap; gap: 6px 16px; font-size: 13px; color: var(--neutral); margin-top: 6px; }
+  .var-list b { color: var(--ink); }
+
+  .tag-src { display:inline-block; font-size:12px; padding:1px 7px; border-radius:6px; font-weight:bold; }
+  .tag-src.a { background: var(--neutral-bg); color: var(--neutral); }
+  .tag-src.c { background: var(--accent-bg); color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:5px;">114年 不動產經紀人考試｜不動產估價</div>
+    <h1>L5｜土地開發分析法</h1>
+    <div class="subtitle">不動產估價技術規則 §70–§81・依上課逐字稿＋講義校正</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>§70～§81</strong>核心條文</div>
+    <div class="badge"><strong>L5</strong>土地開發分析法</div>
+    <div class="badge"><strong>⭐⭐⭐⭐⭐</strong>開發分析價格公式最高頻</div>
+  </div>
+</div>
+
+<div class="tip-banner">📌 學過成本法再學土開法會「笑著學」——很多觀念重複，差異在於土開法的費率基數是「總銷售金額」而不是「總成本」。程序口訣「確調現估估選計」，最後計算公式 V＝S÷(1+R)÷(1+i)−(C+M) 好記又愛考，務必背起來。</div>
+
+<!-- ① 土地開發分析法之意義 -->
+<section>
+  <h2 class="sec-title">① 土地開發分析法之意義 <span class="law-tag hi">§70</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">定義</div>
+      <p>估算開發（或建築）後之<b>總銷售金額</b>，扣除開發期間之<b>直接成本、間接成本、資本利息、利潤</b>，回推<b>開發前之土地開發分析價格</b>。</p>
+    </div>
+    <div class="card hi">
+      <div class="card-title">建商思維</div>
+      <p>學這個方法時，用<b>建商的角色</b>去想會更好理解：我要開發一塊地，賣掉之後的總收入，扣掉蓋房子的成本、跟銀行借錢的利息、還有我自己要賺的利潤，剩下的才是這塊「地」原本值多少錢。</p>
+    </div>
+  </div>
+  <div class="example-box" style="margin-top:8px;">🌰 貴婦買包比喻：貴婦想賺錢，一定是<b>賣價 &gt; 進貨成本</b>。包包賣 80 萬、運費 10 萬、進貨成本 X，利潤 20 萬 → 80 − 10 − X＝20 → 移項後 X＝80 − 10 − 20＝<b>50 萬</b>。土開法的邏輯一模一樣：<b>總銷售金額 − 成本 − 利潤 ＝ 土地開發分析價格（未知數 X）</b>，只是把「進貨成本」換成「土地價格」而已。</div>
+</section>
+
+<!-- ② 程序 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ② 土開法之程序 <span class="law-tag hi">§71</span> <span class="mnemo-char hi">確</span><span class="mnemo-char hi">調</span><span class="mnemo-char hi">現</span><span class="mnemo-char hi">估</span><span class="mnemo-char hi">估</span><span class="mnemo-char hi">估</span><span class="mnemo-char hi">選</span><span class="mnemo-char hi">計</span></h2>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-box"><span class="mnemo-char hi">確</span>定土地開發內容及預期開發時間</div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-box"><span class="mnemo-char hi">調</span>查各項成本及相關費用，並蒐集市場行情等資料 <span class="law-tag">§72</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-box"><span class="mnemo-char hi">現</span>況勘察並進行環境發展程度之調查與分析 <span class="law-tag">§73</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-box"><span class="mnemo-char hi">估</span>算開發或建築後<b>可銷售之土地或建物面積</b> <span class="law-tag">§74</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-box"><span class="mnemo-char hi">估</span>算開發或建築後<b>總銷售金額</b> <span class="law-tag">§75</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step"><div class="flow-num">6</div><div class="flow-box"><span class="mnemo-char hi">估</span>算<b>各項成本及相關費用</b> <span class="law-tag">§76–§78</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step key"><div class="flow-num">7</div><div class="flow-box"><span class="mnemo-char hi">選</span>擇適當之<b>利潤率</b>及<b>資本利息綜合利率</b> <span class="law-tag hi">§78–§79</span></div></div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step key"><div class="flow-num">8</div><div class="flow-box"><span class="mnemo-char hi">計</span>算<b>土地開發分析價格</b> <span class="law-tag hi">§81</span></div></div>
+  </div>
+  <div class="info-box">📖 口訣共 8 字對應 8 個步驟（「估」出現三次：面積、總銷售金額、各項成本），跟成本法「收況調選推總累計」（8 字對 8 步）結構很像，都是先蒐集資料、再現場勘察、再一步步把金額推算出來。</div>
+</section>
+
+<!-- ③ 調查資料 -->
+<section>
+  <h2 class="sec-title">③ 調查各項成本及相關費用（調） <span class="law-tag hi">§72</span></h2>
+  <div class="nested-label">依土地開發分析法進行估價，除依第 11 條規定蒐集資料外，另得視需要蒐集下列土地及建物所需資料——口訣「兩書、兩圖、一照、營規廣管稅資利」</div>
+  <div class="grid-4">
+    <div class="card"><p><span class="mnemo-char">書</span> 開發構想計畫書、建照申請書</p></div>
+    <div class="card"><p><span class="mnemo-char">圖</span> 建築設計圖說、土地規劃配置圖說</p></div>
+    <div class="card"><p><span class="mnemo-char">照</span> 建造執照</p></div>
+    <div class="card hi"><p><span class="mnemo-char hi">營規廣管稅資利</span></p><p style="margin-top:4px;">營造或施工費資料／規劃設計廣告銷售管理稅捐等費用資料／資本利率／開發或建築利潤率</p></div>
+  </div>
+  <div class="warn-box" style="margin-top:8px;">⚠️ 跟成本法 §50「兩書三圖兩照」不同，土開法 §72 是「兩書＋兩圖＋一照」（開發構想計畫書、建照申請書算兩書；建造執照獨立算一照）＋「營規廣管稅資利」七字。<b>成本法</b>蒐集的是「蓋房子」要的資料，<b>土開法</b>蒐集的是「整個開發案」要的資料，範圍更大、偏向整案財務規劃，兩者分類方式不要搞混。</div>
+  <div class="info-box" style="margin-top:6px;">📌 發布單位別搞混：規劃設計費（§57）參考的「建造執照工程造價表」、成本法 §56 未公告前備用的「建築改良物標準單價表」，這兩張是<b>縣市政府</b>公告的；下面 §77 費率表、§82 全聯會公告一覽表（見⑭）才是<b>全聯會</b>公告的，來源不同。</div>
+</section>
+
+<!-- ④ 現況勘察 -->
+<section>
+  <h2 class="sec-title">④ 現況勘察並進行環境發展程度之調查與分析（現） <span class="law-tag hi">§73</span></h2>
+  <div class="grid-4">
+    <div class="card"><p>① 調查影響<b>總銷售金額、成本及費用</b>等因素</p></div>
+    <div class="card"><p>② 確認<b>工程進度、施工及環境狀況</b>並攝製必要照片或影像檔</p></div>
+    <div class="card"><p>③ <b>市場交易資料</b>之蒐集、調查</p></div>
+    <div class="card"><p>④ 週遭<b>土地、建物及公共設施</b>之開發程度</p></div>
+  </div>
+  <div class="example-box" style="margin-top:8px;">🌰 現況勘察要看得細：低窪地要算排水工程成本，山坡地要算擋土牆成本，這些沒在前期調查清楚，蓋到一半才發現，很可能就把利潤吃掉、甚至虧錢。</div>
+</section>
+
+<!-- ⑤ 估算可銷售面積 -->
+<section>
+  <h2 class="sec-title">⑤ 估算開發或建築後可銷售之土地或建物面積（估①） <span class="law-tag hi">§74</span></h2>
+  <div class="grid-2">
+    <div class="card hi">
+      <div class="card-title">已有建照</div>
+      <p>依<b>建造執照及建築設計圖說</b>，或<b>土地開發許可文件及規劃配置圖</b>計算面積。</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">未取得建照</div>
+      <p>應按相關法令規定下<b>最有效使用之狀況</b>，根據土地之<b>地形、地勢</b>並參酌<b>當地市場狀況</b>等因素估算其可銷售面積。</p>
+    </div>
+  </div>
+  <div class="info-box">可銷售面積之計算過程，應詳列計算式以便<b>校核</b>。</div>
+</section>
+
+<!-- ⑥ 估算總銷售金額 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★</span> ⑥ 估算開發或建築後總銷售金額（估②） <span class="law-tag hi">§75</span></h2>
+  <div class="formula-box hi">總銷售金額 ＝ 可銷售之土地或建物面積 × 推定之銷售單價</div>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card"><p>面積求出來後，直接乘以推定之銷售單價即可。</p></div>
+    <div class="card"><p>可銷售面積中各部分銷售單價不同時，應<b>詳列各部分面積及適用之單價</b>。</p></div>
+    <div class="card"><p>銷售單價應考量<b>價格日期當時銷售可實現之價值</b>，以<b>比較法或收益法</b>求取之。</p></div>
+  </div>
+</section>
+
+<!-- ⑦ 估算各項成本及相關費用 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑦ 估算各項成本及相關費用（估③） <span class="law-tag hi">§76</span> <span class="law-tag">§77</span> <span class="law-tag">§78</span></h2>
+  <div class="nested-label">§76：土地建築開發之直接成本、間接成本項目如下</div>
+  <div class="grid-2">
+    <div class="card hi2">
+      <div class="card-title">直接成本</div>
+      <p><span class="mnemo-char hi">營</span> 營造或施工費</p>
+    </div>
+    <div class="card">
+      <div class="card-title">間接成本</div>
+      <p><span class="mnemo-char hi">規</span> 規劃設計費　<span class="mnemo-char hi">廣</span> 廣告費、銷售費　<span class="mnemo-char hi">管</span> 管理費　<span class="mnemo-char hi">稅</span> 稅捐及其他負擔</p>
+    </div>
+  </div>
+
+  <div class="warn-box hi" style="margin-top:10px;">⚠️ 全科最容易混淆的地方：土開法 §77 費率基數是「<b>總銷售金額</b>」；成本法 §61 費率基數是「<b>總成本</b>」。兩者百分比區間數字完全一樣（同一份全聯會第四號公報），只有「乘的對象」不同，考選擇題常故意考這裡。</div>
+
+  <table style="margin-top:8px;">
+    <tr><th>項目</th><th style="width:64px;">依據</th><th>費率／說明</th></tr>
+    <tr><td>廣告費、銷售費</td><td style="color:var(--sub);font-size:13px;">§77</td><td>總銷售金額 × <b>3%～7%</b></td></tr>
+    <tr><td>管理費（含公共基金）</td><td style="color:var(--sub);font-size:13px;">§77</td><td>總銷售金額 × <b>4%～5%</b></td></tr>
+    <tr><td>管理費（不含公共基金）</td><td style="color:var(--sub);font-size:13px;">§77</td><td>總銷售金額 × <b>1.5%～3%</b></td></tr>
+    <tr><td>稅捐</td><td style="color:var(--sub);font-size:13px;">§77</td><td>總銷售金額 × <b>0.5%～1.2%</b></td></tr>
+    <tr style="background:var(--accent-bg);"><td>規劃設計費</td><td style="color:var(--sub);font-size:13px;">§57</td><td>① 內政部<b>建築師酬金標準表</b>／② 直轄市（縣）政府<b>建造執照工程造價表</b>／③ 實際營造施工費 × <b>2%～3%</b>（★最愛考）</td></tr>
+    <tr style="background:var(--accent-bg);"><td>開發或建築利潤</td><td style="color:var(--sub);font-size:13px;">§60</td><td>
+      <b style="color:var(--ink);">開發利潤 ＝（營＋規＋廣＋管＋稅）× 利潤率</b><br>
+      利潤率由全聯會公告；未公告者，依營造或建築業之<b>平均經營利潤率</b>
+    </td></tr>
+  </table>
+</section>
+
+<!-- ⑧ 選擇利潤率及資本利息綜合利率 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑧ 選擇適當之利潤率及資本利息綜合利率（選） <span class="law-tag hi">§78</span> <span class="law-tag hi">§79</span></h2>
+  <div class="card">
+    <div class="card-title">資本利息綜合利率公式</div>
+    <p>依 §58、§59 規定計算<b>資本利息年利率</b>後，再參考下列公式算出<b>綜合利率</b>：</p>
+  </div>
+  <div class="formula-box hi" style="margin-top:8px;">
+    資本利息綜合利率 ＝ 資本利息年利率 × [ <span class="frac"><span class="num">土地價值</span><span class="den">土地＋建物價值</span></span> × 1 ＋ <span class="frac"><span class="num">建物價值</span><span class="den">土地＋建物價值</span></span> × <span class="frac"><span class="num">1</span><span class="den">2</span></span> ] × 開發年數
+  </div>
+  <div class="example-box" style="margin-top:6px;">🌰 為什麼建物價值比率要乘以 1/2？因為建物不是一開始就蓋好的，是慢慢一層一層蓋起來的，資金投入是分批的，粗略打對折計算資本利息負擔。土地則是一開始就整筆買下，所以土地價值比率不用打折（× 1）。</div>
+
+  <div class="grid-2" style="margin-top:10px;">
+    <div class="card">
+      <div class="card-title">調整空間</div>
+      <p>勘估標的資本利息負擔特殊，或<b>土地取得後立即營造施工者</b>，前述公式中的<b>二分之一部分得調整計算</b>，並於估價報告書中<b>敘明</b>。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">建物價值怎麼算</div>
+      <p>建物價值比率之<b>建物價值</b>，得以<b>營造施工費加計規劃設計費</b>計算之。</p>
+    </div>
+  </div>
+
+  <div class="calc-card" style="margin-top:10px;">
+    <div class="q">精選題：資本利息年利率為 2%，土地價值：建物價值 ＝ 6：4，開發年數 3 年，資本利息綜合利率為？</div>
+    <div class="steps">
+      土地價值比率 0.6，建物價值比率 0.4（0.6＋0.4＝1）。<br>
+      資本利息綜合利率 ＝ 2% × (0.6 ＋ 0.4 × <span class="frac"><span class="num">1</span><span class="den">2</span></span>) × 3 ＝ 2% × 0.8 × 3
+    </div>
+    <span class="ans">套公式直接算到底就好，題目條件都會給齊，重點是不要漏乘開發年數，也不要忘記建物價值比率要先乘 1/2 再加進括號</span>
+  </div>
+
+  <div class="info-box" style="margin-top:8px;">變形考法：① 反過來給綜合利率、要你反推年利率——同一公式代入即可；② 土地、建物價值不直接給比例，而是給金額（如土地 800 萬、建物 1000 萬）——先加總（1800 萬）再各自求比例（800／1800、1000／1800）。</div>
+</section>
+
+<!-- ⑨ 開發年數 -->
+<section>
+  <h2 class="sec-title">⑨ 開發年數 vs 建築工期 <span class="law-tag hi">§80</span> <span class="law-tag">§60</span></h2>
+  <table>
+    <tr><th style="width:22%">名詞</th><th>定義</th><th style="width:16%">條文</th></tr>
+    <tr><td><b>開發年數</b></td><td>自<b>價格日期</b>起至<b>開發完成</b>為止，無間斷所需之時間。</td><td>§80</td></tr>
+    <tr><td><b>建築工期</b></td><td>自<b>申請建造執照</b>開始至<b>建築完成達可交屋使用</b>為止，無間斷所需之時間（成本法用語）。</td><td>§60</td></tr>
+  </table>
+  <div class="warn-box" style="margin-top:8px;">⚠️ 兩個名詞起點不同：開發年數從「價格日期」算起，建築工期從「申請建照」算起，選擇題常拿這兩個定義互換來考細節。</div>
+</section>
+
+<!-- ⑩ 計算土地開發分析價格 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑩ 計算土地開發分析價格（計） <span class="law-tag hi">§81</span></h2>
+  <div class="formula-box hi" style="font-size:20px;">V ＝ S ÷ (1＋R) ÷ (1＋i) − (C＋M)</div>
+  <div class="var-list">
+    <span><b>V</b>：土地開發分析價格</span>
+    <span><b>S</b>：開發建築後總銷售金額</span>
+    <span><b>R</b>：適當之利潤率</span>
+    <span><b>i</b>：開發建築所需總成本之資本利息綜合利率</span>
+    <span><b>C</b>：開發建築所需直接成本</span>
+    <span><b>M</b>：開發建築所需間接成本</span>
+  </div>
+  <div class="example-box" style="margin-top:8px;">🌰 記憶方式：跟①「貴婦買包」同一個邏輯——總銷售金額先扣掉利潤（除以 1+R）、再扣掉資本利息（除以 1+i），最後再減掉直接成本與間接成本，剩下的才是「這塊地」原本值多少錢。</div>
+
+  <div class="calc-card" style="margin-top:10px;">
+    <div class="q">精選題：小傑的建設公司預計投資開發一筆土地，預估未來總銷售金額為 100 億元；若直接成本為 10 億元、間接成本為 6 億元，整體投資案要求的利潤率為 20%，假設資本利息綜合利率是 10%，請問該土地的土地開發分析價格為何？</div>
+    <div class="steps">
+      V ＝ 100 億 ÷ (1＋20%) ÷ (1＋10%) − (10億＋6億)<br>
+      ＝ 100 ÷ 1.2 ÷ 1.1 − 16 億
+    </div>
+    <span class="ans">先除利潤率、再除資本利息綜合利率、最後才減直接＋間接成本，順序不能顛倒（跟成本法「先加後扣」的計算順序方向相反，要特別留意）</span>
+  </div>
+</section>
+
+<!-- ⑪ 跟成本法對照 -->
+<section>
+  <h2 class="sec-title">⑪ 與成本法對照速查</h2>
+  <table>
+    <tr><th style="width:20%">項目</th><th>成本法</th><th>土地開發分析法</th></tr>
+    <tr><td>看的時間點</td><td>看「現在」重蓋成本</td><td>看「未來」開發完賣掉的總收入</td></tr>
+    <tr><td>費率計算基數</td><td>總成本（§61）</td><td>總銷售金額（§77）</td></tr>
+    <tr><td>資本利息</td><td>年利率（§58）</td><td>綜合利率（含土建比例＋開發年數，§79）</td></tr>
+    <tr><td>利潤公式</td><td>（營規廣管稅<b>資</b>）× 利潤率</td><td>（營規廣管稅）× 利潤率（<b>資</b>另外用 §79 單獨算，不加在這裡）</td></tr>
+    <tr><td>程序口訣</td><td>收況調選推總累計（8字對8步）</td><td>確調現估估估選計（8字對8步，「估」重複三次）</td></tr>
+    <tr><td>核心公式方向</td><td>總成本 − 累積折舊額 ＝ 成本價格</td><td>總銷售金額先扣利潤、扣利息，再減成本 ＝ 分析價格</td></tr>
+  </table>
+</section>
+
+<!-- ⑫ 高頻考點速查卡 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑫ 高頻考點速查卡</h2>
+  <div class="qa-item">
+    <div class="qa-q">Q. 土開法程序口訣與對應條文？</div>
+    <div class="qa-a">確（§71）、調（§72）、現（§73）、估面積（§74）、估總銷售金額（§75）、估成本（§76–§78）、選利潤率及資本利息綜合利率（§78–§79）、計算土地開發分析價格（§81）。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. §77 與成本法 §61 費率基數的關鍵差異？</div>
+    <div class="qa-a">土開法以「<b>總銷售金額</b>」為基數；成本法以「<b>總成本</b>」為基數。百分比區間數字一致（3%～7%／4%～5%或1.5%～3%／0.5%～1.2%），但乘的對象不同，是本堂最愛考的陷阱。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 資本利息綜合利率公式中，為什麼建物價值比率要乘 1/2？</div>
+    <div class="qa-a">因為建物是分階段慢慢蓋起來的，資金不是一次全部投入，粗略打對折計算利息負擔；土地是一開始整筆取得，比率不需打折（× 1）。特殊情況（資本利息負擔特殊、或取得土地後立即施工）下，這個 1/2 還可以再調整，並要在估價報告書敘明。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 建物價值比率中的「建物價值」怎麼求？</div>
+    <div class="qa-a">依 §79，得以<b>營造施工費加計規劃設計費</b>計算之。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 開發年數與建築工期怎麼分？</div>
+    <div class="qa-a"><b>開發年數</b>（§80）：價格日期至開發完成為止。<b>建築工期</b>（§60，成本法用語）：申請建造執照開始至可交屋使用為止。起點不同，考試常互換考細節。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 土地開發分析價格公式的計算順序？</div>
+    <div class="qa-a">V ＝ S ÷ (1＋R) ÷ (1＋i) − (C＋M)：先除利潤率、再除資本利息綜合利率，最後才減直接成本與間接成本，順序不能顛倒。</div>
+  </div>
+</section>
+
+<!-- ⑬ 考古題對應 -->
+<section>
+  <h2 class="sec-title">⑬ 考古題對應</h2>
+  <div class="info-box">
+    📋 資料來源：陳國全國補習班 105–114 年（近 10 年）不動產估價概要考題解答 PDF，逐年逐題完整查證（2026-08-14）。完整逐年逐題明細見 <code>不動產估價\估價L1-L7_考古題深查.md</code>。
+  </div>
+  <table style="margin-top:8px;">
+    <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:16%">涵蓋狀態</th></tr>
+    <tr>
+      <td>土地開發分析價格公式計算（V＝S÷(1+R)÷(1+i)−(C+M)）</td>
+      <td>⑩計算土地開發分析價格</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 十年約8年出現，最核心計算題</span></td>
+    </tr>
+    <tr>
+      <td>資本利息綜合利率公式計算（含正反推）</td>
+      <td>⑧選擇適當之利潤率及資本利息綜合利率</td>
+      <td><span class="badge">中高頻（約6年）</span></td>
+    </tr>
+    <tr>
+      <td>土地開發分析法程序「確調現估估估選計」八步驟</td>
+      <td>②土開法之程序</td>
+      <td><span class="badge">申論常考（106/113申論）</span></td>
+    </tr>
+    <tr>
+      <td>蒐集資料（§72，七款土地建物資料）</td>
+      <td>③調查各項成本及相關費用（調）</td>
+      <td><span class="badge">申論出現（109申論）</span></td>
+    </tr>
+    <tr>
+      <td>間接成本項目判斷（規劃設計／廣告銷售／管理／稅捐）</td>
+      <td>⑦估算各項成本及相關費用（估③）</td>
+      <td><span class="badge">中頻（112）</span></td>
+    </tr>
+    <tr>
+      <td>現況勘察與環境發展程度調查</td>
+      <td>④現況勘察並進行環境發展程度之調查與分析（現）</td>
+      <td><span class="badge">出現（111）</span></td>
+    </tr>
+    <tr>
+      <td>費率基數辨析（總銷售金額 vs 總成本）</td>
+      <td>⑦估算各項成本及相關費用、⑪與成本法對照速查</td>
+      <td><span class="badge">已涵蓋</span></td>
+    </tr>
+  </table>
+  <div class="warn-box hi2" style="margin-top:8px;">⚠️ L5 因條文數本來就少，每年出現 1–2 題屬正常密度（不是查無命中），本次逐年查證確認十年幾乎全中，公式計算題是最穩定的必考題型。</div>
+</section>
+
+<!-- ⑭ 全聯會公告一覽表 -->
+<section>
+  <h2 class="sec-title">⑭ 全聯會公告一覽表 <span class="law-tag hi">§82</span></h2>
+  <p style="font-size:13.5px; color:var(--sub); margin-bottom:8px;">成本法、土開法散落各條文的「全聯會公告」項目，§82 統一列了一份清單，這裡整合成本法（L4）、土開法（L5）實際教過的位置，方便對照：</p>
+  <table>
+    <tr><th style="width:220px;">項目</th><th style="width:110px;">法條</th><th>本堂對照／出處</th></tr>
+    <tr><td>營造或施工費標準表</td><td style="color:var(--sub);font-size:13px;">§56</td><td><span class="tag-src a">全聯會</span> 成本法 §53–§56（本堂土開法未重複列）</td></tr>
+    <tr><td>廣、管、稅之相關費率</td><td style="color:var(--sub);font-size:13px;">§61＆§77</td><td><span class="tag-src a">全聯會第四號公報</span> 成本法 §61 基數＝總成本／土開法 §77 基數＝總銷售金額（見⑦節對照）</td></tr>
+    <tr><td>利潤率</td><td style="color:var(--sub);font-size:13px;">§60＆§78</td><td><span class="tag-src a">全聯會</span> 成本法 §60／土開法 §78，未公告者依營造或建築業平均經營利潤率</td></tr>
+    <tr><td>建物工程進度營造費用比例表</td><td style="color:var(--sub);font-size:13px;">§63</td><td><span class="tag-src a">全聯會</span> 成本法 §63，未完工建物估價用（★最愛考）</td></tr>
+    <tr><td>建物經濟耐用年數表</td><td style="color:var(--sub);font-size:13px;">§66</td><td><span class="tag-src a">全聯會</span> 成本法折舊計算用</td></tr>
+    <tr><td>建物之殘餘價格率</td><td style="color:var(--sub);font-size:13px;">§67</td><td><span class="tag-src a">全聯會</span> 成本法 §67，不超過 10% 為限</td></tr>
+    <tr><td>＊樓層別效用比</td><td style="color:var(--sub);font-size:13px;">§98</td><td><span class="tag-src c">非本堂</span> 屬區分所有建物（公寓大廈）估價，在後面 L6 宗地房地權利估價才會用到</td></tr>
+  </table>
+  <div class="warn-box hi" style="margin-top:10px;">⚠️ 別搞混發布單位：上表 6 項都是「全聯會」公告；但規劃設計費（§57）參考的「建造執照工程造價表」、成本法（§56）未公告前備用的「建築改良物標準單價表」，這兩張是<b>縣市政府</b>公告的，不是全聯會，來源不同，考選擇題常故意問「這是誰公告的」。</div>
+</section>
+
+</body>
+</html>

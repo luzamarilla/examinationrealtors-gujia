@@ -20,22 +20,26 @@
     color: var(--ink);
     padding: 18px 28px 30px;
   }
-  h1.page-title {
-    font-size: 28px;
-    color: #fff;
+  .page-header {
     background: var(--ink);
-    padding: 13px 22px;
+    color: white;
     border-radius: 14px;
+    padding: 20px 30px;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  h1.page-title .sub {
-    font-size: 14px;
-    font-weight: normal;
-    opacity: 0.9;
+  .page-header h1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+  .page-header .subtitle { font-size: 13.5px; opacity: .85; margin-top: 5px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 9px 18px;
+    text-align: center;
+    font-size: 12.5px;
   }
+  .page-header .badge strong { font-size: 16px; display: block; }
   .tip-banner {
     background: var(--neutral-bg);
     border: 2px solid var(--line-strong);
@@ -195,10 +199,18 @@
 </head>
 <body>
 
-<h1 class="page-title">
-  估價 L4｜成本法
-  <span class="sub">不動產估價技術規則 §48–§69・依上課逐字稿＋講義校正</span>
-</h1>
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:5px;">114年 不動產經紀人考試｜不動產估價</div>
+    <h1>L4｜成本法</h1>
+    <div class="subtitle">不動產估價技術規則 §48–§69・依上課逐字稿＋講義校正</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>§48～§69</strong>核心條文</div>
+    <div class="badge"><strong>L4</strong>成本法</div>
+    <div class="badge"><strong>⭐⭐⭐⭐⭐</strong>折舊計算最高頻</div>
+  </div>
+</div>
 
 <div class="tip-banner">📌 比較法看過去、收益法看未來，成本法看「現在」——重蓋一次要花多少錢，再扣掉屋齡帶來的折舊，就是現在的成本價格。程序口訣「收況調選推總累計」是本堂骨架，「累」（累積折舊額）是計算題最難、也最愛考的一段。</div>
 
@@ -596,17 +608,52 @@
 <section>
   <h2 class="sec-title">⑭ 考古題對應</h2>
   <div class="info-box">
-    📋 資料來源：105–114 年近 10 年四科考古題重點清單研究（`四科考古題重點清單_近10年.html`）。估價科「成本法折舊計算」為六大必背核心之一，105–114 十年全數命中；目前該清單僅記錄到主題層級（pillar），尚未展開逐年具體題目內容，之後如需補充個別年份例題，需另外查證考選部或補習班題解。
+    📋 資料來源：陳國全國補習班 105–114 年（近 10 年）不動產估價概要考題解答 PDF，逐年逐題完整查證（2026-08-14）。完整逐年逐題明細見 <code>不動產估價\估價L1-L7_考古題深查.md</code>。
   </div>
   <table style="margin-top:8px;">
     <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:16%">涵蓋狀態</th></tr>
     <tr>
-      <td>成本法折舊計算（六大核心之一，105–114 十年全數命中）</td>
+      <td>折舊計算（等速折舊／定額法為主，含定率法、償還基金法）</td>
       <td>⑩累積折舊額三路徑、⑪計算成本價格、⑫精選考古題示範</td>
-      <td><span class="badge">已涵蓋（觀念＋公式）</span></td>
+      <td><span class="badge" style="background:var(--accent);">✓ 六大核心・十年幾乎全中</span></td>
+    </tr>
+    <tr>
+      <td>重建成本 vs 重置成本定義區分</td>
+      <td>①成本法之意義</td>
+      <td><span class="badge">高頻（約8年，常考定義互換陷阱）</span></td>
+    </tr>
+    <tr>
+      <td>建物殘餘價格率規定（不超過10%為原則，§67）</td>
+      <td>③殘餘價格率</td>
+      <td><span class="badge">中高頻</span></td>
+    </tr>
+    <tr>
+      <td>耐用年數（經濟耐用年數為主，§65）</td>
+      <td>②耐用年數與折舊種類</td>
+      <td><span class="badge">中高頻</span></td>
+    </tr>
+    <tr>
+      <td>營造施工費四方法（淨計法／單位工程法／工程造價比較法／單位面積比較法）</td>
+      <td>⑦營造施工費</td>
+      <td><span class="badge">中高頻，常考方法名稱與敘述配對</span></td>
+    </tr>
+    <tr>
+      <td>成本法估價程序「收況調選推總累計」八步驟與所需資料</td>
+      <td>④成本法程序、⑤收集資料</td>
+      <td><span class="badge">申論常考（107/111申論）</span></td>
+    </tr>
+    <tr>
+      <td>資本利息計算規則（自有／借款／預售收入利率規則）</td>
+      <td>⑧其他各項費用及利潤</td>
+      <td><span class="badge">中頻（109/112）</span></td>
+    </tr>
+    <tr>
+      <td>總成本例外規定（未完工建物、開發利潤得不予計入）</td>
+      <td>⑨計算總成本之例外情形</td>
+      <td><span class="badge">中頻（105/109/110）</span></td>
     </tr>
   </table>
-  <div class="warn-box hi2" style="margin-top:8px;">⚠️ 逐字稿本堂僅示範定額法（等數折舊）完整計算，定律法（初期加速）雖有公式與「暴力解」說明，但未給出完整數字算例；償債基金法（初期減速）逐字稿明確表示近十年考計算機率極低，只需背誦公式與定義。之後若查到定律法／償債基金法的具體考古題例證，可再補進本節。</div>
+  <div class="warn-box hi2" style="margin-top:8px;">⚠️ 逐字稿本堂僅示範定額法（等速折舊）完整計算，定率法（初期加速）雖有公式與「暴力解」說明，但未給出完整數字算例；償債基金法（初期減速）逐字稿明確表示近十年考計算機率極低，只需背誦公式與定義。本次查證確認 111 年申論一實際考過三種折舊路徑公式（定額法／定率法／償還基金法）並要求計算，屬近年新出現的整合題型，值得留意。</div>
 </section>
 
 </body>

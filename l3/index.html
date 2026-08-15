@@ -20,22 +20,26 @@
     color: var(--ink);
     padding: 18px 28px 30px;
   }
-  h1.page-title {
-    font-size: 28px;
-    color: #fff;
+  .page-header {
     background: var(--ink);
-    padding: 13px 22px;
+    color: white;
     border-radius: 14px;
+    padding: 20px 30px;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  h1.page-title .sub {
-    font-size: 14px;
-    font-weight: normal;
-    opacity: 0.9;
+  .page-header h1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+  .page-header .subtitle { font-size: 13.5px; opacity: .85; margin-top: 5px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 9px 18px;
+    text-align: center;
+    font-size: 12.5px;
   }
+  .page-header .badge strong { font-size: 16px; display: block; }
   .tip-banner {
     background: var(--neutral-bg);
     border: 2px solid var(--line-strong);
@@ -181,10 +185,18 @@
 </head>
 <body>
 
-<h1 class="page-title">
-  估價 L3｜收益法
-  <span class="sub">不動產估價技術規則 §28–§47・依上課逐字稿（完整版 43,102 字）＋講義校正</span>
-</h1>
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:5px;">114年 不動產經紀人考試｜不動產估價</div>
+    <h1>L3｜收益法</h1>
+    <div class="subtitle">不動產估價技術規則 §28–§47・依上課逐字稿（完整版 43,102 字）＋講義校正</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>§28～§47</strong>核心條文</div>
+    <div class="badge"><strong>L3</strong>收益法</div>
+    <div class="badge"><strong>⭐⭐⭐⭐⭐</strong>收益資本化率決定法最高頻</div>
+  </div>
+</div>
 
 <div class="tip-banner">📌 收益法看的是「未來能幫你賺多少錢」，公式其實都是 P＝A/R 的變形。真正的難點只有兩處：折舊提存費／提存率的四個公式，以及決定收益資本化率的五種方法。把這兩塊拆清楚背熟，題目考得很直觀，不會考證明推導。</div>
 
@@ -482,27 +494,47 @@
 <section>
   <h2 class="sec-title">⑬ 考古題對應</h2>
   <div class="info-box">
-    📋 資料來源：105–114 年近 10 年四科考古題重點清單研究（`四科考古題重點清單_近10年.html`，Artifact `9478fc98`）。
+    📋 資料來源：陳國全國補習班 105–114 年（近 10 年）不動產估價概要考題解答 PDF，逐年逐題完整查證（2026-08-14，本堂為此次首次真正逐年查證）。完整逐年逐題明細見 <code>不動產估價\估價L1-L7_考古題深查.md</code>。
   </div>
   <table style="margin-top:8px;">
     <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:16%">涵蓋狀態</th></tr>
     <tr>
-      <td>收益資本化率決定方法（估價六大必背核心之一）</td>
+      <td>收益資本化率五種決定方法（風險溢酬法／市場萃取法／加權平均資金成本法／債務保障比率法／有效總收入乘數法）</td>
       <td>⑩決定收益資本化率或折現率：五種方法</td>
-      <td><span class="badge" style="background:var(--accent);">✓ 六大核心・十年全中</span></td>
+      <td><span class="badge" style="background:var(--accent);">✓ 六大核心・十年幾乎全中</span></td>
     </tr>
     <tr>
-      <td>直接資本化法／DCF 計算</td>
+      <td>不動產證券化 DCF／直接資本化法權重規則</td>
       <td>②兩大方法、③DCF精選題</td>
-      <td><span class="badge">初步比對（推論相關）</span></td>
+      <td><span class="badge">中高頻（108/109/110/111/113）</span></td>
     </tr>
     <tr>
-      <td>折舊提存費／提存率</td>
-      <td>⑧折舊提存費／提存率</td>
-      <td><span class="badge" style="background:#64748b;">查無直接證據</span></td>
+      <td>直接資本化法定義與公式（P=A/R，§29–30，陷阱：未來非過去平均一年）</td>
+      <td>②兩大方法</td>
+      <td><span class="badge">高頻（約8年）</span></td>
+    </tr>
+    <tr>
+      <td>折舊提存費／提存率四公式（§40、40-1）</td>
+      <td>⑧推算總費用（二）：折舊提存費／提存率</td>
+      <td><span class="badge">中高頻（105/106/107/108/109）</span></td>
+    </tr>
+    <tr>
+      <td>三大貢獻說（土地／建物／房地）與收益價格公式</td>
+      <td>⑪計算收益價格：土地／建物／房地</td>
+      <td><span class="badge">多年出現</span></td>
+    </tr>
+    <tr>
+      <td>收益法總費用項目與淨收益計算（陷阱：不含土地增值稅／貸款支出）</td>
+      <td>⑦推算總費用（一）、⑨計算淨收益</td>
+      <td><span class="badge">多年出現</span></td>
+    </tr>
+    <tr>
+      <td>收益法估價程序「收推推計決計」六步驟</td>
+      <td>⑤收益法估價程序口訣</td>
+      <td><span class="badge">申論常考（107申論）</span></td>
     </tr>
   </table>
-  <div class="warn-box hi2">⚠️ 三列證據強度不同，優先順序以此為準：① 收益資本化率決定方法是研究確認「105–114 十年全數命中」的六大核心之一，證據最紮實，優先背誦；② 直接資本化法／DCF 計算沒有獨立考古題證據，只是與①同屬收益法計算核心而推論相關，證據較弱；③ 折舊提存費／提存率原本誤與②併列同一證據來源，經查證研究資料只找到「成本法折舊計算」（§65-68，屬 L4）被列為高頻考點，並無收益法本身折舊提存費／提存率的考古題證據支持，已拆分並如實標註。三項皆尚未逐年比對具體年份原文並插入 `.examhit` 標籤。⑧章節內「最愛考／冷門」等標籤是依老師上課逐字稿口述強調程度而來，非考古題研究結果，仍可參考。</div>
+  <div class="warn-box hi2">⚠️ 本次逐年查證確認：①收益資本化率五種方法「十年幾乎全中」的舊判斷屬實，證據最紮實，優先背誦；②折舊提存費／提存率**推翻**先前「查無直接證據」的判斷——實際上 105、106、107、108、109 年都有直接命中，已改標記並補充年份。⑧章節內「最愛考／冷門」等標籤是依老師上課逐字稿口述強調程度而來，跟本次考古題查證結果方向一致。</div>
 </section>
 
 </body>

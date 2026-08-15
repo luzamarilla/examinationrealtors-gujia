@@ -20,22 +20,26 @@
     color: var(--ink);
     padding: 22px 32px 36px;
   }
-  h1.page-title {
-    font-size: 30px;
-    color: #fff;
+  .page-header {
     background: var(--ink);
-    padding: 16px 24px;
+    color: white;
     border-radius: 14px;
+    padding: 24px 34px;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  h1.page-title .sub {
-    font-size: 15px;
-    font-weight: normal;
-    opacity: 0.9;
+  .page-header h1 { font-size: 28px; font-weight: 900; letter-spacing: 1px; }
+  .page-header .subtitle { font-size: 14px; opacity: .85; margin-top: 5px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 9px 18px;
+    text-align: center;
+    font-size: 12.5px;
   }
+  .page-header .badge strong { font-size: 17px; display: block; }
   .tip-banner {
     background: var(--neutral-bg);
     border: 2px solid var(--line-strong);
@@ -178,10 +182,18 @@
 </head>
 <body>
 
-<h1 class="page-title">
-  估價 L1｜總則＋估價作業程序
-  <span class="sub">不動產估價技術規則 §1–§17・依上課逐字稿＋講義校正</span>
-</h1>
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:5px;">114年 不動產經紀人考試｜不動產估價</div>
+    <h1>L1｜總則＋估價作業程序</h1>
+    <div class="subtitle">不動產估價技術規則 §1–§17・依上課逐字稿＋講義校正</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>§1～§17</strong>核心條文</div>
+    <div class="badge"><strong>L1</strong>總則・估價作業程序</div>
+    <div class="badge"><strong>⭐⭐⭐⭐⭐</strong>價格種類・估價原則最高頻</div>
+  </div>
+</div>
 
 <div class="tip-banner">📌 這科全範圍僅 134 條，前三章（總則／作業程序／比較法）年年必考，條文白話、投資報酬率高，務必背熟用字。</div>
 
@@ -575,22 +587,47 @@
 <section>
   <h2 class="sec-title">⑧ 考古題對應</h2>
   <div class="info-box">
-    📋 資料來源：110–114 年近 5 年四科考古題重點清單研究（2026-07-10 彙整）。原始逐年逐題清單的 Artifact 網址後來被覆蓋成別的內容，目前只保留得下這份文字摘要，沒有逐年出處可查，先如實標註。
+    📋 資料來源：陳國全國補習班 105–114 年（近 10 年）不動產估價概要考題解答 PDF，逐年逐題完整查證（2026-08-14）。完整逐年逐題明細見 <code>不動產估價\估價L1-L7_考古題深查.md</code>。
   </div>
   <table style="margin-top:10px;">
     <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:16%">涵蓋狀態</th></tr>
     <tr>
-      <td>一般／區域／個別因素辨識</td>
-      <td>②用詞定義（第 14–16 款）、③總則其餘條文</td>
-      <td><span class="badge">已涵蓋</span></td>
+      <td>價格種類判斷（正常／限定／特定／特殊價格）</td>
+      <td>②用詞定義（第 1–6 款）</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 十年幾乎全中</span></td>
     </tr>
     <tr>
-      <td>價格種類辨識（正常／限定／特定／特殊）</td>
-      <td>②用詞定義（第 1–6 款）</td>
-      <td><span class="badge">已涵蓋</span></td>
+      <td>12 個不動產估價經濟原則（外部性／貢獻／適合／變動為主）</td>
+      <td>④不動產估價之經濟原則</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 十年幾乎全中</span></td>
+    </tr>
+    <tr>
+      <td>一般／區域／個別因素辨識</td>
+      <td>②用詞定義（第 14–16 款）、③總則其餘條文</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 十年幾乎全中</span></td>
+    </tr>
+    <tr>
+      <td>最有效使用原則（陷阱：通常使用能力，非超凡意識）</td>
+      <td>②用詞定義（§2(17)）</td>
+      <td><span class="badge">多次出現</span></td>
+    </tr>
+    <tr>
+      <td>估價方法選取原則（§14 兼採二法／權重規則）</td>
+      <td>⑥各程序詳解</td>
+      <td><span class="badge">中高頻（108/109/111/113/114）</span></td>
+    </tr>
+    <tr>
+      <td>估價作業程序 8 步驟與基本事項</td>
+      <td>⑤估價作業程序總覽</td>
+      <td><span class="badge">中頻（105/108/109/111/114）</span></td>
+    </tr>
+    <tr>
+      <td>蒐集比較實例原則（§12，常與 L2 混合出題）</td>
+      <td>⑥各程序詳解</td>
+      <td><span class="badge">中頻（106/107/108）</span></td>
     </tr>
   </table>
-  <div class="warn-box hi2" style="margin-top:10px;">⚠️ 這兩項是估價科「不分堂次、反覆考」的必背核心之一，不是 L1 專屬考點；比較法調整計算、成本法折舊、收益資本化率、土地開發分析法等其他必考重點屬於後面堂次（L2–L5），不在本堂筆記範圍內。</div>
+  <div class="warn-box hi2" style="margin-top:10px;">⚠️ 價格種類辨識、一般／區域／個別因素判斷是估價科「不分堂次、反覆考」的必背核心，不是 L1 專屬考點；比較法調整計算、成本法折舊、收益資本化率、土地開發分析法等其他必考重點屬於後面堂次（L2–L5），不在本堂筆記範圍內。另外查到 106 年考過「不動產價值定義（保險價值／營運價值／市場價值／公允價值）」這組專有名詞，L1–L7 現有筆記完全沒涵蓋，屬於真正的知識缺口，之後可考慮補充。</div>
 </section>
 
 </body>

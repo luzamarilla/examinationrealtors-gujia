@@ -20,22 +20,26 @@
     color: var(--ink);
     padding: 18px 28px 30px;
   }
-  h1.page-title {
-    font-size: 28px;
-    color: #fff;
+  .page-header {
     background: var(--ink);
-    padding: 13px 22px;
+    color: white;
     border-radius: 14px;
+    padding: 20px 30px;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  h1.page-title .sub {
-    font-size: 14px;
-    font-weight: normal;
-    opacity: 0.9;
+  .page-header h1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+  .page-header .subtitle { font-size: 13.5px; opacity: .85; margin-top: 5px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 9px 18px;
+    text-align: center;
+    font-size: 12.5px;
   }
+  .page-header .badge strong { font-size: 16px; display: block; }
   .tip-banner {
     background: var(--neutral-bg);
     border: 2px solid var(--line-strong);
@@ -181,10 +185,18 @@
 </head>
 <body>
 
-<h1 class="page-title">
-  估價 L2｜比較法
-  <span class="sub">不動產估價技術規則 §18–§27・依上課逐字稿＋講義校正</span>
-</h1>
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:5px;">114年 不動產經紀人考試｜不動產估價</div>
+    <h1>L2｜比較法</h1>
+    <div class="subtitle">不動產估價技術規則 §18–§27・依上課逐字稿＋講義校正</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>§18～§27</strong>核心條文</div>
+    <div class="badge"><strong>L2</strong>比較法</div>
+    <div class="badge"><strong>⭐⭐⭐⭐⭐</strong>調整限制門檻最高頻</div>
+  </div>
+</div>
 
 <div class="tip-banner">📌 比較法是三大估價法中最好掌握、最直觀的方法，計算不需要計算機，用手算即可。核心口訣「蒐選對比計決」務必背熟，是本堂程序的骨架。</div>
 
@@ -424,22 +436,47 @@
 <section>
   <h2 class="sec-title">⑪ 考古題對應</h2>
   <div class="info-box">
-    📋 資料來源：105–114 年近 10 年四科考古題重點清單研究（`四科考古題重點清單_近10年.html`）。
+    📋 資料來源：陳國全國補習班 105–114 年（近 10 年）不動產估價概要考題解答 PDF，逐年逐題完整查證（2026-08-14）。完整逐年逐題明細見 <code>不動產估價\估價L1-L7_考古題深查.md</code>。
   </div>
   <table style="margin-top:8px;">
     <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:16%">涵蓋狀態</th></tr>
     <tr>
-      <td>比較法調整計算（六大核心之一，105–114 十年全數命中）</td>
-      <td>⑦調整方法與限制、⑧試算價格與決定比較價格、⑨精選考古題示範</td>
-      <td><span class="badge">已涵蓋</span></td>
+      <td>調整限制門檻（單獨項目 15%／總調整率 30%，§25）</td>
+      <td>⑦調整方法與調整限制</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 十年幾乎全中</span></td>
     </tr>
     <tr>
-      <td>計量模型分析法（判定係數／自變數個數，106 年後穩定入題，105–109 年 4/5）</td>
-      <td>③名詞定義：三個調整方法（§20 要件）</td>
-      <td><span class="badge">已涵蓋</span></td>
+      <td>試算價格差距 20% 排除規則（§26）</td>
+      <td>⑧計算試算價格與決定比較價格</td>
+      <td><span class="badge">高頻（約8年）</span></td>
+    </tr>
+    <tr>
+      <td>計量模型分析法三條件（自變數5倍、判定係數0.7、顯著機率5%）</td>
+      <td>③名詞定義：三個調整方法</td>
+      <td><span class="badge">高頻（約7年，常考0.7 vs 0.8陷阱）</span></td>
+    </tr>
+    <tr>
+      <td>情況調整（§19(1)＋§23 十三種情況）</td>
+      <td>②四個調整項目、⑥情況調整13種特殊情況</td>
+      <td><span class="badge">多年出現</span></td>
+    </tr>
+    <tr>
+      <td>價格日期調整計算（房價指數）</td>
+      <td>②四個調整項目</td>
+      <td><span class="badge">中高頻（107/110/111/113）</span></td>
+    </tr>
+    <tr>
+      <td>百分率法為原則、調整程序順序（§24）</td>
+      <td>⑦調整方法與調整限制</td>
+      <td><span class="badge">中頻（108/111）</span></td>
+    </tr>
+    <tr>
+      <td>比較法程序「蒐選對比計決」六步驟</td>
+      <td>④比較法程序</td>
+      <td><span class="badge">申論常考（106申論）</span></td>
     </tr>
   </table>
-  <div class="warn-box hi2" style="margin-top:8px;">⚠️ 樓層別效用比計算（105–109 年 5/5，每年至少 1 題，全期最穩定）屬於個別因素調整的延伸細節，逐字稿本堂未展開講解，待後續堂次或精選題課程補充後再納入筆記。</div>
+  <div class="warn-box hi2" style="margin-top:8px;">⚠️ 樓層別效用比計算屬於個別因素調整的延伸細節，逐字稿本堂未展開講解，實際歸屬於 L6（宗地房地土地改良物與權利），本次查證確認 L6 幾乎年年必考（每年2–5題），該堂尚待補做視覺化筆記。</div>
 </section>
 
 </body>
