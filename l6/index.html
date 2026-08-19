@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>估價 L6｜宗地、房地、土地改良物與權利估價</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:#1e293b; --sub:#64748b; --line:#e2e8f0; --line-strong:#94a3b8;
+    --neutral:#334155; --neutral-bg:#f1f5f9;
+    --accent:#8B4438; --accent-bg:#F1E2DD;
+    --accent2:#9C7A34; --accent2-bg:#EFE6D0;
+  }
+  body {
+    font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    width: 1400px;
+    margin: 0 auto;
+    background: #f4f5f7;
+    color: var(--ink);
+    padding: 18px 28px 30px;
+  }
+  .page-header {
+    background: var(--ink);
+    color: white;
+    border-radius: 14px;
+    padding: 20px 30px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .page-header h1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+  .page-header .subtitle { font-size: 13.5px; opacity: .85; margin-top: 5px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 9px 18px;
+    text-align: center;
+    font-size: 12.5px;
+  }
+  .page-header .badge strong { font-size: 16px; display: block; }
+  .tip-banner {
+    background: var(--neutral-bg);
+    border: 2px solid var(--line-strong);
+    color: var(--neutral);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14.5px;
+    margin-bottom: 14px;
+    font-weight: bold;
+  }
+  section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  h2.sec-title {
+    font-size: 19px;
+    color: var(--ink);
+    border-left: 6px solid var(--ink);
+    padding-left: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2.sec-title .star { color: var(--accent); font-size: 14px; }
+  h3.sub-title { font-size: 15.5px; color: var(--ink); margin: 10px 0 6px; display:flex; align-items:center; gap:6px; }
+  .law-tag {
+    display: inline-block;
+    background: var(--neutral-bg);
+    color: var(--neutral);
+    border: 1px solid var(--line-strong);
+    font-size: 12.5px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-weight: bold;
+    margin: 2px 3px 2px 0;
+  }
+  .law-tag.hi { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+  .law-tag.hi2 { background: var(--accent2-bg); color: var(--accent2); border-color: var(--accent2); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 9px; }
+  .grid-7 { display: grid; grid-template-columns: repeat(7,1fr); gap: 7px; }
+  .card {
+    border-radius: 12px;
+    padding: 10px 13px;
+    border: 2px solid var(--line-strong);
+    background: #fff;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink);
+  }
+  .card p { font-size: 14px; line-height: 1.65; }
+  .card.hi { border-color: var(--accent); background: var(--accent-bg); }
+  .card.hi .card-title { color: var(--accent); }
+  .card.hi2 { border-color: var(--accent2); background: var(--accent2-bg); }
+  .card.hi2 .card-title { color: var(--accent2); }
+  .badge {
+    font-size: 11.5px;
+    background: var(--neutral);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
+  table th { background: var(--ink); color: #fff; padding: 7px 9px; text-align: left; }
+  table td { padding: 7px 9px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f9fafb; }
+  .mnemo-char {
+    display: inline-block;
+    min-width: 1.5em;
+    height: 1.5em;
+    line-height: 1.42em;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid var(--accent2);
+    background: var(--accent2-bg);
+    color: var(--accent2);
+    font-weight: 800;
+    margin: 0 1px;
+  }
+  .mnemo-char.hi { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+  .flow { display: flex; flex-direction: column; gap: 3px; }
+  .flow-step { display: flex; align-items: center; gap: 12px; }
+  .flow-num {
+    flex-shrink: 0; width: 28px; height: 28px;
+    background: var(--ink); color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 13.5px;
+  }
+  .flow-step.key .flow-num { background: var(--accent); }
+  .flow-box {
+    flex: 1; background: var(--neutral-bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 13px; font-size: 14px;
+  }
+  .flow-step.key .flow-box { background: var(--accent-bg); border-color: var(--accent); font-weight: bold; color: var(--accent); }
+  .flow-box .law-tag { margin-left: 6px; }
+  .flow-arrow { text-align: center; color: var(--sub); font-size: 15px; margin-left: 14px; }
+  .warn-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 14px; margin-top: 8px; font-weight: bold;
+  }
+  .warn-box.hi { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .warn-box.hi2 { background: var(--accent2-bg); border-color: var(--accent2); color: var(--accent2); }
+  .info-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 13.5px; margin-top: 8px;
+  }
+  .example-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); border-radius: 10px;
+    padding: 10px 16px; font-size: 14px; line-height: 1.6; color: var(--neutral);
+  }
+  .nested-label { font-size: 12.5px; font-weight: bold; color: var(--sub); margin-bottom: 6px; }
+  .qa-item { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .qa-item:last-child { border-bottom: none; }
+  .qa-q { font-weight: bold; color: var(--ink); font-size: 14px; margin-bottom: 3px; }
+  .qa-a { font-size: 13.5px; color: var(--neutral); line-height: 1.65; }
+
+  /* 直式分數 */
+  .frac { display: inline-flex; flex-direction: column; align-items: stretch; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
+  .frac .num { border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
+  .frac .den { padding-top: 2px; text-align: center; white-space: nowrap; }
+
+  /* 計算範例卡 */
+  .calc-card { background: var(--neutral-bg); border: 1.5px solid var(--line-strong); border-radius: 10px; padding: 10px 16px; margin-top: 8px; }
+  .calc-card .q { font-size: 14px; font-weight: bold; color: var(--ink); margin-bottom: 6px; }
+  .calc-card .steps { font-size: 13.5px; color: var(--neutral); line-height: 1.9; }
+  .calc-card .ans { display:inline-block; margin-top: 4px; background: var(--ink); color:#fff; padding: 2px 10px; border-radius: 6px; font-size: 13px; font-weight: bold; }
+
+  .formula-box {
+    background: var(--ink); color: #fff; border-radius: 10px; padding: 12px 18px;
+    font-size: 17px; text-align: center; margin: 8px 0; letter-spacing: 0.5px;
+  }
+  .formula-box.hi { background: var(--accent); }
+  .formula-box.hi2 { background: var(--accent2); }
+  .formula-note { font-size: 12.5px; color: var(--sub); margin-top: 4px; }
+  .var-list { display:flex; flex-wrap:wrap; gap: 6px 16px; font-size: 13px; color: var(--neutral); margin-top: 6px; }
+  .var-list b { color: var(--ink); }
+
+  .tag-src { display:inline-block; font-size:12px; padding:1px 7px; border-radius:6px; font-weight:bold; }
+  .tag-src.a { background: var(--neutral-bg); color: var(--neutral); }
+  .tag-src.c { background: var(--accent-bg); color: var(--accent); }
+
+  /* 時間軸（農作改良物三階段） */
+  .timeline { display: flex; gap: 8px; }
+  .timeline-step { flex: 1; text-align: center; }
+  .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); margin: 0 auto 6px; }
+  .timeline-label { font-size: 13.5px; font-weight: bold; color: var(--ink); margin-bottom: 6px; }
+  .timeline-desc { font-size: 12.5px; color: var(--neutral); line-height: 1.7; text-align: left; padding-left: 6px; }
+  .timeline-line { height: 2px; background: var(--line-strong); margin: 6px 0 10px; position: relative; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:5px;">114年 不動產經紀人考試｜不動產估價</div>
+    <h1>L6｜宗地、房地、土地改良物與權利估價</h1>
+    <div class="subtitle">不動產估價技術規則 §83–§128・依上課逐字稿＋補充講義＋官方條文校正</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>§83～§128</strong>橫跨四章</div>
+    <div class="badge"><strong>L6</strong>宗地・房地・改良物・權利</div>
+    <div class="badge"><strong>⭐⭐⭐⭐⭐</strong>樓層別效用比全堂最高頻</div>
+  </div>
+</div>
+
+<div class="tip-banner">📌 老師原話：這堂課投報率相對較低（每年考題不多），但條文短、觀念白話，好背就該拿分。真正要花時間搞懂的只有第五章「樓層別效用比」跟「地價分配率」，其餘宗地估價、土地改良物、權利估價大多是文字辨識送分題，抓關鍵字就能作答。</div>
+
+<!-- ① 宗地估價全覽表 -->
+<section>
+  <h2 class="sec-title">① 第四章｜宗地估價全覽表 <span class="law-tag hi">§83～§89</span></h2>
+  <table>
+    <tr><th style="width:8%">條文</th><th style="width:20%">情形</th><th>處理原則</th></tr>
+    <tr><td class="law-tag" style="border:none;">§83</td><td>以合併或分割為前提</td><td>考量合併或分割前後之<b>價格變動情形</b>，酌量增減</td></tr>
+    <tr style="background:var(--accent-bg);"><td class="law-tag hi" style="border:none;">§84</td><td>數筆土地合併為一宗</td><td>以合併後估價，並以<b>合併前各筆土地價值比例</b>分算土地價格 <span class="badge">★★★ 詳見②</span></td></tr>
+    <tr><td class="law-tag" style="border:none;">§85</td><td>一宗數種不同法定用途</td><td>考量<b>最有效使用</b>及各用途相關性、分割難易度，決定分別估價或依主要用途估價</td></tr>
+    <tr><td class="law-tag" style="border:none;">§86</td><td>附有建物之宗地（部分估價）</td><td>原則考量建物對宗地價格之影響；但書可採<b>素地估價</b>（詳見③） <span class="badge">★★ 詳見③</span></td></tr>
+    <tr><td class="law-tag" style="border:none;">§87</td><td>以進行開發為前提</td><td>得採<b>土地開發分析法</b>（見L5），並參酌比較法或收益法評估結果決定估價額。實務判斷：<b>未開發</b>→土地開發分析法；<b>已開發</b>→直接用比較法／收益法／成本法即可</td></tr>
+    <tr><td class="law-tag" style="border:none;">§88</td><td>設施通過使用受限制</td><td>先估算正常價格，計算<b>地價減損額</b>後從正常價格扣除 <span class="badge">詳見④</span></td></tr>
+    <tr><td class="law-tag" style="border:none;">§89</td><td>受土壤或地下水污染</td><td>邏輯同§88，依委託人提供之污染檢測資料計算地價減損額扣除 <span class="badge">詳見④</span></td></tr>
+  </table>
+</section>
+
+<!-- ② 數筆土地合併估價計算 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ② 數筆土地合併估價計算（§84） <span class="law-tag hi">§84</span></h2>
+  <div class="card">
+    <div class="card-title">觀念</div>
+    <p>數筆土地合併為一宗進行土地利用之估價，應<b>以合併後之土地估價</b>，再以<b>合併前各筆土地價值比例</b>分算回各筆土地的價格。合併不一定剛好等於原本兩筆價值相加，通常因為效益提升而<b>增值</b>。</p>
+  </div>
+  <div class="calc-card" style="margin-top:8px;">
+    <div class="q">範例：A 地 200 萬、B 地 400 萬，兩筆合計理論上是 600 萬。合併後產生綜效，實際估價為 800 萬，A、B 兩地個別價格各是多少？</div>
+    <div class="steps">
+      Step 1｜先估合併後總價：<b>800 萬</b><br>
+      Step 2｜算合併前各筆土地在原總價（600萬）中的比例：A 佔 <span class="frac"><span class="num">200</span><span class="den">600</span></span>＝1/3；B 佔 <span class="frac"><span class="num">400</span><span class="den">600</span></span>＝2/3<br>
+      Step 3｜依比例分算合併後總價：<br>
+      A′＝<span class="frac"><span class="num">200</span><span class="den">600</span></span>×800 萬 ≈ <b>266.7 萬</b>　　B′＝<span class="frac"><span class="num">400</span><span class="den">600</span></span>×800 萬 ≈ <b>533.3 萬</b>
+    </div>
+    <span class="ans">A′＋B′＝800萬，剛好等於合併後估價總額——這是驗算的方式，考試常反過來要你先驗算比例對不對</span>
+  </div>
+  <div class="info-box">§84 第二項：<b>非以合併為目的</b>，但數筆相連土地<b>屬同一土地所有權人</b>所有者，比照前項規定計算（不是要合併使用，但因為是同一人的地，估價邏輯一樣套用比例分算）。</div>
+</section>
+
+<!-- ③ 部分估價 vs 獨立估價 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★</span> ③ 部分估價與獨立估價（素地估價） <span class="law-tag hi">§86</span> <span class="law-tag hi2">§106</span></h2>
+  <div class="nested-label">§86 本身就有「本文＋但書」兩層，但書本身就已經可以做獨立估價，不用等到 §106 才行。§106 是另外並列的一條規定，兩條路徑殊途同歸，都能導向「視為素地估價」的結果：</div>
+  <div class="grid-2">
+    <div class="card hi">
+      <div class="card-title">§86 本文｜部分估價</div>
+      <p>宗地上<b>附有建物</b>時，原則應考量<b>該建物與土地結合而產生之價值</b>，將宗地與建物一併估價，並可分別評估出建物、土地部分各自的價值。</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">§86 但書｜獨立估價（素地估價）</div>
+      <p>以<b>素地估價為前提並於估價報告書中敘明</b>者，不在此限——即可<b>不考量</b>建物對土地價值的影響，單純就土地本身進行估價。</p>
+    </div>
+  </div>
+  <div class="warn-box hi2" style="margin-top:8px;">§106（另一條可導向獨立估價的規定）：建物<b>已不具備使用價值</b>者，也<b>得</b>將其基地視為獨立（素地）估價，但這條<b>應考量建物拆除成本</b>予以調整之。</div>
+  <div class="info-box" style="margin-top:6px;">📌 §86 但書 vs §106 差異：§86 但書是<b>委託人主動以素地估價為前提</b>；§106 是<b>建物本身客觀上已無使用價值</b>這個事實觸發的。兩者結果相同（視為素地估價），但只有 §106 明確要求還要扣除<b>建物拆除成本</b>做調整——判斷關鍵字看題目給的是「委託人指定前提」還是「建物已不具使用價值」。</div>
+</section>
+
+<!-- ④ 設施通過／受污染土地 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★</span> ④ 設施通過／受污染土地——地價減損計算 <span class="law-tag hi">§88</span> <span class="law-tag hi">§89</span></h2>
+  <div class="formula-box hi">宗地價格 ＝ 正常價格 － 地價減損額</div>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card">
+      <div class="card-title">§88 設施通過</div>
+      <p>土地上下因<b>其他設施通過</b>使用受限制者，先估算<b>正常價格</b>，考量該設施造成土地利用之影響，計算地價減損額後扣除。</p>
+      <div class="calc-card" style="margin-top:6px;">
+        <div class="steps">正常價格 1000 萬，設施通過減損額 300 萬</div>
+        <span class="ans">宗地價格 ＝ 1000 － 300 ＝ 700 萬</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">§89 受污染土地</div>
+      <p>受有<b>土壤或地下水污染</b>之土地，先估算<b>未受污染之正常價格</b>，依委託人提供之<b>土壤污染檢測資料</b>考量污染影響，計算地價減損額後扣除。</p>
+      <div class="calc-card" style="margin-top:6px;">
+        <div class="steps">正常價格 1000 萬，污染減損額 500 萬</div>
+        <span class="ans">宗地價格 ＝ 1000 － 500 ＝ 500 萬</span>
+      </div>
+    </div>
+  </div>
+  <div class="info-box">兩條邏輯完全一致（先求正常價格→算減損額→扣除），差別只在減損原因：§88 是<b>設施通過的限制</b>，§89 是<b>污染的影響</b>，§89 特別強調要依委託人提供的<b>檢測資料</b>作為依據。</div>
+</section>
+
+<!-- ⑤ 特殊宗地估價 -->
+<section>
+  <h2 class="sec-title">⑤ 特殊宗地估價：溫泉地・高爾夫球場・林地 <span class="law-tag hi">§90</span> <span class="law-tag hi">§91</span> <span class="law-tag hi">§92</span></h2>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">溫泉地 <span class="law-tag">§90</span></div>
+      <p>考量<b>水權內容、開發成本、水量、水質、溫度</b>、當地交通情形、相關設施及<b>遊客人數</b>等影響溫泉地價之因素。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">高爾夫球場 <span class="law-tag">§91</span></div>
+      <p>考量<b>會員制度</b>、球場設施、開發成本、<b>收益</b>及<b>營運費用</b>等因素。</p>
+    </div>
+    <div class="card hi">
+      <div class="card-title">林地 <span class="law-tag hi">§92</span></div>
+      <p>得視<b>林木之成長情形</b>，分別採<b>比較法、收益法或成本法</b>估計之（三法皆可，是本節唯一例外）。採成本法者，總費用應考量<b>造林費、林地改良費、道路開挖費</b>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 比較法為原則四條文 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★</span> ⑥ 比較法為原則四條文：農牧場・鹽田・池沼墓地・公設地 <span class="law-tag hi">§93～§97</span></h2>
+  <div class="nested-label">§93、§94、§95、§97 這四條都以「比較法估價為原則」，無買賣實例時以附近土地價格為基礎，各自考量不同的比較因素：</div>
+  <table>
+    <tr><th style="width:8%">條文</th><th style="width:18%">對象</th><th>無買賣實例時考量因素</th></tr>
+    <tr><td class="law-tag" style="border:none;">§93</td><td>農場或牧場</td><td>位置、形狀、地形、<b>土壤特性</b>、利用狀況</td></tr>
+    <tr><td class="law-tag" style="border:none;">§94</td><td>鹽田</td><td><b>日照、通風</b>、位置、形狀</td></tr>
+    <tr><td class="law-tag" style="border:none;">§95</td><td>池沼、墓地</td><td>位置、形狀、利用狀況（比前兩者少考量的項目）</td></tr>
+    <tr><td class="law-tag" style="border:none;">§97</td><td>公共設施用地及保留地</td><td>與鄰近土地<b>使用分區及使用強度之差異</b>、土地價值減損情況，斟酌鄰近土地平均價格推算</td></tr>
+  </table>
+  <div class="warn-box hi" style="margin-top:8px;">⚠️ 最愛出的陷阱：這四條都是「以比較法估價為原則」，<b>唯獨林地§92例外</b>——林地可採比較法、收益法或成本法三種，不是只能用比較法。考題常問「下列何者不以比較法為原則」，答案就是林地。</div>
+</section>
+
+<!-- ⑦ 三大貢獻說 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑦ 第五章｜房地估價開場：三大貢獻說（觀念導論）</h2>
+  <div class="info-box">情境：一棟五層公寓，每層樓價格不同（通常一樓較貴）。這個「樓層價差」是誰的功勞？三種學說給出不同答案，是理解後面樓層別效用比、地價分配率的基礎觀念。</div>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card">
+      <div class="card-title">① 土地貢獻說</div>
+      <p>樓層價差來自<b>土地立體空間位置不同</b>，跟建物無關。<b>超額利潤歸屬於土地</b>。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">② 建物貢獻說</div>
+      <p>樓層價差是<b>建物新建</b>所產生，跟土地無關。<b>超額利潤歸屬於建物</b>（缺乏經濟理論支持，點到為止）。</p>
+    </div>
+    <div class="card hi">
+      <div class="card-title">③ 聯合貢獻說</div>
+      <p>土地、建物都有功勞，<b>缺一不可</b>，超額利潤應按<b>原本價值比例</b>共同分配。</p>
+    </div>
+  </div>
+  <div class="calc-card" style="margin-top:10px;">
+    <div class="q">案例：土地 500 萬、建物 300 萬，理論上合計 800 萬。實際房地合併估價為 1000 萬（多出 200 萬超額利潤），三種學說怎麼分？</div>
+    <div class="steps">
+      <b>土地貢獻說</b>：土地價值＝房地價格－建物成本＝1000－300＝<b>700 萬</b>（原本300萬建物不變，多出的200萬全歸土地）<br>
+      <b>建物貢獻說</b>：建物價值＝房地價格－土地成本＝1000－500＝<b>500 萬</b>（原本500萬土地不變，多出的200萬全歸建物）<br>
+      <b>聯合貢獻說</b>：土地佔 <span class="frac"><span class="num">500</span><span class="den">800</span></span>＝5/8，建物佔 <span class="frac"><span class="num">300</span><span class="den">800</span></span>＝3/8 → 土地＝1000×5/8＝<b>625 萬</b>，建物＝1000×3/8＝<b>375 萬</b>
+    </div>
+    <span class="ans">三種算法得到的土地價值分別是700萬／—／625萬，差異就是「超額利潤功勞歸誰」的立場不同，這組數字後面§99基地價格推算會再用一次</span>
+  </div>
+</section>
+
+<!-- ⑧ 樓層別效用比計算 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★★★</span> ⑧ 樓層別效用比計算（全堂最高頻） <span class="law-tag hi">§98 Ⅱ</span></h2>
+  <div class="card hi">
+    <div class="card-title">觀念</div>
+    <p>樓層別效用比是<b>聯合貢獻說延伸出來</b>的概念，由<b>全聯會</b>按不同地區蒐集案例公告，供估價調整參考。做法：先選一個<b>基準層（比準層）</b>當作 100%，其他樓層<b>單價 ÷ 基準層單價</b>，就是各層的樓層別效用比。</p>
+  </div>
+  <table style="margin-top:8px;">
+    <tr><th>樓層</th><th>單價</th><th>計算式</th><th>樓層別效用比</th></tr>
+    <tr><td>1 樓</td><td>15 萬</td><td>15 ÷ 10</td><td><b>150%</b></td></tr>
+    <tr><td>2 樓</td><td>11 萬</td><td>11 ÷ 10</td><td><b>110%</b></td></tr>
+    <tr><td>3 樓</td><td>12 萬</td><td>12 ÷ 10</td><td><b>120%</b></td></tr>
+    <tr style="background:var(--accent-bg);"><td>4 樓（基準層）</td><td>10 萬</td><td>10 ÷ 10</td><td><b>100%</b></td></tr>
+    <tr><td>5 樓</td><td>12 萬</td><td>12 ÷ 10</td><td><b>120%</b></td></tr>
+    <tr style="background:#f1f5f9;font-weight:bold;"><td>平均</td><td>12 萬</td><td>(15+11+12+10+12)÷5</td><td><b>120%</b></td></tr>
+  </table>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card"><p>基準層<b>不一定要選 4 樓</b>，可以選任何一樓層。通常選<b>單價最低</b>的樓層當基準層（100%），其他樓層就都會是<b>高於 100%</b>，數字比較好看。</p></div>
+    <div class="card"><p>平均單價與平均樓層別效用比會互相對應：本例平均單價 12 萬 ÷ 基準層 10 萬 ＝ 120%，跟五層效用比直接平均（150+110+120+100+120）÷5＝120% 結果一致。</p></div>
+  </div>
+  <div class="warn-box hi" style="margin-top:8px;">⚠️ 105 年考古題陷阱：「樓層別效用比以<b>總價百分率</b>方式表示」是錯的，正確是以<b>單價比</b>表示（單價÷基準層單價），不是總價相除。</div>
+</section>
+
+<!-- ⑨ 區分所有建物估價原則 -->
+<section>
+  <h2 class="sec-title">⑨ 區分所有建物估價原則 <span class="law-tag hi">§98 Ⅰ</span></h2>
+  <div class="card">
+    <p>區分所有建物之估價，應將其<b>專有部分、共用部分之比例及基地權利</b>合併估價（跟《公寓大廈管理條例》§4 專有／共用／基地權利不可分離移轉的觀念一致）。合併估價後，還要考量與比較標的之<b>樓層別效用比及位置之差異</b>作適當調整。</p>
+  </div>
+</section>
+
+<!-- ⑩ 基地價格推算 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★</span> ⑩ 基地價格推算（一般房地） <span class="law-tag hi">§99</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">路徑一｜土地貢獻說</div>
+      <div class="formula-box hi" style="font-size:15px;padding:8px 12px;">基地價格 ＝ 房地價格 － 建物成本價格</div>
+      <p style="margin-top:6px;">承⑦案例：1000 － 300 ＝ <b>700 萬</b>。基地單價再以基地價格 ÷ 面積求得。</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">路徑二｜聯合貢獻說</div>
+      <div class="formula-box hi2" style="font-size:15px;padding:8px 12px;">基地價格 ＝ 房地價格 × 土地價值比率</div>
+      <p style="margin-top:6px;">承⑦案例：土地價值比率＝500÷800＝5/8，1000×5/8＝<b>625 萬</b>。基地單價同樣再除以面積。</p>
+    </div>
+  </div>
+  <div class="info-box">§99 條文本身給了「土地價值比率、建物價值比率已知」時的第二組公式，就是這裡的聯合貢獻說路徑；兩種路徑都是先求<b>基地價格</b>，再除以<b>基地面積</b>得到<b>基地單價</b>。</div>
+</section>
+
+<!-- ⑪ 區分所有建物基地單價與地價分配率 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑪ 區分所有建物基地單價與地價分配率（本堂最複雜） <span class="law-tag hi">§100</span> <span class="law-tag hi">§101</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">§100｜土地貢獻說延伸路徑</div>
+      <p>① 基地權利價格 ＝ 房地價格 － 建物成本價格<br>
+      ② 基地權利單價 ＝ 基地權利價格 ÷ 基地持分面積<br>
+      ③ 基地單價 ＝ 基地權利單價 × <span class="frac"><span class="num">平均地價分配率</span><span class="den">該區分建物之地價分配率</span></span></p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">§101｜聯合貢獻說延伸路徑</div>
+      <p>① 基地權利價格 ＝ 房地價格 × 土地價值比率<br>
+      ② 基地權利單價 ＝ 基地權利價格 ÷ 基地持分面積<br>
+      ③ 基地單價 ＝ 基地權利單價 × <span class="frac"><span class="num">平均樓層別效用比</span><span class="den">該區分建物之樓層別效用比</span></span></p>
+    </div>
+  </div>
+
+  <h3 class="sub-title" style="margin-top:12px;">§100 vs §101 一次看懂差在哪</h3>
+  <table>
+    <tr><th style="width:16%">步驟</th><th>§100｜土地貢獻說延伸路徑</th><th>§101｜聯合貢獻說延伸路徑</th></tr>
+    <tr><td class="law-tag" style="border:none;">① 基地權利價格</td><td>房地價格 <b>－</b> 建物成本價格</td><td>房地價格 <b>×</b> 土地價值比率</td></tr>
+    <tr><td class="law-tag" style="border:none;">② 基地權利單價</td><td colspan="2" style="text-align:center;">基地權利價格 ÷ 基地持分面積（<b>兩條路徑算法完全相同</b>）</td></tr>
+    <tr><td class="law-tag" style="border:none;">③ 基地單價</td><td>基地權利單價 × 平均<b>地價分配率</b> ÷ 該區分建物之地價分配率</td><td>基地權利單價 × 平均<b>樓層別效用比</b> ÷ 該區分建物之樓層別效用比</td></tr>
+  </table>
+  <div class="info-box" style="margin-top:6px;">兩條路徑差異只在①的算法邏輯（<b>減法</b> vs <b>乘比率</b>，呼應§99兩條路徑）跟③引用的比率（地價分配率 vs 樓層別效用比，也呼應①的邏輯），②完全共用同一個公式——記憶時只要抓「①③要分兩套邏輯記，②不用管」。</div>
+
+  <h3 class="sub-title" style="margin-top:12px;">地價分配率怎麼算？<span class="law-tag">§100 Ⅱ</span></h3>
+  <div class="formula-box hi">地價分配率 ＝ 樓層別效用比 － （平均樓層別效用比 × 建物成本價格占房地總價比率）</div>
+  <div class="info-box">「平均樓層別效用比 × 建物成本價格占房地總價比率」這一段其實就是<b>建物效用比</b>——因為土地貢獻說認為各樓層價差跟建物無關，所以每層樓分到的「建物效用比」是同一個平均值。</div>
+
+  <div class="calc-card" style="margin-top:8px;">
+    <div class="q">承⑧樓層別效用比表格：房地總價 1000 萬，建物成本 600 萬（建物價值比例 60%），平均樓層別效用比 120%，求各樓層地價分配率。</div>
+    <div class="steps">
+      建物效用比 ＝ 120% × 60% ＝ <b>72%</b>（每層樓一律扣掉這個固定值）<br>
+      地價分配率 ＝ 該樓層樓層別效用比 － 72%
+    </div>
+  </div>
+  <table style="margin-top:6px;">
+    <tr><th>樓層</th><th>樓層別效用比</th><th>－ 建物效用比</th><th>地價分配率</th></tr>
+    <tr><td>1 樓</td><td>150%</td><td>－72%</td><td><b>78%</b></td></tr>
+    <tr><td>2 樓</td><td>110%</td><td>－72%</td><td><b>38%</b></td></tr>
+    <tr><td>3 樓</td><td>120%</td><td>－72%</td><td><b>48%</b></td></tr>
+    <tr><td>4 樓</td><td>100%</td><td>－72%</td><td><b>28%</b></td></tr>
+    <tr><td>5 樓</td><td>120%</td><td>－72%</td><td><b>48%</b></td></tr>
+  </table>
+  <div class="info-box">大部分考題只考到「算樓層別效用比」這一步就結束了，地價分配率屬於進階延伸，出現頻率較低但觀念要懂，避免申論或情境題被繞進去。</div>
+</section>
+
+<!-- ⑫ 房地估價其他規定 -->
+<section>
+  <h2 class="sec-title">⑫ 房地估價其他規定 <span class="law-tag hi">§102～§105</span></h2>
+  <table>
+    <tr><th style="width:8%">條文</th><th style="width:20%">情形</th><th>處理原則</th></tr>
+    <tr><td class="law-tag" style="border:none;">§102</td><td>超過法定容積</td><td>以<b>實際建築使用合法部分</b>之現況估價，並敘明法定容積對估值之影響</td></tr>
+    <tr><td class="law-tag" style="border:none;">§103</td><td>違章建築</td><td>原則<b>違建部分不予評估</b>；委託人要求評估時，合法建物與違建部分應在報告書中<b>分別標示</b></td></tr>
+    <tr><td class="law-tag" style="border:none;">§104</td><td>未達最有效使用</td><td>先求取<b>最有效使用之正常價格</b>，再視低度使用情況進行調整</td></tr>
+    <tr><td class="law-tag" style="border:none;">§105</td><td>不符法定用途</td><td>以現行<b>土地使用分區管制允許之建物用途</b>估價，並就其法定用途差額於報告書中敘明</td></tr>
+  </table>
+  <div class="info-box">四條邏輯有共通性：§102/§104/§105 都是「先求正常或合法狀況的價格，再依實際狀況調整或敘明差異」；§103 違章建築則是直接排除不評估，除非委託人特別要求。</div>
+</section>
+
+<!-- ⑬ 第六章 土地改良物估價 -->
+<section>
+  <h2 class="sec-title">⑬ 第六章｜土地改良物估價 <span class="law-tag hi">§107～§113</span></h2>
+  <table>
+    <tr><th style="width:8%">條文</th><th style="width:18%">項目</th><th>內容</th></tr>
+    <tr><td class="law-tag" style="border:none;">§107</td><td>土地改良物分類</td><td>依《土地法》§5 規定分類</td></tr>
+    <tr><td class="law-tag" style="border:none;">§108</td><td>建物估價</td><td>以<b>成本法</b>估價為原則，附屬設施得<b>一併估計</b>之</td></tr>
+    <tr><td class="law-tag" style="border:none;">§109</td><td>農作改良物種類</td><td>附著於土地之<b>果樹、茶樹、竹類、觀賞花木、造林木</b>及其他各種農作物</td></tr>
+    <tr><td class="law-tag" style="border:none;">§110</td><td>農作改良物估價考量因素</td><td>生產環境、農業災害、生產技術、生產期間、樹齡大小、生長情形、結果習性、管理狀況、農業設施</td></tr>
+    <tr><td class="law-tag" style="border:none;">§112</td><td>工事、水利土壤改良</td><td>以<b>成本法</b>估價為原則，得斟酌<b>比較法及收益法</b>估價結果決定之</td></tr>
+    <tr><td class="law-tag" style="border:none;">§113</td><td>受污染之建物</td><td>邏輯同§88/§89：先估未受污染正常價格，考量檢測資料影響，計算減損額後扣除</td></tr>
+  </table>
+
+  <h3 class="sub-title" style="margin-top:10px;"><span class="star">★</span> 農作改良物估價方式（三階段） <span class="law-tag hi">§111</span></h3>
+  <div class="timeline">
+    <div class="timeline-step">
+      <div class="timeline-label">距成熟期尚長</div>
+      <div class="timeline-line"></div>
+      <div class="timeline-desc">依其<b>種植及培育費用</b>，並視生長情形估計之</div>
+    </div>
+    <div class="timeline-step">
+      <div class="timeline-label">距成熟期一年以上（有期待收穫價值）</div>
+      <div class="timeline-line"></div>
+      <div class="timeline-desc">以<b>產地價格</b>為基礎，推估未來收穫價格，折算為<b>價格日期</b>之價格；扣除應投入之費用</div>
+    </div>
+    <div class="timeline-step">
+      <div class="timeline-label">接近成熟期</div>
+      <div class="timeline-line"></div>
+      <div class="timeline-desc">估計<b>收穫量及市場價格</b>，必要時扣除收成前應投入之費用</div>
+    </div>
+  </div>
+  <div class="info-box" style="margin-top:6px;">依講義流程圖，三階段沿時間軸走向孳息成熟期：<b>種植培育費 → 產地價格推估未來價格再折現 → 市場價格與收穫量</b>，愈接近成熟期估價方式愈直接、愈靠近實際收穫值。</div>
+</section>
+
+<!-- ⑭ 第七章 權利估價總覽 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★</span> ⑭ 第七章｜權利估價總覽 <span class="law-tag hi">§114～§123</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">§114｜權利種類（共 11 種）</div>
+      <p>地上權、典權、永佃權、農育權、不動產役權、耕作權、<b>抵押權</b>、租賃權、市地重劃、容積移轉、都市更新權利變換。</p>
+    </div>
+    <div class="card hi">
+      <div class="card-title">§115｜應考量之因素（共 6 種）</div>
+      <p>契約內容、權利存續期間、權利登記狀況、相關法令規定、<b>民間習俗</b>、<b>正常市場權利狀態</b>。</p>
+    </div>
+  </div>
+  <table style="margin-top:10px;">
+    <tr><th style="width:8%">條文</th><th style="width:18%">權利</th><th>估價應考量因素</th></tr>
+    <tr><td class="law-tag" style="border:none;">§116</td><td>地上權</td><td>用途、存續期間、支付地租之有無、權利讓與限制、地上權設定之空間位置</td></tr>
+    <tr><td class="law-tag" style="border:none;">§117</td><td>典權</td><td>權利存續期間、權利讓與限制，<b>以典價為基礎</b>估計</td></tr>
+    <tr><td class="law-tag" style="border:none;">§118</td><td>永佃權</td><td>佃租支付情形、民間習俗（民法已改採農育權，永佃權指舊制已存在者）</td></tr>
+    <tr><td class="law-tag" style="border:none;">§118-1</td><td>農育權</td><td>設定目的、約定方法、存續期間、地租有無及高低、權利讓與限制、民間習俗、特別改良</td></tr>
+    <tr><td class="law-tag" style="border:none;">§119</td><td>不動產役權</td><td>需役與供役不動產使用情況、存續期間、使用性質、民間習俗</td></tr>
+    <tr><td class="law-tag" style="border:none;">§120</td><td>耕作權</td><td>耕作期間、權利登記狀況、相關法令規定</td></tr>
+    <tr style="background:var(--accent-bg);"><td class="law-tag hi" style="border:none;">§121</td><td>抵押權 <span class="badge" style="background:var(--accent);">★講義標星・較常考</span></td><td>先估<b>正常價格</b>，以實際債權額為基礎，考量<b>順位、流通性、風險性、增值性、執行難易度</b>調整</td></tr>
+    <tr><td class="law-tag" style="border:none;">§122</td><td>租賃權</td><td>契約內容、用途、租期、租金支付方式、使用目的及情形</td></tr>
+    <tr><td class="law-tag" style="border:none;">§122-1</td><td>市地重劃</td><td>依《平均地權條例》及施行細則、市地重劃相關辦法規定辦理</td></tr>
+    <tr><td class="law-tag" style="border:none;">§123</td><td>容積移轉</td><td>送出基地、接受基地及其他影響不動產價格與相關法令等因素</td></tr>
+  </table>
+</section>
+
+<!-- ⑮ 都市更新權利變換 -->
+<section>
+  <h2 class="sec-title">⑮ 都市更新權利變換（精簡摘要） <span class="law-tag hi2">§124～§128</span></h2>
+  <div class="warn-box hi2">⚠️ 這段課堂逐字稿沒有教授（老師時間有限直接跳過），以下依官方條文（全國法規資料庫）整理精簡重點，公式較複雜，考古題中確實有命中（109、110年皆考過基地權利價值計算），建議之後若有補充教材再核對細節。</div>
+  <div class="card" style="margin-top:8px;">
+    <div class="card-title">核心觀念</div>
+    <p>都市更新前，區分所有建物的「基地權利價值」要怎麼在全棟各戶之間分配？核心工具是<b>基地價值比率</b>——用來把整塊基地的價值，按比例分給每一戶。</p>
+  </div>
+  <div class="formula-box hi2" style="font-size:14.5px;margin-top:8px;">基地價值比率 ＝ <span class="frac"><span class="num">素地單價 × 基地總面積</span><span class="den">素地單價×基地總面積 ＋ 營造施工費單價×(1－累積折舊率)×全棟建物面積</span></span></div>
+  <table style="margin-top:8px;">
+    <tr><th style="width:10%">條文</th><th>情況</th></tr>
+    <tr><td class="law-tag" style="border:none;">§125</td><td>權利變換前為區分所有建物：各戶基地權利價值＝各戶房地總價 × 基地價值比率</td></tr>
+    <tr><td class="law-tag" style="border:none;">§126</td><td>區分所有建物基地總價值 <b>低於</b> 素地總價值時：先算比率，再依<b>素地總價值</b>重新調整分配</td></tr>
+    <tr><td class="law-tag" style="border:none;">§126-1</td><td>非屬區分所有建物：以房地總價 × 基地價值比率，但不得低於素地價值</td></tr>
+    <tr><td class="law-tag" style="border:none;">§126-2</td><td>基地所有權人未持有區分所有建物產權：依是否可確認對應建物分兩種算法處理</td></tr>
+    <tr><td class="law-tag" style="border:none;">§127</td><td>基地未建築使用：以<b>素地價值</b>推估其土地權利價值</td></tr>
+    <tr><td class="law-tag" style="border:none;">§128</td><td>權利變換後估價：考量建築計畫、建材標準、設備等級、工程造價水準及<b>更新前後樓層別效用比關聯性</b>，以評價基準日之新成屋價格查估</td></tr>
+  </table>
+</section>
+
+<!-- ⑯ 高頻考點速查卡 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑯ 高頻考點速查卡</h2>
+  <div class="qa-item">
+    <div class="qa-q">Q. 樓層別效用比怎麼算？</div>
+    <div class="qa-a">選一個基準層當 100%，其他樓層<b>單價 ÷ 基準層單價</b>即得（不是總價比！）。基準層不限定選哪一層，但通常選單價最低的樓層，讓其他樓層數字都大於 100%。由<b>全聯會</b>依地區蒐集案例公告，供比較調整參考。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 四大特殊宗地估價，哪一個不是以比較法為原則？</div>
+    <div class="qa-a"><b>林地（§92）</b>——可採比較法、收益法或成本法三種，是唯一例外。農場牧場（§93）、鹽田（§94）、池沼墓地（§95）、公設地（§97）都以比較法為原則。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 數筆土地合併估價（§84）怎麼算？</div>
+    <div class="qa-a">先估<b>合併後總價</b>，再依<b>合併前各筆土地在原總價中的比例</b>分算回去，不是直接對半分或等比例分。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 部分估價（§86）跟獨立估價／素地估價（§106）差在哪？</div>
+    <div class="qa-a">§86 原則：考量建物對宗地價格的影響。§106 例外：建物已不具備使用價值時，可視為素地估價（不考慮建物影響），但仍要考量<b>建物拆除成本</b>予以調整。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 三大貢獻說的核心差異？</div>
+    <div class="qa-a"><b>土地貢獻說</b>：超額利潤歸土地。<b>建物貢獻說</b>：超額利潤歸建物（缺乏理論支持）。<b>聯合貢獻說</b>：按原本價值比例共同分配，是樓層別效用比與地價分配率的理論基礎。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 設施通過（§88）與受污染土地（§89）估價邏輯？</div>
+    <div class="qa-a">都是「先估正常價格 → 計算地價減損額 → 從正常價格中扣除」，差別只在減損原因（設施限制 vs 污染影響），§89 特別要求依委託人提供的<b>土壤污染檢測資料</b>。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 違章建築（§103）怎麼處理？</div>
+    <div class="qa-a">原則<b>違建部分不予評估</b>；若委託人要求評估其價值，合法建物與違建部分應在估價報告書中<b>分別標示清楚</b>。</div>
+  </div>
+</section>
+
+<!-- ⑰ 考古題對應 -->
+<section>
+  <h2 class="sec-title">⑰ 考古題對應</h2>
+  <div class="info-box">
+    📋 資料來源：陳國全國補習班 105–114 年（近 10 年）不動產估價概要考題解答 PDF，逐年逐題完整查證（2026-08-14）。L6 涵蓋面最廣、每年 2–5 題命中，10 年全中無空窗。完整逐年逐題明細見 <code>不動產估價\估價L1-L7_考古題深查.md</code>。
+  </div>
+  <table style="margin-top:8px;">
+    <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:20%">涵蓋狀態</th></tr>
+    <tr>
+      <td>樓層別效用比計算（§98、§100）</td>
+      <td>⑧樓層別效用比計算</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 10年幾乎全中，最高頻計算題</span></td>
+    </tr>
+    <tr>
+      <td>特殊宗地估價方法（比較法為原則，林地例外）</td>
+      <td>⑤特殊宗地估價、⑥比較法為原則四條文</td>
+      <td><span class="badge">中高頻（105/110/112/113等年出現）</span></td>
+    </tr>
+    <tr>
+      <td>數筆土地合併分算價格（§84）</td>
+      <td>②數筆土地合併估價計算</td>
+      <td><span class="badge">中高頻計算題（107/108年出現）</span></td>
+    </tr>
+    <tr>
+      <td>部分估價／獨立估價（素地估價）（§86、§106）</td>
+      <td>③部分估價 vs 獨立估價</td>
+      <td><span class="badge">中頻（106/107年出現）</span></td>
+    </tr>
+    <tr>
+      <td>設施通過／受污染土地地價減損計算（§88、§89）</td>
+      <td>④設施通過／受污染土地</td>
+      <td><span class="badge">中頻（106/109年出現）</span></td>
+    </tr>
+    <tr>
+      <td>違章建築房地估價處理（§103）</td>
+      <td>⑫房地估價其他規定</td>
+      <td><span class="badge">中頻（107/111年出現）</span></td>
+    </tr>
+    <tr>
+      <td>基地價格計算與三貢獻說（§99～§101）</td>
+      <td>⑦三大貢獻說、⑩基地價格推算、⑪地價分配率</td>
+      <td><span class="badge">中頻計算題（108/109/110年出現）</span></td>
+    </tr>
+    <tr>
+      <td>不符法定用途／超過法定容積／未達最有效使用（§102、104、105）</td>
+      <td>⑫房地估價其他規定</td>
+      <td><span class="badge">中頻（109/110年出現）</span></td>
+    </tr>
+    <tr>
+      <td>水利土壤改良估價（§112，成本法為原則）</td>
+      <td>⑬第六章土地改良物估價</td>
+      <td><span class="badge">中頻（105/107/114年出現）</span></td>
+    </tr>
+    <tr>
+      <td>權利估價（地上權、永佃權/農育權、都市更新權利變換）</td>
+      <td>⑭權利估價總覽、⑮都市更新權利變換</td>
+      <td><span class="badge">中低頻但涵蓋面廣（106/109/110/113年零星出現）</span></td>
+    </tr>
+  </table>
+  <div class="warn-box hi2" style="margin-top:8px;">⚠️ 106 年測驗 39 考過「不動產價值定義（保險價值／營運價值／市場價值／公允價值）」，這組專有名詞屬於估價概論範疇，L1–L7 全系列筆記目前都尚未涵蓋，是已知的知識缺口，非本堂查無命中。</div>
+</section>
+
+</body>
+</html>
