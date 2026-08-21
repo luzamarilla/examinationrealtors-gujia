@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>估價 L7｜租金估計</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:#1e293b; --sub:#64748b; --line:#e2e8f0; --line-strong:#94a3b8;
+    --neutral:#334155; --neutral-bg:#f1f5f9;
+    --accent:#8B4438; --accent-bg:#F1E2DD;
+    --accent2:#9C7A34; --accent2-bg:#EFE6D0;
+  }
+  body {
+    font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    width: 1400px;
+    margin: 0 auto;
+    background: #f4f5f7;
+    color: var(--ink);
+    padding: 18px 28px 30px;
+  }
+  .page-header {
+    background: var(--ink);
+    color: white;
+    border-radius: 14px;
+    padding: 20px 30px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .page-header h1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+  .page-header .subtitle { font-size: 13.5px; opacity: .85; margin-top: 5px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 9px 18px;
+    text-align: center;
+    font-size: 12.5px;
+  }
+  .page-header .badge strong { font-size: 16px; display: block; }
+  .tip-banner {
+    background: var(--neutral-bg);
+    border: 2px solid var(--line-strong);
+    color: var(--neutral);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14.5px;
+    margin-bottom: 14px;
+    font-weight: bold;
+  }
+  section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  h2.sec-title {
+    font-size: 19px;
+    color: var(--ink);
+    border-left: 6px solid var(--ink);
+    padding-left: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2.sec-title .star { color: var(--accent); font-size: 14px; }
+  h3.sub-title { font-size: 15.5px; color: var(--ink); margin: 10px 0 6px; display:flex; align-items:center; gap:6px; }
+  .law-tag {
+    display: inline-block;
+    background: var(--neutral-bg);
+    color: var(--neutral);
+    border: 1px solid var(--line-strong);
+    font-size: 12.5px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-weight: bold;
+    margin: 2px 3px 2px 0;
+  }
+  .law-tag.hi { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+  .law-tag.hi2 { background: var(--accent2-bg); color: var(--accent2); border-color: var(--accent2); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 9px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 9px; }
+  .card {
+    border-radius: 12px;
+    padding: 10px 13px;
+    border: 2px solid var(--line-strong);
+    background: #fff;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink);
+  }
+  .card p { font-size: 14px; line-height: 1.65; }
+  .card.hi { border-color: var(--accent); background: var(--accent-bg); }
+  .card.hi .card-title { color: var(--accent); }
+  .card.hi2 { border-color: var(--accent2); background: var(--accent2-bg); }
+  .card.hi2 .card-title { color: var(--accent2); }
+  .badge {
+    font-size: 11.5px;
+    background: var(--neutral);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
+  table th { background: var(--ink); color: #fff; padding: 7px 9px; text-align: left; }
+  table td { padding: 7px 9px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  table tr:nth-child(even) td { background: #f9fafb; }
+  .mnemo-char {
+    display: inline-block;
+    min-width: 1.5em;
+    height: 1.5em;
+    line-height: 1.42em;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid var(--accent2);
+    background: var(--accent2-bg);
+    color: var(--accent2);
+    font-weight: 800;
+    margin: 0 1px;
+  }
+  .mnemo-char.hi { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+  .warn-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 14px; margin-top: 8px; font-weight: bold;
+  }
+  .warn-box.hi { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+  .warn-box.hi2 { background: var(--accent2-bg); border-color: var(--accent2); color: var(--accent2); }
+  .info-box {
+    background: var(--neutral-bg); border: 2px solid var(--line-strong); color: var(--neutral);
+    border-radius: 10px; padding: 8px 14px; font-size: 13.5px; margin-top: 8px;
+  }
+  .qa-item { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .qa-item:last-child { border-bottom: none; }
+  .qa-q { font-weight: bold; color: var(--ink); font-size: 14px; margin-bottom: 3px; }
+  .qa-a { font-size: 13.5px; color: var(--neutral); line-height: 1.65; }
+
+  /* 直式分數 */
+  .frac { display: inline-flex; flex-direction: column; align-items: stretch; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
+  .frac .num { border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
+  .frac .den { padding-top: 2px; text-align: center; white-space: nowrap; }
+
+  /* 計算範例卡 */
+  .calc-card { background: var(--neutral-bg); border: 1.5px solid var(--line-strong); border-radius: 10px; padding: 10px 16px; margin-top: 8px; }
+  .calc-card .q { font-size: 14px; font-weight: bold; color: var(--ink); margin-bottom: 6px; }
+  .calc-card .steps { font-size: 13.5px; color: var(--neutral); line-height: 1.9; }
+  .calc-card .ans { display:inline-block; margin-top: 4px; background: var(--ink); color:#fff; padding: 2px 10px; border-radius: 6px; font-size: 13px; font-weight: bold; }
+
+  .formula-box {
+    background: var(--ink); color: #fff; border-radius: 10px; padding: 12px 18px;
+    font-size: 17px; text-align: center; margin: 8px 0; letter-spacing: 0.5px;
+  }
+  .formula-box.hi { background: var(--accent); }
+  .formula-box.hi2 { background: var(--accent2); }
+  .formula-note { font-size: 12.5px; color: var(--sub); margin-top: 4px; }
+
+  .method-steps { display:flex; flex-direction:column; gap:6px; }
+  .method-step { display:flex; align-items:flex-start; gap:10px; }
+  .method-num {
+    flex-shrink:0; width:24px; height:24px; border-radius:50%;
+    background: var(--neutral); color:#fff; font-size:12.5px; font-weight:bold;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .method-step.key .method-num { background: var(--accent); }
+  .method-body { font-size: 13.5px; line-height: 1.7; color: var(--ink); }
+  .method-body b { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:5px;">114年 不動產經紀人考試｜不動產估價</div>
+    <h1>L7｜租金估計</h1>
+    <div class="subtitle">不動產估價技術規則 第八章 §129–§133・依上課逐字稿＋上課講義整理</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>§129～§133</strong>僅 5 條</div>
+    <div class="badge"><strong>L7</strong>租金估計</div>
+    <div class="badge"><strong>⭐⭐⭐⭐</strong>條文少・選擇題愛考</div>
+  </div>
+</div>
+
+<div class="tip-banner">📌 老師原話：這堂課條文只有 129 到 133 條，非常少，是全科投報率最高的章節之一。選擇題超愛考名詞解釋，很多題目就是純粹考定義。害怕數學的同學不用緊張，計算題條件都會給好，公式記熟套進去就能算出來，真的不行也可以死背——這章節範圍小，10 幾年來該考的地方大致都考過一輪了。</div>
+
+<!-- ① 租金名詞解釋 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ① 租金名詞解釋（選擇題最愛考） <span class="law-tag hi">概念題</span></h2>
+  <div class="grid-5">
+    <div class="card hi">
+      <div class="card-title">實質租金</div>
+      <p>每期支付之租金，<b>加計</b>押金或保證金、權利金及其他運用收益。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">支付租金</div>
+      <p>依租賃契約每期支付之租金，又稱<b>契約租金</b>。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">經濟租金</div>
+      <p>就是<b>正常租金</b>，又稱<b>市場租金</b>。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">差額租金</div>
+      <p>基於<b>特殊關係</b>成立租約使租金偏低（如阿嬤租給孫子），實際支付租金與經濟租金之差額。</p>
+    </div>
+    <div class="card hi2">
+      <div class="card-title">純租金</div>
+      <p>實質租金 <b>－</b> 總費用，又稱<b>淨租金</b>（呼應 L3 收益法的淨收益概念）。</p>
+    </div>
+  </div>
+  <div class="info-box">五個名詞裡最容易混淆的是「支付租金」跟「實質租金」：支付租金就是你每期真的付出去的那筆錢（很單純）；實質租金還要<b>加上</b>押金、保證金、權利金等運用收益，題目最愛考這個「還要加東西」的細節。</div>
+</section>
+
+<!-- ② §129 應考量因素 -->
+<section>
+  <h2 class="sec-title">② §129｜租金應考量之因素（共 9 個）</h2>
+  <div class="card">
+    <p>不動產租金應考量下列因素估計之：<b>契約內容、租期長短、使用目的、稅費負擔、租金水準、變遷狀態、租約更新、變更條件</b>及其他相關因素。</p>
+  </div>
+</section>
+
+<!-- ③ §130-131 租金估計原則 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★★</span> ③ §130・§131｜租金估計原則 <span class="law-tag hi">§130</span> <span class="badge" style="background:var(--accent2);margin-left:auto;font-size:12.5px;">§131｜租金估計以新訂租約與續訂租約分別為之</span></h2>
+  <div class="grid-2">
+    <div class="card hi">
+      <div class="card-title">§130 Ⅰ｜以實質租金為原則</div>
+      <p>不動產租金之估計，以估計勘估標的之<b>客觀實質租金</b>為原則。</p>
+      <div class="warn-box hi" style="margin-top:8px;">⚠️ 注意！題目常寫成「以<b>支付</b>租金為原則」，應為－<b>實質租金</b>。</div>
+    </div>
+    <div class="card">
+      <div class="card-title">§130 Ⅱ｜實質租金定義複述</div>
+      <p>前項實質租金，指承租人每期支付與出租人之<b>支付租金</b>，加計<b>押金、保證金、權利金</b>及其他相關運用收益之總額。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ④ §132 新訂 vs §133 續訂 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ④ §132 新訂租約（3 法）　vs　§133 續訂租約（4 法・限定租金）</h2>
+  <table>
+    <tr>
+      <th style="width:11%">步驟</th>
+      <th style="width:44.5%">§132｜新訂租約之租金估計</th>
+      <th style="width:44.5%">§133｜續訂租約之租金估計</th>
+    </tr>
+    <tr>
+      <td><b>口訣</b></td>
+      <td><span class="mnemo-char">比</span><span class="mnemo-char">積</span><span class="mnemo-char">收</span></td>
+      <td><span class="mnemo-char hi">比</span><span class="mnemo-char hi">利</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">差</span></td>
+    </tr>
+    <tr>
+      <td>①</td>
+      <td><b>租賃實例比較法</b>：以新訂租約之租賃實例為比較標的 → 比較法</td>
+      <td><b>租賃實例比較法</b>：以續訂租約之租賃實例為比較標的 → 比較法</td>
+    </tr>
+    <tr>
+      <td>②</td>
+      <td><b>基算法（積算法）</b>：勘估標的價格 × 租金收益率 ＝ 淨收益，淨收益 ＋ 必要費用</td>
+      <td><b>收益率法（利率法）</b>：勘估標的之正常價格 × 續租租金收益率 ＝ 淨收益，淨收益 ＋ 必要費用</td>
+    </tr>
+    <tr>
+      <td>③</td>
+      <td><b>收益分析法</b>：分析企業總收入，估計一定期間內之淨收益 ＋ 必要費用</td>
+      <td><b>推算法</b>：原契約租金淨收益 × 變動率（題目會給租金指數漲幅）＋ 必要費用</td>
+    </tr>
+    <tr>
+      <td>④</td>
+      <td style="color:var(--sub);">（無，§132 僅 3 法）</td>
+      <td><b>差額租金分配法</b>：（市場經濟租金－原契約租金）× 歸屬出租人之貢獻比例 ＋ 原契約租金　<span class="badge" style="background:var(--accent);">選擇題最愛考</span></td>
+    </tr>
+  </table>
+  <div class="info-box">兩條的第 1、2 款邏輯幾乎一樣（都是比較法起手、再來是「價格 × 收益率 ＝ 淨收益 ＋ 必要費用」），差別在於 §132 用的是<b>勘估標的價格</b>、§133 用的是<b>正常價格 × 續租收益率</b>。真正只屬於續訂租約的獨門方法是第 3、4 款（推算法、差額租金分配法），尤其<b>差額租金分配法</b>是老師特別點名「選擇題很愛考，而且需要算一下」的重點。</div>
+</section>
+
+<!-- ⑤ 精選例題一：實質租金計算 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★★</span> ⑤ 精選例題一｜實質租金 vs 支付租金計算 <span class="law-tag hi">§130</span></h2>
+  <div class="calc-card">
+    <div class="q">酷哥將新買的房子租給文文使用，每月租金為新台幣 2 萬元整，押金兩個月，定存年利率為 1%。試問實質租金、支付租金各別為何？</div>
+    <div class="steps">
+      Step 1｜支付租金 ＝ 每月租金 × 12 ＝ 20,000 × 12 ＝ <b>240,000 元／年</b>（很單純，付多少加起來就是了）<br>
+      Step 2｜押金運用收益 ＝ 押金 × 利率 ＝（20,000 × 2）× 1% ＝ 40,000 × 1% ＝ <b>400 元</b><br>
+      Step 3｜實質租金 ＝ 支付租金 ＋ 押金運用收益 ＝ 240,000 ＋ 400 ＝ <b>240,400 元／年</b>
+    </div>
+    <span class="ans">支付租金非常直接；實質租金要多考慮押金拿去投資能生的收益（或保證金、權利金），這才是題目要考的細節</span>
+  </div>
+</section>
+
+<!-- ⑥ 精選例題二：差額租金分配法 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★★</span> ⑥ 精選例題二｜§133 差額租金分配法計算 <span class="law-tag hi2">§133④</span></h2>
+  <div class="calc-card">
+    <div class="q">小羅三年前向閃哥承租房屋，每月實質租金為新台幣 2 萬元整。若閃哥的房屋現在拿到市場上重新出租，合理價格為新台幣 4 萬元整。若租金上漲有 50% 歸屬於閃哥，續約的合理租金應為多少？</div>
+    <div class="steps">
+      Step 1｜算差額（市場經濟租金 － 原契約租金）＝ 4 萬 － 2 萬 ＝ <b>2 萬元</b>（這是漲價的部分）<br>
+      Step 2｜依貢獻比例分配給出租人（閃哥）＝ 2 萬 × 50% ＝ <b>1 萬元</b><br>
+      Step 3｜續約合理租金 ＝ 原契約租金 ＋ 歸屬出租人之部分 ＝ 2 萬 ＋ 1 萬 ＝ <b>3 萬元</b>
+    </div>
+    <span class="ans">公式核心：差額（漲價金額）× 房東的貢獻比例，再加回原本的契約租金——不是把新舊租金直接平均，一定要先抓「漲了多少」再乘比例</span>
+  </div>
+  <div class="info-box">若題目換成 70% 歸屬出租人，算法完全一樣：2 萬 × 70% ＝ 1.4 萬，續約租金 ＝ 2 萬 ＋ 1.4 萬 ＝ 3.4 萬。關鍵只有兩步：先算差額、再乘比例加回去。</div>
+</section>
+
+<!-- ⑦ 高頻考點速查卡 -->
+<section>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑦ 高頻考點速查卡</h2>
+  <div class="qa-item">
+    <div class="qa-q">Q. 不動產租金估計以什麼租金為原則？</div>
+    <div class="qa-a"><b>實質租金</b>（§130），不是支付租金——這是全章最基本也最常考的文字陷阱。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 實質租金跟支付租金差在哪？</div>
+    <div class="qa-a">支付租金＝每期真正付的錢（契約租金）；實質租金＝支付租金 <b>＋</b> 押金／保證金／權利金等運用收益。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 續訂租約屬於哪種價格類型？</div>
+    <div class="qa-a">屬於<b>限定租金</b>（跟 L1 用詞定義混合出題的常見陷阱：私校校舍續租、捷運地下街擴大承租等情境都是這個判斷）。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 新訂租約三法跟續訂租約四法分別是什麼？</div>
+    <div class="qa-a">新訂（§132）：<b>比</b>較法・<b>積</b>算法・<b>收</b>益分析法。續訂（§133）：<b>比</b>較法・<b>利</b>率法・<b>推</b>算法・<b>差</b>額租金分配法（多一款，且最愛考）。</div>
+  </div>
+  <div class="qa-item">
+    <div class="qa-q">Q. 差額租金分配法怎麼算？</div>
+    <div class="qa-a">（市場經濟租金 － 原契約租金）× 歸屬出租人之貢獻比例 ＋ 原契約租金。先算漲了多少，再乘房東的貢獻比例，最後加回原本租金。</div>
+  </div>
+</section>
+
+<!-- ⑧ 考古題對應 -->
+<section>
+  <h2 class="sec-title">⑧ 考古題對應</h2>
+  <div class="info-box">
+    📋 資料來源：陳國全國補習班 105–114 年（近 10 年）不動產估價概要考題解答 PDF，逐年逐題完整查證（2026-08-14）。L7 十年中有 <b>7 年直接命中</b>（105、106、107、110、112、113、114），108、109、111 三年未見獨立命中題目，但條文本身只有 5 條，1–2 題屬正常密度。完整逐年逐題明細見 <code>不動產估價\估價L1-L7_考古題深查.md</code>。
+  </div>
+  <table style="margin-top:8px;">
+    <tr><th style="width:26%">高頻考點</th><th>對應本堂筆記章節</th><th style="width:24%">涵蓋狀態</th></tr>
+    <tr>
+      <td>實質租金定義與計算（§130）</td>
+      <td>①租金名詞解釋、③租金估計原則、⑤精選例題一</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 10年中7年命中，最核心考點</span></td>
+    </tr>
+    <tr>
+      <td>新訂／續訂租約估計方法（§132、§133）</td>
+      <td>④§132 vs §133、⑥精選例題二</td>
+      <td><span class="badge">中高頻（105、106、110 申論皆出現）</span></td>
+    </tr>
+    <tr>
+      <td>差額租金分配法計算（§133④）</td>
+      <td>④§132 vs §133、⑥精選例題二</td>
+      <td><span class="badge" style="background:var(--accent);">✓ 106、110年出現，選擇題固定題型</span></td>
+    </tr>
+    <tr>
+      <td>租金用詞定義區分（正常/限定/經濟/差額/支付/純租金）</td>
+      <td>①租金名詞解釋</td>
+      <td><span class="badge">中頻，常與L1用詞定義混合出題（106年續租屬限定租金陷阱）</span></td>
+    </tr>
+    <tr>
+      <td>§129 租金應考量因素</td>
+      <td>②§129應考量因素</td>
+      <td><span class="badge">114年申論出現</span></td>
+    </tr>
+  </table>
+</section>
+
+</body>
+</html>
