@@ -112,6 +112,13 @@
     border-radius: 6px;
     font-weight: bold;
   }
+  .badge.top { background: var(--accent); }
+  .badge.mid { background: var(--accent2); }
+  .examhit {
+    display: inline-block; margin-left: 6px; font-size: 11.5px; font-weight: 800; color: var(--accent);
+    background: var(--accent-bg); border: 1px solid var(--accent); border-radius: 10px; padding: 1px 9px;
+    vertical-align: middle;
+  }
   table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
   table th { background: var(--ink); color: #fff; padding: 7px 9px; text-align: left; }
   table td { padding: 7px 9px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
@@ -221,7 +228,7 @@
   <h2 class="sec-title"><span class="star">★★★</span> ② 兩大方法 <span class="law-tag hi">§29–30</span> <span class="law-tag hi2">§31–32</span></h2>
   <div class="grid-2">
     <div class="card hi">
-      <div class="card-title">直接資本化法</div>
+      <div class="card-title">直接資本化法<span class="examhit">約8/10年</span></div>
       <p>取勘估標的<b>未來平均一年期間</b>之客觀淨收益，除以價格日期當時適當之收益資本化率，即得收益價格。算的是<b>平均值</b>，不細分各期。</p>
       <div class="example-box" style="margin-top:8px;">
         P ＝ <span class="frac"><span class="num">A</span><span class="den">R</span></span>　　A＝未來平均一年期間之客觀淨收益；R＝收益資本化率
@@ -232,7 +239,7 @@
       </div>
     </div>
     <div class="card hi2">
-      <div class="card-title">折現現金流量分析法（DCF）</div>
+      <div class="card-title">折現現金流量分析法（DCF）<span class="examhit">108・109・110・111・113測（權重規則）</span></div>
       <p>適用於<b>以投資為目的</b>之不動產評估。各期<b>淨收益都算清楚</b>（不平均），連同<b>期末價值</b>依各自發生的期數分別折現後加總。</p>
       <div class="example-box" style="margin-top:8px;">
         P ＝ <span class="sigma"><span class="bound-top">n′</span><span class="symbol">Σ</span><span class="bound-bottom">k＝1</span></span> <span class="frac"><span class="num">CFₖ</span><span class="den">(1＋y)ᵏ</span></span> ＋ <span class="frac"><span class="num">Pn′</span><span class="den">(1＋y)ⁿ′</span></span>
@@ -258,7 +265,7 @@
 
 <!-- ④ 客觀淨收益 -->
 <section>
-  <h2 class="sec-title">④ 客觀淨收益之認定 <span class="law-tag">§33</span></h2>
+  <h2 class="sec-title">④ 客觀淨收益之認定 <span class="law-tag">§33</span><span class="examhit">105・111測</span></h2>
   <div class="grid-2">
     <div class="card">
       <div class="card-title">第一項｜認定基準</div>
@@ -273,7 +280,7 @@
 
 <!-- ⑤ 估價程序口訣 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑤ 收益法估價程序口訣 <span class="law-tag hi">§34</span> <span class="mnemo-char hi">收</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">計</span><span class="mnemo-char hi">決</span><span class="mnemo-char hi">計</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑤ 收益法估價程序口訣 <span class="law-tag hi">§34</span> <span class="mnemo-char hi">收</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">推</span><span class="mnemo-char hi">計</span><span class="mnemo-char hi">決</span><span class="mnemo-char hi">計</span><span class="examhit">107申論</span></h2>
   <div class="flow">
     <div class="flow-step"><div class="flow-num">1</div><div class="flow-box"><span class="mnemo-char hi">收</span>集<b>總收入、總費用</b>及<b>收益資本化率或折現率</b>等資料 <span class="law-tag">§35</span></div></div>
     <div class="flow-arrow">↓</div>
@@ -306,7 +313,7 @@
 
 <!-- ⑦ 總費用（一） -->
 <section>
-  <h2 class="sec-title">⑦ 推算總費用（一）：費用項目與重置提撥費 <span class="law-tag hi">§38</span> <span class="law-tag">§39</span></h2>
+  <h2 class="sec-title">⑦ 推算總費用（一）：費用項目與重置提撥費 <span class="law-tag hi">§38</span> <span class="law-tag">§39</span><span class="examhit">多年出現，含105・106・107・112測</span></h2>
   <div class="grid-3">
     <div class="card"><p>🏛️ 地價稅</p></div>
     <div class="card"><p>📋 地租</p></div>
@@ -323,7 +330,7 @@
 
 <!-- ⑧ 折舊提存費/率 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑧ 推算總費用（二）：折舊提存費／提存率 <span class="law-tag hi">§40</span> <span class="law-tag hi">§40–1</span> <span class="law-tag hi2">§41</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑧ 推算總費用（二）：折舊提存費／提存率 <span class="law-tag hi">§40</span> <span class="law-tag hi">§40–1</span> <span class="law-tag hi2">§41</span><span class="examhit">105・106・107・108・109測</span></h2>
   <div class="warn-box">勘估標的包含<b>建物</b>者才需考慮折舊（土地不會折舊）。總費用中<b>已扣除</b>折舊提存費者，後面決定 R 時不用再加；<b>未扣除</b>者，則要在 R 上加計折舊提存率——<b>費、率二擇一</b>，不會同時出現（§40）。</div>
   <div class="grid-2" style="margin-top:10px;">
     <div class="card hi">
@@ -366,7 +373,7 @@
 
 <!-- ⑨ 淨收益 -->
 <section>
-  <h2 class="sec-title">⑨ 計算淨收益 <span class="law-tag">§42</span></h2>
+  <h2 class="sec-title">⑨ 計算淨收益 <span class="law-tag">§42</span><span class="examhit">110測</span></h2>
   <div class="card">
     <p><b>淨收益＝有效總收入－總費用。</b>若為營運性不動產之淨收益，應扣除<b>不屬於該不動產所產生</b>之其他淨收益。</p>
   </div>
@@ -374,7 +381,7 @@
 
 <!-- ⑩ 五種資本化率決定方法 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑩ 決定收益資本化率或折現率：五種方法 <span class="law-tag hi">§43</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑩ 決定收益資本化率或折現率：五種方法 <span class="law-tag hi">§43</span><span class="examhit">105-114年10/10年幾乎全中</span></h2>
   <div class="tip-banner">老師強調：這五種方法<b>全部都要記住</b>，選擇、申論都愛考。</div>
   <div class="grid-3">
     <div class="card hi">
@@ -416,7 +423,7 @@
 
 <!-- ⑪ 各類標的收益價格 -->
 <section>
-  <h2 class="sec-title"><span class="star">★★★</span> ⑪ 計算收益價格：土地／建物／房地 <span class="law-tag hi">§44</span> <span class="law-tag hi">§45</span> <span class="law-tag hi">§46</span></h2>
+  <h2 class="sec-title"><span class="star">★★★</span> ⑪ 計算收益價格：土地／建物／房地 <span class="law-tag hi">§44</span> <span class="law-tag hi">§45</span> <span class="law-tag hi">§46</span><span class="examhit">多年出現，含113測驗14</span></h2>
   <div class="info-box">📖 觀念解析：一棟透天厝，土地＋建物合計的價值，通常會大於土地與建物各自價值的加總（1＋1＞2，「團結力量大」）。多出來的那份效益該歸給誰？§44～46 各自代表一種立場：</div>
   <div class="grid-3" style="margin-top:8px;">
     <div class="card hi">
@@ -501,37 +508,42 @@
     <tr>
       <td>收益資本化率五種決定方法（風險溢酬法／市場萃取法／加權平均資金成本法／債務保障比率法／有效總收入乘數法）</td>
       <td>⑩決定收益資本化率或折現率：五種方法</td>
-      <td><span class="badge" style="background:var(--accent);">✓ 六大核心・十年幾乎全中</span></td>
-    </tr>
-    <tr>
-      <td>不動產證券化 DCF／直接資本化法權重規則</td>
-      <td>②兩大方法、③DCF精選題</td>
-      <td><span class="badge">中高頻（108/109/110/111/113）</span></td>
+      <td><span class="badge top">✓ 六大核心・最高頻必考（10/10年幾乎全中）</span></td>
     </tr>
     <tr>
       <td>直接資本化法定義與公式（P=A/R，§29–30，陷阱：未來非過去平均一年）</td>
       <td>②兩大方法</td>
-      <td><span class="badge">高頻（約8年）</span></td>
+      <td><span class="badge top">高頻（約8/10年）</span></td>
+    </tr>
+    <tr>
+      <td>不動產證券化 DCF／直接資本化法權重規則</td>
+      <td>②兩大方法、③DCF精選題</td>
+      <td><span class="badge top">高頻（5年：108・109・110・111・113）</span></td>
     </tr>
     <tr>
       <td>折舊提存費／提存率四公式（§40、40-1）</td>
       <td>⑧推算總費用（二）：折舊提存費／提存率</td>
-      <td><span class="badge">中高頻（105/106/107/108/109）</span></td>
+      <td><span class="badge top">高頻（5年：105・106・107・108・109，此前誤判「查無證據」已推翻）</span></td>
     </tr>
     <tr>
       <td>三大貢獻說（土地／建物／房地）與收益價格公式</td>
       <td>⑪計算收益價格：土地／建物／房地</td>
-      <td><span class="badge">多年出現</span></td>
+      <td><span class="badge mid">中頻（多年出現）</span></td>
     </tr>
     <tr>
       <td>收益法總費用項目與淨收益計算（陷阱：不含土地增值稅／貸款支出）</td>
       <td>⑦推算總費用（一）、⑨計算淨收益</td>
-      <td><span class="badge">多年出現</span></td>
+      <td><span class="badge mid">中頻（多年出現）</span></td>
+    </tr>
+    <tr>
+      <td>客觀淨收益之認定（§33，以最有效使用為基準）</td>
+      <td>④客觀淨收益之認定</td>
+      <td><span class="badge mid">中頻（2年：105・111）</span></td>
     </tr>
     <tr>
       <td>收益法估價程序「收推推計決計」六步驟</td>
       <td>⑤收益法估價程序口訣</td>
-      <td><span class="badge">申論常考（107申論）</span></td>
+      <td><span class="badge">一般命中（1年：107申論）</span></td>
     </tr>
   </table>
   <div class="warn-box hi2">⚠️ 本次逐年查證確認：①收益資本化率五種方法「十年幾乎全中」的舊判斷屬實，證據最紮實，優先背誦；②折舊提存費／提存率**推翻**先前「查無直接證據」的判斷——實際上 105、106、107、108、109 年都有直接命中，已改標記並補充年份。⑧章節內「最愛考／冷門」等標籤是依老師上課逐字稿口述強調程度而來，跟本次考古題查證結果方向一致。</div>
