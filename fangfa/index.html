@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不動產估價方法視覺化</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink:#1e293b; --sub:#64748b; --line:#e2e8f0; --line-strong:#94a3b8;
+    --neutral:#334155; --neutral-bg:#f1f5f9;
+    --accent:#8B4438; --accent-bg:#F1E2DD;
+    --accent2:#9C7A34; --accent2-bg:#EFE6D0;
+  }
+  body {
+    font-family: 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+    background: #f0f2f5;
+    color: var(--ink);
+    padding: 32px;
+    width: 1400px;
+  }
+
+  h1.main-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--sub);
+    margin-bottom: 32px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== FRACTION / SIGMA ===== */
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
+  .frac .num { border-bottom: 2px solid currentColor; padding: 0 6px 2px; text-align: center; white-space: nowrap; font-size: 0.85em; }
+  .frac .den { padding: 2px 6px 0; text-align: center; white-space: nowrap; font-size: 0.85em; }
+  .sigma { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 3px; line-height: 1; }
+  .sigma .bound-top, .sigma .bound-bottom { font-size: 11px; white-space: nowrap; }
+  .sigma .symbol { font-size: 22px; line-height: 0.85; }
+
+  /* ===== SECTION TITLE ===== */
+  .section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--ink);
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== METHOD CARDS ===== */
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .method-card {
+    border-radius: 16px;
+    padding: 20px 18px;
+    color: #fff;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .card-icon { font-size: 28px; margin-bottom: 8px; }
+  .card-name { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+  .card-alias { font-size: 11px; opacity: 0.85; margin-bottom: 12px; }
+  .card-formula {
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .card-tag {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  /* ===== COMPARISON TABLE ===== */
+  .table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 28px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead tr {
+    background: var(--ink);
+    color: #fff;
+  }
+  thead th {
+    padding: 12px 14px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  thead th:first-child { text-align: left; }
+  tbody tr:nth-child(even) { background: var(--neutral-bg); }
+  tbody tr:hover { background: #eef1f5; }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+    line-height: 1.5;
+  }
+  tbody td:first-child {
+    text-align: left;
+    font-weight: 700;
+    color: var(--neutral);
+    background: var(--neutral-bg);
+    white-space: nowrap;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--neutral-bg);
+    color: var(--neutral);
+    border: 1px solid var(--line-strong);
+  }
+  .star { color: var(--accent); }
+
+  /* ===== FLOW CHART ===== */
+  .flow-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .flow-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .flow-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .flow-title .mnemo { font-size: 12.5px; font-weight: 700; color: var(--accent2); }
+  .flow-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    background: var(--ink);
+  }
+  .flow-steps { display: flex; flex-direction: column; gap: 0; }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .flow-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--ink);
+    flex-shrink: 0;
+  }
+  .step-num.last { background: var(--accent); }
+  .step-line {
+    width: 2px;
+    flex: 1;
+    min-height: 10px;
+    margin: 2px 0;
+    background: var(--line-strong);
+  }
+  .step-content {
+    padding: 4px 0 12px 0;
+    flex: 1;
+  }
+  .step-main { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .step-sub { font-size: 11px; color: var(--sub); margin-top: 2px; line-height: 1.4; }
+
+  /* ===== DECISION TREE ===== */
+  .decision-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 28px;
+  }
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .decision-item {
+    border-radius: 12px;
+    padding: 14px;
+    border-left: 4px solid var(--line-strong);
+    background: var(--neutral-bg);
+  }
+  .di-title { font-size: 14px; font-weight: 800; margin-bottom: 8px; color: var(--ink); }
+  .di-keyword {
+    font-size: 11.5px;
+    color: var(--neutral);
+    line-height: 1.8;
+  }
+  .keyword-tag {
+    display: inline-block;
+    background: rgba(0,0,0,0.06);
+    border-radius: 4px;
+    padding: 0px 5px;
+    margin: 1px 2px;
+    font-size: 11px;
+  }
+
+  /* ===== EXAM TIPS ===== */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .tip-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-top: 4px solid var(--line-strong);
+  }
+  .tip-q {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--neutral);
+    margin-bottom: 6px;
+  }
+  .tip-a {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--ink);
+  }
+  .tip-note { font-size: 11px; color: var(--sub); margin-top: 3px; }
+
+  /* ===== DEPRECIATION ===== */
+  .dep-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .dep-card {
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    background: var(--neutral-bg);
+    border: 1px solid var(--line);
+  }
+  .dep-card .dep-icon { font-size: 24px; margin-bottom: 6px; }
+  .dep-card .dep-name { font-size: 14px; font-weight: 800; margin-bottom: 4px; color: var(--ink); }
+  .dep-card .dep-desc { font-size: 11.5px; color: var(--neutral); line-height: 1.5; }
+  .dep-card .dep-recover { font-size: 11px; margin-top: 6px; font-weight: 700; color: var(--sub); }
+
+  /* ===== FORMULA BOX（強調用途，比照全站標準）===== */
+  .formula-box {
+    background: var(--ink); color: #fff; border-radius: 10px; padding: 12px 18px;
+    font-size: 15px; font-weight: 900; text-align: center; margin: 8px 0; letter-spacing: 0.5px;
+    line-height: 1.7;
+  }
+  .formula-box.hi { background: var(--accent); }
+  .formula-box.hi2 { background: var(--accent2); }
+  .fx-card {
+    background: #fff; border-radius: 16px; padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08); border: 2px solid var(--line-strong);
+  }
+  .fx-title { font-size: 14px; font-weight: 900; color: var(--ink); margin-bottom: 12px; }
+  .fx-box {
+    background: var(--neutral-bg); border-radius: 8px; padding: 10px; margin-bottom: 10px;
+  }
+  .fx-label { font-size: 11px; color: var(--sub); font-weight: 700; margin-bottom: 4px; }
+  .fx-formula { font-size: 15px; font-weight: 900; color: var(--ink); text-align: center; padding: 4px 0; line-height: 1.8; }
+  .fx-vars { font-size: 10.5px; color: var(--neutral); line-height: 1.7; }
+  .warn { color: var(--accent); font-weight: 800; }
+
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--sub);
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="main-title">不動產估價四大方法 — 考試速記圖</h1>
+<p class="subtitle">114 年不動產經紀人考試備考 ｜ 來源：三民輔考 不動產估價概要</p>
+
+<!-- ===== SECTION 1: METHOD CARDS ===== -->
+<div class="section-title">① 四大方法一覽</div>
+<div class="cards-row">
+  <div class="method-card">
+    <div class="card-icon">📊</div>
+    <div class="card-name">比較法</div>
+    <div class="card-alias">市場比較法</div>
+    <div class="card-formula">比較價格<br>＝ 成交價 × 四大調整係數</div>
+    <div class="card-tags">
+      <span class="card-tag">住宅</span>
+      <span class="card-tag">一般土地</span>
+      <span class="card-tag">最常用</span>
+    </div>
+  </div>
+  <div class="method-card">
+    <div class="card-icon">💰</div>
+    <div class="card-name">收益法</div>
+    <div class="card-alias">投資還原法</div>
+    <div class="card-formula">收益價格 ＝ <span class="frac"><span class="num">淨收益（NOI）</span><span class="den">還原利率</span></span></div>
+    <div class="card-tags">
+      <span class="card-tag">商辦</span>
+      <span class="card-tag">店面</span>
+      <span class="card-tag">出租住宅</span>
+    </div>
+  </div>
+  <div class="method-card">
+    <div class="card-icon">🏗️</div>
+    <div class="card-name">成本法</div>
+    <div class="card-alias">積算法</div>
+    <div class="card-formula">積算價格<br>＝ 土地 ＋（重建成本 ─ 折舊）</div>
+    <div class="card-tags">
+      <span class="card-tag">廠房</span>
+      <span class="card-tag">學校</span>
+      <span class="card-tag">特殊建物</span>
+    </div>
+  </div>
+  <div class="method-card">
+    <div class="card-icon">🏙️</div>
+    <div class="card-name">土地開發分析法</div>
+    <div class="card-alias">假設開發法</div>
+    <div class="card-formula">土地價格<br>＝ 總銷 ─ 開發成本 ─ 開發利潤</div>
+    <div class="card-tags">
+      <span class="card-tag">素地</span>
+      <span class="card-tag">農地變更</span>
+      <span class="card-tag">都更</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: COMPARISON TABLE ===== -->
+<div class="section-title">② 四大方法比較總表</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:130px">比較項目</th>
+        <th>比較法</th>
+        <th>收益法</th>
+        <th>成本法</th>
+        <th>土地開發分析法</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>核心概念</td>
+        <td>市場成交行情</td>
+        <td>未來收益折現</td>
+        <td>重建成本扣折舊</td>
+        <td>開發利潤反推地價</td>
+      </tr>
+      <tr>
+        <td>最適用</td>
+        <td><span class="badge">住宅、一般土地</span></td>
+        <td><span class="badge">商辦、店面、出租</span></td>
+        <td><span class="badge">廠房、學校、廟宇</span></td>
+        <td><span class="badge">素地、都更基地</span></td>
+      </tr>
+      <tr>
+        <td>必要條件</td>
+        <td>3 個以上比較案例</td>
+        <td>穩定租金收益</td>
+        <td>需有建物存在</td>
+        <td>可開發之土地</td>
+      </tr>
+      <tr>
+        <td>資料來源</td>
+        <td>實價登錄、成交案例</td>
+        <td>市場租金、空置率</td>
+        <td>建造成本資料庫</td>
+        <td>銷售行情＋建造成本</td>
+      </tr>
+      <tr>
+        <td>主觀判斷點</td>
+        <td>比較案例選取、調整率</td>
+        <td><strong>還原利率</strong>的決定</td>
+        <td><strong>折舊額</strong>的估算</td>
+        <td>開發假設、利潤率</td>
+      </tr>
+      <tr>
+        <td>最大風險</td>
+        <td>案例相似度不足</td>
+        <td>還原利率誤差</td>
+        <td>折舊估算偏差</td>
+        <td>開發假設脫離現實</td>
+      </tr>
+      <tr>
+        <td>程序步驟</td>
+        <td><span class="badge">6 步</span></td>
+        <td><span class="badge">6 步</span></td>
+        <td><span class="badge">8 步</span></td>
+        <td><span class="badge">8 步</span></td>
+      </tr>
+      <tr>
+        <td>難度</td>
+        <td><span class="star">★★</span>☆</td>
+        <td><span class="star">★★★</span></td>
+        <td><span class="star">★★</span>☆</td>
+        <td><span class="star">★★★★</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== SECTION 3: 估價作業程序 ===== -->
+<div class="section-title">③ 估價作業程序（8步）§6</div>
+<div class="decision-box" style="margin-bottom:28px">
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px">
+    <span style="font-size:13px; color:var(--sub)">口訣 — 外業：</span>
+    <span style="font-size:15px; font-weight:800; color:var(--ink)">基、計、蒐、狀</span>
+    <span style="font-size:13px; color:var(--sub); margin-left:16px">內業：</span>
+    <span style="font-size:15px; font-weight:800; color:var(--ink)">整、運、決、製</span>
+  </div>
+  <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:10px">
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">外業 ①</div>
+      <div style="font-size:13px; font-weight:800">確定估價基本事項 §9</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">勘估標的內容<br>價格日期<br>價格種類、條件<br>估價目的</div>
+    </div>
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">外業 ②</div>
+      <div style="font-size:13px; font-weight:800">擬定估價計畫 §10</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">步驟<br>時間<br>人力<br>經費<br>進度表</div>
+    </div>
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">外業 ③</div>
+      <div style="font-size:13px; font-weight:800">蒐集資料 §11–12</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">標示、權利、法定用途<br>一般、區域、個別因素<br>交易、收益、成本資料<br>比較實例資料</div>
+    </div>
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">外業 ④</div>
+      <div style="font-size:13px; font-weight:800">確認勘估標的狀態 §13</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">基本資料、權利狀態<br>勘比使用狀況<br>影響價格各項資料<br>作成紀錄、攝影照片</div>
+    </div>
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">內業 ⑤</div>
+      <div style="font-size:13px; font-weight:800">整理、比較、分析資料 §13–14</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">資料整理與比對分析</div>
+    </div>
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">內業 ⑥</div>
+      <div style="font-size:13px; font-weight:800">運用估價方法推算價格 §14</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">⚠️ 兼採 2 種以上估價方法（原則）<br>比較法→比較價格<br>收益法→收益價格<br>成本法→成本價格</div>
+    </div>
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">內業 ⑦</div>
+      <div style="font-size:13px; font-weight:800">決定勘估標的價格 §15</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">價格綜合比較<br>→ 顯著差異重新檢討<br>→ 決定價格並敘明理由</div>
+    </div>
+    <div style="background:var(--neutral-bg); border-radius:12px; padding:14px; border-left:4px solid var(--line-strong)">
+      <div style="font-size:11px; color:var(--sub); font-weight:800; margin-bottom:4px">內業 ⑧</div>
+      <div style="font-size:13px; font-weight:800">製作估價報告書 §16 ✓</div>
+      <div style="font-size:11px; color:var(--sub); margin-top:4px; line-height:1.6">簽名或蓋章<br>應載明事項：15個<br>檢附圖說資料</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: PROCEDURE FLOWS ===== -->
+<div class="section-title">④ 四大估價方法程序流程</div>
+<div class="flow-section">
+
+  <!-- 比較法 -->
+  <div class="flow-box">
+    <div class="flow-title">
+      <span class="flow-dot"></span>
+      比較法 估價程序（6步）　<span class="mnemo">口訣：蒐、選、對、比、計、決</span>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-main">蒐集並查證比較標的相關資料</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-main">選擇條件相同或相似之比較標的</div>
+          <div class="step-sub">⚠️ 至少 3 個案例</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-main">情況調整 ＋ 價格日期調整</div>
+          <div class="step-sub">排除非正常交易｜時間漲跌修正</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-main">區域因素調整 ＋ 個別因素調整</div>
+          <div class="step-sub">地段差異｜樓層、屋齡、面積</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-main">計算試算價格</div>
+          <div class="step-sub">① 情況→②日期→③區域→④個別</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num last">6</div>
+        </div>
+        <div class="step-content">
+          <div class="step-main">決定比較價格 ✓</div>
+          <div class="step-sub">加權平均各案例試算價格</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 收益法 -->
+  <div class="flow-box">
+    <div class="flow-title">
+      <span class="flow-dot"></span>
+      收益法 估價程序（6步）§34　<span class="mnemo">口訣：蒐、推、推、計、決、計</span>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">蒐集資料 §35</div><div class="step-sub">蒐集勘估標的 &amp; 比較標的最近 3 年：總收入、有效總收入、收益資本化率</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">推算有效總收入 §36–37</div><div class="step-sub">有效總收入 ＝ 總收入 ─ 閒置損失 ─ 其他收入損失</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">推算總費用 §38–41</div><div class="step-sub">地價稅、地租、房屋稅、保險、管理、維修費；含重置提撥費 §39、折舊提存費/率 §40</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">計算淨收益 §42</div><div class="step-sub">淨收益 ＝ 有效總收入 ─ 總費用</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">決定收益資本化率或折現率 §43</div><div class="step-sub">⚠️ 5 種方法：①風險溢酬法　②市場萃取法　③加權平均資金成本法　④債務保障比率法　⑤有效總收入乘數法</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num last">6</div>
+        </div>
+        <div class="step-content"><div class="step-main">計算收益價格 §44–47 ✓</div><div class="step-sub">求取土地 / 建物 / 房地收益價格；直接資本化法：P ＝ a ÷ r</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成本法 -->
+  <div class="flow-box">
+    <div class="flow-title">
+      <span class="flow-dot"></span>
+      成本法 估價程序（8步）§49　<span class="mnemo">口訣：蒐、況、調、選、推、總、累、計</span>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">蒐集資料 §50–51</div><div class="step-sub">三書（開發建築/施工計畫書）、兩圖（設計/竣工圖）、兩照（許可/使用執照）、一登（登記謄本）</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">現況勘察</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">調查、整理、比較及分析各項成本及相關費用 §52</div><div class="step-sub">營、規、廣、管、稅、資、利</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">選擇適當方法推算營造或施工費 §53–56</div><div class="step-sub">直接法（①淨計法 §55 ②單位工程比較法）｜間接法（①工程造價比較法 §56 ②單位面積比較法）</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">推算其他各項費用及利潤 §57–61</div><div class="step-sub">規劃設計費 §57、廣告&amp;銷售&amp;管理費 §61、稅捐、資本利息 §58–59、開發或建築利潤 §60</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">6</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">計算總成本 §62–64</div><div class="step-sub">廣、管、稅、利潤 → 不予計入 §62；未完工建物依比例估算 §63</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">7</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">計算建物累積折舊額 §65–68</div><div class="step-sub">⚠️ 三種路徑：等速折舊（定額法）｜初期加速（定率法）｜初期減速（償債基金法）</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num last">8</div>
+        </div>
+        <div class="step-content"><div class="step-main">計算成本價格 §69 ✓</div><div class="step-sub">建物成本價格 ＝ 建物總成本 ─ 建物累積折舊額</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 土地開發分析法 -->
+  <div class="flow-box">
+    <div class="flow-title">
+      <span class="flow-dot"></span>
+      土地開發分析法 估價程序（8步）§71　<span class="mnemo">口訣：確、調、現、估、估、估、選、計</span>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">確定土地開發內容及預期開發時間</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">調查各項成本及相關費用並蒐集市場行情等資料 §72</div><div class="step-sub">第11條資料、建設計畫書</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">現況勘察並進行環境發展程度之調查及分析 §73</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">估算開發或建築後可銷售之土地或建物面積 §74</div><div class="step-sub">依法定用途、容積率、建蔽率計算可售面積</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">估算開發或建築後總銷售金額 §75</div><div class="step-sub">總銷售金額 ＝ 可售面積 × 銷售單價</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">6</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">估算各項成本及相關費用 §76–78</div><div class="step-sub">直接成本（建造施工費）＋ 間接成本（廣、管、稅）、資本利息 §78</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num">7</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content"><div class="step-main">選擇適當之利潤率及資本利息綜合利率 §78–79</div><div class="step-sub">⚠️ 綜合利率 ＝ 資本利息年利率 × (土/(土+建) + 建/(土+建)×½) × 開發年數</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="step-num last">8</div>
+        </div>
+        <div class="step-content"><div class="step-main">計算土地開發分析價格 §81 ✓</div><div class="step-sub">V ＝ S ÷ (1＋R) ÷ (1＋i) ─ (C＋M)</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SECTION 5: FORMULAS ===== -->
+<div class="section-title">⑤ 重要公式速查</div>
+<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px">
+
+  <!-- 比較法 -->
+  <div class="fx-card">
+    <div class="fx-title">📊 比較法</div>
+
+    <div class="fx-box">
+      <div class="fx-label">試算價格 §26（調整順序不可顛倒）</div>
+      <div class="fx-formula" style="font-size:12px; line-height:1.9; text-align:center">
+        成交價<br>
+        ×情況調整<br>
+        ×價格日期調整<br>
+        ×區域因素調整<br>
+        ×個別因素調整<br>
+        ＝ 試算價格
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label warn">⚠️ 調整限制 §25</div>
+      <div class="fx-formula" style="font-size:12px; line-height:2">
+        單項（區域/個別） &gt; 15% → 排除<br>
+        四項總計 &gt; 30% → 排除
+      </div>
+    </div>
+
+    <div class="fx-box" style="margin-bottom:0">
+      <div class="fx-label">⚠️ 試算價格差距 §26</div>
+      <div class="fx-formula" style="font-size:12.5px; line-height:1.8">
+        <span class="frac"><span class="num">高 － 低</span><span class="den">(高 ＋ 低) ÷ 2</span></span><br>
+        <span class="warn" style="font-size:12px">&gt; 20% → 排除</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 收益法 -->
+  <div class="fx-card">
+    <div class="fx-title">💰 收益法</div>
+
+    <div class="fx-box">
+      <div class="fx-label">直接資本化法 §30 ★★★</div>
+      <div class="formula-box hi" style="font-size:20px; padding:8px">P ＝ <span class="frac"><span class="num">a</span><span class="den">r</span></span></div>
+      <div class="fx-vars">a：未來平均一年期間客觀淨收益<br>r：收益資本化率</div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">DCF 折現現金流量法 §32</div>
+      <div class="fx-formula" style="font-size:12px; line-height:1.9">
+        <span class="sigma"><span class="bound-top">n'</span><span class="symbol">Σ</span><span class="bound-bottom">k＝1</span></span>
+        <span class="frac"><span class="num">CFk</span><span class="den">(1＋Y)ᵏ</span></span>
+        ＋ <span class="frac"><span class="num">Pn'</span><span class="den">(1＋Y)ⁿ'</span></span>
+      </div>
+      <div class="fx-vars">CFk：各期淨收益　Y：折現率<br>Pn'：期末價值　n'：分析期間</div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">淨收益計算 §42</div>
+      <div class="fx-formula" style="font-size:11.5px; line-height:1.9; text-align:left">
+        有效總收入 ＝ 總收入 ─ 閒置損失<br>
+        淨收益 ＝ 有效總收入 ─ 總費用
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">市場萃取法求收益資本化率 §43</div>
+      <div class="fx-formula" style="font-size:18px">r ＝ <span class="frac"><span class="num">a</span><span class="den">P</span></span></div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">收益資本化率與折現率關係</div>
+      <div class="fx-formula" style="font-size:20px">R ＝ Y ─ g</div>
+      <div class="fx-vars" style="text-align:center">R：收益資本化率　Y：折現率　g：淨收益成長率</div>
+    </div>
+
+    <div class="fx-box" style="margin-bottom:0">
+      <div class="fx-label">一定期間收益 §47</div>
+      <div class="fx-formula" style="font-size:13px">
+        P ＝ a × [1 ─ <span class="frac"><span class="num">1</span><span class="den">(1＋r)ⁿ'</span></span>] ÷ r
+      </div>
+      <div class="fx-vars">a：平均一年折舊前淨收益　n'：可收益之年數</div>
+    </div>
+
+  </div>
+
+  <!-- 成本法 -->
+  <div class="fx-card">
+    <div class="fx-title">🏗️ 成本法（三大折舊公式）</div>
+
+    <div class="fx-box">
+      <div class="fx-label">① 等速折舊路徑（定額法）</div>
+      <div class="fx-formula" style="font-size:14px">
+        Dₙ ＝ C × [<span class="frac"><span class="num">1─s</span><span class="den">N</span></span>] × n
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">② 初期加速折舊路徑（定率法）</div>
+      <div class="fx-formula" style="font-size:14px">
+        Dₙ ＝ C × [1 ─ (1─d)ⁿ]
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">③ 初期減速折舊路徑（償債基金法）</div>
+      <div class="fx-formula" style="font-size:13px">
+        Dₙ ＝ C(1─s) × <span class="frac"><span class="num">(1＋i)ⁿ ─ 1</span><span class="den">(1＋i)ᴺ ─ 1</span></span>
+      </div>
+    </div>
+
+    <div class="fx-box" style="background:#f9fafb">
+      <div class="fx-vars" style="line-height:2"><strong style="color:var(--ink)">變數說明</strong><br>
+        Dₙ：累積折舊額　C：建物總成本<br>
+        s：殘餘價格率　　n：已經歷年數<br>
+        N：耐用年數　　　d：定率法折舊率<br>
+        i：自有資金計息利率
+      </div>
+    </div>
+
+    <div class="fx-box" style="margin-bottom:0">
+      <div class="fx-label">成本價格 §69</div>
+      <div class="fx-formula" style="font-size:11.5px; line-height:1.9; text-align:left">
+        建物成本價格<br>
+        ＝ 建物總成本 ─ 累積折舊額<br>
+        房地成本價格<br>
+        ＝ 土地價格 ＋ 建物成本價格
+      </div>
+    </div>
+  </div>
+
+  <!-- 土地開發分析法 -->
+  <div class="fx-card">
+    <div class="fx-title">🏙️ 土地開發分析法</div>
+
+    <div class="fx-box">
+      <div class="fx-label">土地開發分析價格 §81 ★★★</div>
+      <div class="formula-box hi" style="font-size:14px; padding:8px; line-height:1.8">
+        V ＝ <span class="frac"><span class="num">S</span><span class="den">(1＋R)(1＋i)</span></span> ─ (C＋M)
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-vars" style="line-height:2"><strong style="color:var(--ink)">變數說明</strong><br>
+        V：土地開發分析價格<br>
+        S：開發後總銷售金額<br>
+        R：開發建築利潤率<br>
+        i：資本利息綜合利率<br>
+        C：直接成本（建造施工費）<br>
+        M：間接成本（廣管稅等）
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">資本利息綜合利率 §79 ⚠️</div>
+      <div class="fx-formula" style="font-size:11px; line-height:2">
+        綜合利率 ＝ 資本利息年利率 × (
+        <span class="frac"><span class="num">土</span><span class="den">土＋建</span></span> ＋
+        <span class="frac"><span class="num">建</span><span class="den">土＋建</span></span> ×
+        <span class="frac"><span class="num">1</span><span class="den">2</span></span> )
+        × 開發年數
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-label">收益法補充：土地收益價格 §44</div>
+      <div class="fx-formula" style="font-size:11.5px; line-height:1.9; text-align:left">
+        無建物：P土地 ＝ <span class="frac"><span class="num">a土地</span><span class="den">r土地</span></span><br>
+        有建物：P土地 ＝ <span class="frac"><span class="num">a房地─a建物</span><span class="den">r土地</span></span>
+      </div>
+    </div>
+
+    <div class="fx-box" style="margin-bottom:0">
+      <div class="fx-label">加權平均資金成本法求 r §43</div>
+      <div class="fx-formula" style="font-size:15px">
+        r ＝ <span class="sigma"><span class="bound-top">n</span><span class="symbol">Σ</span><span class="bound-bottom">i＝1</span></span> Wᵢ × Kᵢ
+      </div>
+      <div class="fx-vars">Wᵢ：第i資金來源占比　Kᵢ：第i資金利率</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SECTION 4: DECISION TREE ===== -->
+<div class="decision-box">
+  <div class="section-title" style="margin-bottom:0">⑥ 考試選方法速查：看關鍵字判斷</div>
+  <div class="decision-grid">
+    <div class="decision-item">
+      <div class="di-title">📊 比較法</div>
+      <div class="di-keyword">
+        <span class="keyword-tag">市場行情</span>
+        <span class="keyword-tag">成交案例</span>
+        <span class="keyword-tag">實價登錄</span>
+        <span class="keyword-tag">住宅</span>
+        <span class="keyword-tag">一般土地</span>
+        <span class="keyword-tag">調整率</span>
+        <span class="keyword-tag">試算價格</span>
+      </div>
+    </div>
+    <div class="decision-item">
+      <div class="di-title">💰 收益法</div>
+      <div class="di-keyword">
+        <span class="keyword-tag">租金收益</span>
+        <span class="keyword-tag">還原利率</span>
+        <span class="keyword-tag">商辦大樓</span>
+        <span class="keyword-tag">店面</span>
+        <span class="keyword-tag">出租</span>
+        <span class="keyword-tag">NOI</span>
+        <span class="keyword-tag">空置率</span>
+        <span class="keyword-tag">DCF</span>
+      </div>
+    </div>
+    <div class="decision-item">
+      <div class="di-title">🏗️ 成本法</div>
+      <div class="di-keyword">
+        <span class="keyword-tag">重建成本</span>
+        <span class="keyword-tag">折舊</span>
+        <span class="keyword-tag">積算</span>
+        <span class="keyword-tag">廠房</span>
+        <span class="keyword-tag">學校</span>
+        <span class="keyword-tag">廟宇</span>
+        <span class="keyword-tag">特殊建物</span>
+        <span class="keyword-tag">無市場交易</span>
+      </div>
+    </div>
+    <div class="decision-item">
+      <div class="di-title">🏙️ 土地開發分析法</div>
+      <div class="di-keyword">
+        <span class="keyword-tag">素地</span>
+        <span class="keyword-tag">農地變更</span>
+        <span class="keyword-tag">都更</span>
+        <span class="keyword-tag">容積率</span>
+        <span class="keyword-tag">假設開發</span>
+        <span class="keyword-tag">開發利潤</span>
+        <span class="keyword-tag">可售坪數</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: DEPRECIATION ===== -->
+<div class="decision-box" style="margin-bottom:28px">
+  <div class="section-title" style="margin-bottom:0">⑦ 成本法三種折舊（必考！口訣：物功經）</div>
+  <div class="dep-row">
+    <div class="dep-card">
+      <div class="dep-icon">⚙️</div>
+      <div class="dep-name">① 物理性折舊</div>
+      <div class="dep-desc">老化、磨損、結構劣化<br>隨時間自然發生</div>
+      <div class="dep-recover">▲ 部分可修繕回復</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-icon">🔧</div>
+      <div class="dep-name">② 功能性折舊</div>
+      <div class="dep-desc">格局過時、設備落後<br>設計不符現代需求</div>
+      <div class="dep-recover">▼ 難以回復</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-icon">🌍</div>
+      <div class="dep-name">③ 經濟性折舊</div>
+      <div class="dep-desc">周邊環境變差<br>市場需求下滑</div>
+      <div class="dep-recover">✗ 無法回復</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION NEW: 收益資本化率/折現率5種方法 ===== -->
+<div class="decision-box" style="margin-bottom:28px">
+  <div class="section-title" style="margin-bottom:0">💰 收益資本化率／折現率 §43（5 種決定方法）</div>
+  <div class="dep-row" style="grid-template-columns: repeat(5, 1fr)">
+    <div class="dep-card">
+      <div class="dep-icon">📊</div>
+      <div class="dep-name">① 風險溢酬法</div>
+      <div class="dep-desc" style="text-align:left">
+        <strong>2率：</strong>定存利率、公債利率<br>
+        <strong>2動：</strong>貨幣變動、不動產價格變動<br>
+        <strong>1風險：</strong>不動產投資風險性<br>
+        → 選最具一般性財貨投報率<br>
+        → 比較勘/比特性差異<br>
+        → 就流通、風險、增值、管難決定
+      </div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-icon">🔍</div>
+      <div class="dep-name">② 市場萃取法</div>
+      <div class="dep-desc">選相同或類似比較標的</div>
+      <div class="fx-formula" style="font-size:20px; padding:8px 0">r ＝ <span class="frac"><span class="num">a</span><span class="den">P</span></span></div>
+      <div class="fx-vars">a：淨收益　P：價格</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-icon">⚖️</div>
+      <div class="dep-name">③ 加權平均<br>資金成本法</div>
+      <div class="fx-formula" style="font-size:16px; padding:8px 0">r ＝ <span class="sigma"><span class="bound-top">n</span><span class="symbol">Σ</span><span class="bound-bottom">i＝1</span></span> Wᵢ×Kᵢ</div>
+      <div class="fx-vars">Wᵢ：資金來源占比（Σ Wᵢ ＝ 1）<br>Kᵢ：各資金利率/要求報酬率</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-icon">🏦</div>
+      <div class="dep-name">④ 債務保障<br>比率法</div>
+      <div class="dep-desc" style="line-height:1.8">r ＝ 債務保障比率<br>× 貸款常數<br>× 貸款資金占不動產價格比率</div>
+      <div class="fx-label" style="margin-top:8px; margin-bottom:3px">貸款常數公式：</div>
+      <div class="fx-formula" style="font-size:12px">
+        <span class="frac"><span class="num">(1+r)ⁿ×r</span><span class="den">(1+r)ⁿ─1</span></span>
+      </div>
+      <div class="fx-vars">n：每期數量　r：貸款利率</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-icon">📈</div>
+      <div class="dep-name">⑤ 有效總收入<br>乘數法</div>
+      <div class="fx-formula" style="font-size:13px; padding:10px 0">
+        r ＝ <span class="frac"><span class="num">淨收益率</span><span class="den">有效總收入乘數</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION NEW: 折舊提存費/率公式 ===== -->
+<div class="decision-box" style="margin-bottom:28px">
+  <div class="section-title" style="margin-bottom:0">📉 折舊提存費 §40-1 ／ 折舊提存率 §41</div>
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:14px">
+
+    <div class="dep-card" style="text-align:left; padding:16px">
+      <div style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:12px; text-align:center">折舊提存費 §40-1（金額）</div>
+      <div class="fx-label">等速折舊型</div>
+      <div class="fx-formula" style="font-size:18px; padding:6px 0">C(1-S) × <span class="frac"><span class="num">1</span><span class="den">N</span></span></div>
+      <div style="border-top:1px solid var(--line); margin:10px 0"></div>
+      <div class="fx-label">償債基金型</div>
+      <div class="fx-formula" style="font-size:14px; padding:6px 0">C(1-S) × <span class="frac"><span class="num">i</span><span class="den">(1+i)ᴺ ─ 1</span></span></div>
+      <div class="fx-vars" style="margin-top:10px">C：建物總成本　S：殘餘價格率<br>N：建物經濟耐用年數　i：自有資金之計息利率</div>
+    </div>
+
+    <div class="dep-card" style="text-align:left; padding:16px">
+      <div style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:12px; text-align:center">折舊提存率 §41（比率 d）</div>
+      <div class="fx-label">等速折舊型</div>
+      <div class="fx-formula" style="font-size:13px; padding:6px 0">d ＝ <span class="frac"><span class="num">(1-S)×(1/N)</span><span class="den">1-(1-S)×(n/N)</span></span></div>
+      <div style="border-top:1px solid var(--line); margin:10px 0"></div>
+      <div class="fx-label">償債基金型</div>
+      <div class="fx-formula" style="font-size:16px; padding:6px 0">d ＝ <span class="frac"><span class="num">i</span><span class="den">(1+i)ⁿ' ─ 1</span></span></div>
+      <div class="fx-vars" style="margin-top:10px">d：折舊提存率　n：已經歷年數<br>n'：剩餘可收益之年數　i：自有資金之計息利率</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION NEW: §44-46 收益價格公式 ===== -->
+<div class="decision-box" style="margin-bottom:28px">
+  <div class="section-title" style="margin-bottom:0">🏠 計算收益價格 §44–46（土地 ／ 建物 ／ 房地）</div>
+  <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:14px">
+
+    <div class="dep-card" style="text-align:left; padding:16px">
+      <div style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:10px; text-align:center">① 土地收益價格 §44</div>
+      <div class="fx-label">無建物</div>
+      <div class="fx-formula" style="font-size:15px; padding:4px 0">P土地 ＝ <span class="frac"><span class="num">a土地</span><span class="den">r土地</span></span></div>
+      <div class="fx-label" style="margin-top:8px">有建物</div>
+      <div class="fx-formula" style="font-size:13px; padding:4px 0">P土地 ＝ <span class="frac"><span class="num">a房地 ─ a建物</span><span class="den">r土地</span></span></div>
+      <div style="background:var(--neutral-bg); border-radius:6px; padding:8px; margin-top:10px; font-size:10.5px; color:var(--neutral); line-height:1.9">
+        a建物（已扣折舊）＝ P建物 × r建物<br>
+        a建物（未扣折舊）＝ P建物 × (r建物 ＋ d)
+      </div>
+    </div>
+
+    <div class="dep-card" style="text-align:left; padding:16px">
+      <div style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:10px; text-align:center">② 建物收益價格 §45</div>
+      <div class="fx-label">已扣除折舊提存費</div>
+      <div class="fx-formula" style="font-size:13px; padding:3px 0">P ＝ <span class="frac"><span class="num">a建物</span><span class="den">r建物</span></span></div>
+      <div style="font-size:10.5px; text-align:center; color:var(--sub)">or <span class="frac"><span class="num">a房地 ─ a土地</span><span class="den">r建物</span></span></div>
+      <div style="border-top:1px solid var(--line); margin:8px 0"></div>
+      <div class="fx-label warn">⚠️ 未扣除折舊提存費</div>
+      <div class="fx-formula" style="font-size:13px; padding:3px 0">P ＝ <span class="frac"><span class="num">a建物</span><span class="den">r建物 ＋ d</span></span></div>
+      <div style="font-size:10.5px; text-align:center; color:var(--sub)">or <span class="frac"><span class="num">a房地 ─ a土地</span><span class="den">r建物 ＋ d</span></span></div>
+      <div style="font-size:10px; color:var(--sub); margin-top:6px; text-align:center">d ＝ 折舊提存率</div>
+    </div>
+
+    <div class="dep-card" style="text-align:left; padding:16px">
+      <div style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:10px; text-align:center">③ 房地收益價格 §46</div>
+      <div class="fx-formula" style="font-size:16px; padding:4px 0">P房地 ＝ <span class="frac"><span class="num">a房地</span><span class="den">r房地</span></span></div>
+      <div style="border-top:1px solid var(--line); margin:8px 0"></div>
+      <div class="fx-label">已扣除折舊提存費</div>
+      <div class="fx-formula" style="font-size:11.5px">r ＝ r土 × 土地比率 ＋ r建 × 建物比率</div>
+      <div style="border-top:1px solid var(--line); margin:8px 0"></div>
+      <div class="fx-label warn">⚠️ 未扣除折舊提存費</div>
+      <div class="fx-formula" style="font-size:11px">r ＝ r土 × 土地比率 ＋ (r建 ＋ d) × 建物比率</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION NEW: 直接資本化法 vs DCF ===== -->
+<div class="decision-box" style="margin-bottom:28px">
+  <div class="section-title" style="margin-bottom:0">⚡ 直接資本化法 vs DCF 差異比較（申論必考 ★★★）</div>
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:14px">
+    <div class="dep-card" style="text-align:left; padding:16px">
+      <div style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:8px; text-align:center">直接資本化法 §29–30</div>
+      <div style="background:var(--neutral-bg); border-radius:6px; padding:8px; margin-bottom:12px; font-size:10.5px; color:var(--neutral); line-height:1.8">
+        指勘估標的未來<strong>平均一年期間之客觀淨收益</strong>，應用價格日期當時適當之<strong>收益資本化率</strong>推算勘估標的價格之方法。
+      </div>
+      <div style="font-size:11.5px; color:var(--neutral); line-height:2.3">
+        ▸ 採用 <strong style="color:var(--ink)">收益資本化率 r</strong>（收益率概念）<br>
+        ▸ 收益期間：<strong style="color:var(--ink)">永續收益</strong>（無限期）<br>
+        ▸ 每年淨收益：<strong style="color:var(--ink)">固定</strong><br>
+        ▸ 折舊提存費：<strong class="warn">需扣除 ⚠️</strong><br>
+        ▸ 期末價值：無<br>
+        ▸ 淨收益求法：間接方法<br>
+        ▸ 適用：長期穩定收益不動產
+      </div>
+    </div>
+    <div class="dep-card" style="text-align:left; padding:16px">
+      <div style="font-size:13px; font-weight:800; color:var(--ink); margin-bottom:8px; text-align:center">DCF 折現現金流量法 §31–32</div>
+      <div style="background:var(--neutral-bg); border-radius:6px; padding:8px; margin-bottom:12px; font-size:10.5px; color:var(--neutral); line-height:1.8">
+        指勘估標的未來折現現金流量分析期間之<strong>各期淨收益及期末價值</strong>，以適當<strong>折現率</strong>折現後加總推算勘估標的價格之方法。得適用於<strong>以投資為目的</strong>之不動產投資評估。
+      </div>
+      <div style="font-size:11.5px; color:var(--neutral); line-height:2.3">
+        ▸ 採用 <strong style="color:var(--ink)">折現率 Y</strong>（獲利率概念）<br>
+        ▸ 收益期間：<strong style="color:var(--ink)">一定期間</strong>（期滿處分）<br>
+        ▸ 每年淨收益：<strong style="color:var(--ink)">可不固定</strong><br>
+        ▸ 折舊提存費：<strong style="color:var(--ink)">不需扣除 ✓</strong><br>
+        ▸ 期末價值：有 Pn'<br>
+        ▸ 淨收益求法：直接方法<br>
+        ▸ 適用：以投資為目的之不動產
+      </div>
+    </div>
+  </div>
+  <div style="background:var(--accent2-bg); border-radius:8px; padding:10px; margin-top:12px; font-size:11px; color:var(--neutral); line-height:1.9">
+    <span class="mnemo" style="color:var(--accent2); font-weight:800">⚠️ 口訣：</span>DCF ＝「<strong>不扣折舊、有期末、一定期間、可不固定</strong>」；直接資本化 ＝「<strong>要扣折舊、無期末、永續、固定</strong>」
+  </div>
+</div>
+
+<!-- ===== SECTION 6: EXAM HIGH FREQ ===== -->
+<div class="section-title">⑧ 高頻考點速查卡</div>
+<div class="tips-grid">
+  <div class="tip-card">
+    <div class="tip-q">比較法需要幾個比較案例？</div>
+    <div class="tip-a">至少 3 個以上</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">收益法（直接資本化法）核心公式？</div>
+    <div class="tip-a">P ＝ a ÷ r</div>
+    <div class="tip-note">a ＝ 客觀淨收益；r ＝ 收益資本化率</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">積算價格如何計算？</div>
+    <div class="tip-a">土地 ＋（重建成本 ─ 折舊）</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">比較法「情況調整」排第幾順序？</div>
+    <div class="tip-a">第一個（最優先）</div>
+    <div class="tip-note">順序：情況→日期→區域→個別</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">還原利率與價值的關係？</div>
+    <div class="tip-a">還原利率↑ → 價值↓</div>
+    <div class="tip-note">利率愈高，折現愈多，估價愈低</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">折舊三大類口訣？</div>
+    <div class="tip-a">物 → 功 → 經</div>
+    <div class="tip-note">物理性、功能性、經濟性</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">土地開發法適用何種土地？</div>
+    <div class="tip-a">素地、農地、都更基地</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">土地開發法「資本利息」屬於？</div>
+    <div class="tip-a">開發成本（非利潤）</div>
+    <div class="tip-note warn">⚠️ 易考混淆！利息≠利潤</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-q">估價作業程序共幾步驟？</div>
+    <div class="tip-a">8 步，最後為製作估價報告書</div>
+  </div>
+</div>
+
+<div class="footer">三民輔考 不動產估價概要 ｜ 114 年不動產經紀人考試備考用 ｜ Claude AI 整理</div>
+
+</body>
+</html>

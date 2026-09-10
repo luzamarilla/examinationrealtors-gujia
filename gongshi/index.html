@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不動產估價公式總整理</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink:#1e293b; --sub:#64748b; --line:#e2e8f0; --line-strong:#94a3b8;
+    --neutral:#334155; --neutral-bg:#f1f5f9;
+    --accent:#8B4438; --accent-bg:#F1E2DD;
+    --accent2:#9C7A34; --accent2-bg:#EFE6D0;
+  }
+  body {
+    font-family: 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+    background: #f0f2f5;
+    color: var(--ink);
+    padding: 32px;
+    width: 1400px;
+  }
+  h1.main-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--sub);
+    margin-bottom: 32px;
+    letter-spacing: 1px;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--ink);
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .f-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 20px;
+    border: 2px solid var(--line-strong);
+  }
+  .f-card.hi { border-color: var(--accent); background: var(--accent-bg); }
+  .f-card.hi2 { border-color: var(--accent2); background: var(--accent2-bg); }
+  .f-name { font-size: 12px; font-weight: 800; color: var(--sub); margin-bottom: 6px; }
+  .f-formula {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--ink);
+    text-align: center;
+    padding: 8px 0;
+    line-height: 1.8;
+  }
+  .f-vars { font-size: 11px; color: var(--neutral); line-height: 1.8; margin-top: 6px; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
+  .frac .num { border-bottom: 2px solid currentColor; padding: 0 6px 2px; text-align: center; white-space: nowrap; font-size: 0.85em; }
+  .frac .den { padding: 2px 6px 0; text-align: center; white-space: nowrap; font-size: 0.85em; }
+  .sigma { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 3px; line-height: 1; }
+  .sigma .bound-top, .sigma .bound-bottom { font-size: 11px; white-space: nowrap; }
+  .sigma .symbol { font-size: 22px; line-height: 0.85; }
+  .warn { font-size: 11px; color: var(--accent); font-weight: 800; margin-top: 6px; }
+  .clause { font-size: 11px; color: var(--sub); font-weight: 700; }
+  .star { color: var(--accent); }
+
+  .full-row { grid-column: 1 / -1; }
+  .footer { text-align: center; font-size: 11px; color: var(--sub); margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1 class="main-title">不動產估價公式總整理 — 純公式速查</h1>
+<p class="subtitle">114 年不動產經紀人考試備考 ｜ 只記公式與變數，不含程序文字 ｜ 來源：估價方法視覺化.html 抽出</p>
+
+<!-- ===== 比較法 ===== -->
+<div class="section-title">📊 比較法</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">試算價格 <span class="clause">§26（調整順序不可顛倒）</span></div>
+    <div class="f-formula">成交價 × 情況調整 × 價格日期調整 × 區域因素調整 × 個別因素調整 ＝ 試算價格</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">調整限制 <span class="clause">§25</span></div>
+    <div class="f-formula" style="font-size:14px">單項（區域/個別）＞15% → 排除<br>四項總計 ＞30% → 排除</div>
+  </div>
+  <div class="f-card full-row hi">
+    <div class="f-name">試算價格差距檢核 <span class="clause">§26</span></div>
+    <div class="f-formula">
+      <span class="frac"><span class="num">高 － 低</span><span class="den">(高 ＋ 低) ÷ 2</span></span>
+      <span class="warn" style="margin-left:8px">＞ 20% → 排除</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 收益法 ===== -->
+<div class="section-title">💰 收益法</div>
+<div class="formula-grid">
+  <div class="f-card hi">
+    <div class="f-name">直接資本化法 <span class="clause">§29–30 ★★★</span></div>
+    <div class="f-formula">P ＝ <span class="frac"><span class="num">a</span><span class="den">r</span></span></div>
+    <div class="f-vars">a：未來平均一年期間客觀淨收益　r：收益資本化率</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">DCF 折現現金流量法 <span class="clause">§31–32</span></div>
+    <div class="f-formula" style="font-size:13px">
+      <span class="sigma"><span class="bound-top">n'</span><span class="symbol">Σ</span><span class="bound-bottom">k＝1</span></span>
+      <span class="frac"><span class="num">CFk</span><span class="den">(1＋Y)ᵏ</span></span>
+      ＋ <span class="frac"><span class="num">Pn'</span><span class="den">(1＋Y)ⁿ'</span></span>
+    </div>
+    <div class="f-vars">CFk：各期淨收益　Y：折現率　Pn'：期末價值　n'：分析期間</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">淨收益計算 <span class="clause">§42</span></div>
+    <div class="f-formula" style="font-size:14px">有效總收入 ＝ 總收入 － 閒置損失<br>淨收益 ＝ 有效總收入 － 總費用</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">市場萃取法求收益資本化率 <span class="clause">§43</span></div>
+    <div class="f-formula">r ＝ <span class="frac"><span class="num">a</span><span class="den">P</span></span></div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">收益資本化率與折現率關係</div>
+    <div class="f-formula">R ＝ Y － g</div>
+    <div class="f-vars">R：收益資本化率　Y：折現率　g：淨收益成長率</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">一定期間收益 <span class="clause">§47</span></div>
+    <div class="f-formula" style="font-size:14px">P ＝ a × [1 － <span class="frac"><span class="num">1</span><span class="den">(1＋r)ⁿ'</span></span>] ÷ r</div>
+    <div class="f-vars">a：平均一年折舊前淨收益　n'：可收益之年數</div>
+  </div>
+</div>
+
+<div class="section-title">💰 收益資本化率／折現率 §43（5 種決定方法）</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">① 風險溢酬法</div>
+    <div class="f-vars" style="font-size:11.5px; line-height:2">2 率：定存利率、公債利率<br>2 動：貨幣變動、不動產價格變動<br>1 風險：不動產投資風險性</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">② 市場萃取法</div>
+    <div class="f-formula">r ＝ <span class="frac"><span class="num">a</span><span class="den">P</span></span></div>
+    <div class="f-vars">a：淨收益　P：價格</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">③ 加權平均資金成本法</div>
+    <div class="f-formula">r ＝ <span class="sigma"><span class="bound-top">n</span><span class="symbol">Σ</span><span class="bound-bottom">i＝1</span></span> Wᵢ × Kᵢ</div>
+    <div class="f-vars">Wᵢ：第 i 資金來源占比（Σ Wᵢ ＝ 1）　Kᵢ：第 i 資金利率</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">④ 債務保障比率法</div>
+    <div class="f-formula" style="font-size:14px">r ＝ 債務保障比率 × 貸款常數 × 貸款資金占不動產價格比率</div>
+    <div class="f-vars">貸款常數 ＝ <span class="frac"><span class="num">(1+r)ⁿ×r</span><span class="den">(1+r)ⁿ－1</span></span>　　n：每期數量　r：貸款利率</div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-name">⑤ 有效總收入乘數法</div>
+    <div class="f-formula">r ＝ <span class="frac"><span class="num">淨收益率</span><span class="den">有效總收入乘數</span></span></div>
+  </div>
+</div>
+
+<div class="section-title">💰 折舊提存費 §40-1 ／ 折舊提存率 §41</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">折舊提存費（金額）§40-1</div>
+    <div class="f-vars">等速折舊型</div>
+    <div class="f-formula">C(1-S) × <span class="frac"><span class="num">1</span><span class="den">N</span></span></div>
+    <div class="f-vars">償債基金型</div>
+    <div class="f-formula" style="font-size:13px">C(1-S) × <span class="frac"><span class="num">i</span><span class="den">(1+i)ᴺ － 1</span></span></div>
+    <div class="f-vars">C：建物總成本　S：殘餘價格率　N：建物經濟耐用年數　i：自有資金之計息利率</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">折舊提存率（比率 d）§41</div>
+    <div class="f-vars">等速折舊型</div>
+    <div class="f-formula" style="font-size:13px">d ＝ <span class="frac"><span class="num">(1-S)×(1/N)</span><span class="den">1-(1-S)×(n/N)</span></span></div>
+    <div class="f-vars">償債基金型</div>
+    <div class="f-formula">d ＝ <span class="frac"><span class="num">i</span><span class="den">(1+i)ⁿ' － 1</span></span></div>
+    <div class="f-vars">d：折舊提存率　n：已經歷年數　n'：剩餘可收益之年數　i：自有資金之計息利率</div>
+  </div>
+</div>
+
+<div class="section-title">🔑 折舊公式記憶法（收益法 ＝ 成本法的特例，不用分開背）</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">① 等速折舊型提存費 ＝ 定額法本人（公式完全相同）</div>
+    <div class="f-formula">C(1-S) × <span class="frac"><span class="num">1</span><span class="den">N</span></span></div>
+    <div class="f-vars">定額法本來每年折舊金額就是固定的，直接搬去當提存費，<strong>一字不用改</strong>。</div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-name">② 償債基金型提存費 ＝ 成本法償債基金法「n ＝ 1」代入</div>
+    <div class="f-formula" style="font-size:13px; text-align:left; line-height:2.4">
+      成本法③：Dₙ ＝ C(1-s) × <span class="frac"><span class="num">(1＋i)ⁿ－1</span><span class="den">(1＋i)ᴺ－1</span></span>
+      　令 <strong>n ＝ 1</strong> → (1＋i)¹－1 ＝ i<br>
+      ⟹ D₁ ＝ C(1-s) × <span class="frac"><span class="num">i</span><span class="den">(1＋i)ᴺ－1</span></span> ＝ 收益法償債基金型提存費
+    </div>
+    <div class="f-vars">白話：成本法問「<strong>累積</strong>到第 n 年折舊多少」；收益法只問「<strong>今年（第 1 年）</strong>該提存多少」——同一條路徑，差在看累積值還是看第 1 年的值。</div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-vars warn">收益法沒有「定率法」版本——因為提存費只在乎每年固定存多少（年金概念），不需要模擬定率法那種初期加速折舊的路徑。</div>
+  </div>
+</div>
+
+<div class="section-title">🏠 計算收益價格 §44–46（土地／建物／房地）</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">① 土地收益價格 §44</div>
+    <div class="f-vars">無建物</div>
+    <div class="f-formula" style="font-size:14px">P土地 ＝ <span class="frac"><span class="num">a土地</span><span class="den">r土地</span></span></div>
+    <div class="f-vars">有建物</div>
+    <div class="f-formula" style="font-size:13px">P土地 ＝ <span class="frac"><span class="num">a房地 － a建物</span><span class="den">r土地</span></span></div>
+    <div class="f-vars">a建物（已扣折舊）＝ P建物 × r建物<br>a建物（未扣折舊）＝ P建物 × (r建物 ＋ d)</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">② 建物收益價格 §45</div>
+    <div class="f-vars">已扣除折舊提存費</div>
+    <div class="f-formula" style="font-size:13px">P ＝ <span class="frac"><span class="num">a建物</span><span class="den">r建物</span></span>　or　<span class="frac"><span class="num">a房地－a土地</span><span class="den">r建物</span></span></div>
+    <div class="f-vars warn">未扣除折舊提存費</div>
+    <div class="f-formula" style="font-size:13px">P ＝ <span class="frac"><span class="num">a建物</span><span class="den">r建物＋d</span></span>　or　<span class="frac"><span class="num">a房地－a土地</span><span class="den">r建物＋d</span></span></div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-name">③ 房地收益價格 §46</div>
+    <div class="f-formula">P房地 ＝ <span class="frac"><span class="num">a房地</span><span class="den">r房地</span></span></div>
+    <div class="f-vars">已扣除折舊提存費：r ＝ r土 × 土地比率 ＋ r建 × 建物比率</div>
+    <div class="f-vars warn">未扣除折舊提存費：r ＝ r土 × 土地比率 ＋ (r建＋d) × 建物比率</div>
+  </div>
+</div>
+
+<div class="section-title">⚡ 直接資本化法 vs DCF（口訣對照）</div>
+<div class="f-card full-row" style="margin-bottom:28px">
+  <div class="f-formula" style="font-size:13px; text-align:left; line-height:2">
+    直接資本化法 ＝「要扣折舊、無期末、永續收益、淨收益固定」　|　收益資本化率 r（收益率概念）<br>
+    DCF 折現現金流量法 ＝「不扣折舊、有期末 Pn'、一定期間、淨收益可不固定」　|　折現率 Y（獲利率概念）
+  </div>
+</div>
+
+<!-- ===== 成本法 ===== -->
+<div class="section-title">🏗️ 成本法（三大折舊公式）</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">① 等速折舊路徑（定額法）</div>
+    <div class="f-formula">Dₙ ＝ C × [<span class="frac"><span class="num">1－s</span><span class="den">N</span></span>] × n</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">② 初期加速折舊路徑（定率法）</div>
+    <div class="f-formula">Dₙ ＝ C × [1 － (1－d)ⁿ]</div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-name">③ 初期減速折舊路徑（償債基金法）</div>
+    <div class="f-formula">
+      Dₙ ＝ C(1－s) ×
+      <span class="frac"><span class="num">(1＋i)ⁿ － 1</span><span class="den">(1＋i)ᴺ － 1</span></span>
+    </div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-vars" style="font-size:12px; line-height:2"><strong>變數說明：</strong>Dₙ：累積折舊額　C：建物總成本　s：殘餘價格率　n：已經歷年數　N：耐用年數　d：定率法折舊率　i：自有資金計息利率</div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-name">成本價格 §69</div>
+    <div class="f-formula" style="font-size:14px">建物成本價格 ＝ 建物總成本 － 累積折舊額<br>房地成本價格 ＝ 土地價格 ＋ 建物成本價格</div>
+  </div>
+</div>
+
+<!-- ===== 土地開發分析法 ===== -->
+<div class="section-title">🏙️ 土地開發分析法</div>
+<div class="formula-grid">
+  <div class="f-card full-row hi">
+    <div class="f-name">土地開發分析價格 <span class="clause">§81 ★★★</span></div>
+    <div class="f-formula" style="font-size:18px">V ＝ <span class="frac"><span class="num">S</span><span class="den">(1＋R)(1＋i)</span></span> － (C＋M)</div>
+    <div class="f-vars">V：土地開發分析價格　S：開發後總銷售金額　R：開發建築利潤率　i：資本利息綜合利率　C：直接成本（建造施工費）　M：間接成本（廣管稅等）</div>
+  </div>
+  <div class="f-card full-row hi2">
+    <div class="f-name">資本利息綜合利率 <span class="clause">§79 ⚠️</span></div>
+    <div class="f-formula" style="font-size:13px">
+      綜合利率 ＝ 資本利息年利率 ×
+      ( <span class="frac"><span class="num">土</span><span class="den">土＋建</span></span> ＋
+      <span class="frac"><span class="num">建</span><span class="den">土＋建</span></span> ×
+      <span class="frac"><span class="num">1</span><span class="den">2</span></span> )
+      × 開發年數
+    </div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">加權平均資金成本法求 r <span class="clause">§43</span></div>
+    <div class="f-formula">r ＝ <span class="sigma"><span class="bound-top">n</span><span class="symbol">Σ</span><span class="bound-bottom">i＝1</span></span> Wᵢ × Kᵢ</div>
+    <div class="f-vars">Wᵢ：第 i 資金來源占比　Kᵢ：第 i 資金利率</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">收益法補充：土地收益價格 <span class="clause">§44</span></div>
+    <div class="f-formula" style="font-size:13px">無建物：P土地 ＝ <span class="frac"><span class="num">a土地</span><span class="den">r土地</span></span>　有建物：P土地 ＝ <span class="frac"><span class="num">a房地－a建物</span><span class="den">r土地</span></span></div>
+  </div>
+</div>
+
+<!-- ===== 房地估價 ===== -->
+<div class="section-title">🏠 房地估價（第五章 §99–§101）</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">§99 土地貢獻說</div>
+    <div class="f-formula" style="font-size:14px">基地價格 ＝ 房地價格 － 建物成本價格<br>基地單價 ＝ <span class="frac"><span class="num">基地價格</span><span class="den">基地面積</span></span></div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">§99 聯合貢獻說</div>
+    <div class="f-formula" style="font-size:14px">
+      基地價格 ＝ 房地價格 × <span class="frac"><span class="num">土</span><span class="den">土＋建</span></span>（土地價值比率）<br>
+      基地單價 ＝ <span class="frac"><span class="num">基地價格</span><span class="den">基地面積</span></span>
+    </div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">§100 地價分配率法（土地貢獻說）</div>
+    <div class="f-formula" style="font-size:13px">
+      基地單價 ＝ 基地權利單價 × <span class="frac"><span class="num">平均地價分配率</span><span class="den">該區分建物之地價分配率</span></span>
+    </div>
+    <div class="f-vars warn">地價分配率 ＝ 樓層別效用比 － [平均樓層別效用比 ×
+      <span class="frac"><span class="num">建物成本價格</span><span class="den">房地總價格</span></span> ]
+    </div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">§101 樓層別效用比法（聯合貢獻說）</div>
+    <div class="f-formula" style="font-size:13px">
+      基地單價 ＝ 基地權利單價 × <span class="frac"><span class="num">平均樓層別效用比</span><span class="den">該建物之樓層別效用比</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 租金估價 ===== -->
+<div class="section-title">💵 租金估價（第八章 §132–§133）</div>
+<div class="formula-grid">
+  <div class="f-card">
+    <div class="f-name">§132 新訂租約 — 基算法（積算法）</div>
+    <div class="f-formula" style="font-size:14px">(勘估標的之價格 × 租金收益率) ＋ 必要費用 ＝ 淨收益</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">§133 續訂租約 — 收益率法</div>
+    <div class="f-formula" style="font-size:13px">(勘估標的之正常價格 × 續訂租金收益率) ＋ 必要費用</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">§133 續訂租約 — 推算法</div>
+    <div class="f-formula" style="font-size:14px">(原契約之租金淨收益 × 變動率) ＋ 必要費用</div>
+  </div>
+  <div class="f-card">
+    <div class="f-name">§133 續訂租約 — 差額租金分配法</div>
+    <div class="f-formula" style="font-size:12.5px">(市場經濟租金 － 原契約租金) × 歸屬出租人之貢獻比例 ＋ 原契約租金</div>
+  </div>
+  <div class="f-card full-row">
+    <div class="f-name">實質租金（例題公式）</div>
+    <div class="f-formula" style="font-size:14px">支付租金 ＝ 每期租金 × 期數<br>實質租金 ＝ 支付租金 ＋ 押金（或保證金）運用收益（押金 × 利率）</div>
+  </div>
+</div>
+
+<div class="footer">三民輔考 不動產估價概要 ｜ 114 年不動產經紀人考試備考用 ｜ Claude AI 整理（純公式版）</div>
+
+</body>
+</html>
