@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>估價跨堂比較總表</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink: #1e293b; --sub: #64748b; --line: #e2e8f0; --line-strong: #94a3b8;
+    --neutral-bg: #f1f5f9;
+    --accent: #8B4438; --accent-bg: #F1E2DD;
+    --accent2: #9C7A34; --accent2-bg: #EFE6D0;
+  }
+  body {
+    font-family: 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+    background: #f4f1eb;
+    color: #1a1a1a;
+    width: 1400px;
+    margin: 0 auto;
+    padding: 20px 36px 26px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  /* ── 頁首 ── */
+  .page-header {
+    background: var(--ink); color: white; border-radius: 14px;
+    padding: 22px 32px; margin-bottom: 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .page-header h1 { font-size: 30px; font-weight: 900; letter-spacing: 2px; }
+  .page-header .subtitle { font-size: 14.5px; opacity: .85; margin-top: 6px; }
+  .page-header .badge {
+    background: rgba(255,255,255,.2); border-radius: 12px;
+    padding: 10px 20px; text-align: center; font-size: 13px; white-space: nowrap;
+  }
+  .page-header .badge strong { font-size: 19px; display: block; }
+
+  /* ── Section 標題 ── */
+  .section { margin-bottom: 12px; }
+  .section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .section-num {
+    color: white; width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 16px; flex-shrink: 0; background: var(--ink);
+  }
+  .section-title h2 { font-size: 21px; font-weight: 900; padding-bottom: 3px; color: var(--ink); border-bottom: 3px solid var(--line-strong); }
+  .stars { color: var(--accent); font-size: 14px; margin-left: 6px; }
+  .lesson-tag { display: inline-block; margin-left: 8px; font-size: 11.5px; font-weight: 800; color: #fff; background: var(--line-strong); border-radius: 4px; padding: 1px 8px; vertical-align: middle; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .card { background: white; border-radius: 12px; padding: 10px 14px; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+  .card-title { font-size: 15px; font-weight: 900; margin-bottom: 7px; color: var(--ink); }
+
+  .examhit {
+    display: inline-block; margin-left: 4px; font-size: 11px; font-weight: 800; color: var(--accent);
+    background: var(--accent-bg); border: 1px solid var(--accent); border-radius: 10px; padding: 0 8px; white-space: nowrap;
+  }
+
+  /* ── 表格 ── */
+  table { width: 100%; table-layout: fixed; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+  th { padding: 8px 12px; text-align: left; font-size: 13.5px; font-weight: 700; color: white; background: var(--ink); word-wrap: break-word; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e5e7eb; font-size: 13.5px; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8faf9; }
+  td.term { font-weight: 800; color: var(--ink); background: var(--neutral-bg) !important; border-right: 2px solid var(--line-strong); }
+  tr.hit td { background: var(--accent-bg) !important; }
+  tr.hit td.term { background: var(--accent-bg) !important; }
+  .law { color: var(--sub); font-size: 12px; font-weight: 400; margin-left: 4px; }
+  .trap { color: var(--accent2); font-weight: 700; }
+  .na { color: var(--line-strong); }
+
+  /* ── 重點框 ── */
+  .highlight-box { border-left: 5px solid var(--line-strong); background: #f8f9fa; padding: 8px 14px; border-radius: 0 8px 8px 0; margin: 8px 0; font-size: 14px; }
+  .highlight-box.hi { border-left-color: var(--accent); background: var(--accent-bg); }
+  .highlight-box.hi2 { border-left-color: var(--accent2); background: var(--accent2-bg); }
+
+  /* ── 公式 ── */
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
+  .frac .num { border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
+  .frac .den { padding-top: 2px; text-align: center; white-space: nowrap; }
+
+  hr { border: none; border-top: 2px dashed var(--line); margin: 16px 0; }
+  .footer { text-align: center; color: var(--sub); font-size: 13px; margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<!-- ═══ 頁首 ═══ -->
+<div class="page-header">
+  <div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:6px;">114年 不動產經紀人考試｜不動產估價　跨堂總複習</div>
+    <h1>估價跨堂比較總表</h1>
+    <div class="subtitle">價格租金種類｜數字門檻｜兩種折舊｜資本利息｜程序口訣｜貢獻說｜標的選方法｜新訂續訂｜易混用語</div>
+  </div>
+  <div style="display:flex;gap:14px;">
+    <div class="badge"><strong>跨堂總複習</strong>L1～L7</div>
+    <div class="badge"><strong>9大主題</strong>橫向比較</div>
+    <div class="badge"><strong>⭐⭐⭐⭐⭐</strong>比較題必考</div>
+  </div>
+</div>
+
+<div class="highlight-box" style="margin-bottom:18px;">
+  <strong>📌 這份筆記的定位：</strong>把散在 L1～L7 各堂、要<b>跨堂放在一起看才分得清</b>的觀念抽出來並排比較。條文內容已逐條對照全國法規資料庫《不動產估價技術規則》現行條文；考古題年份來自 <code>估價L1-L7_考古題深查.md</code> 逐年明細。四大方法本身的總比較、直接資本化法 vs DCF，已經在「估價方法視覺化」那份，這裡不重複。
+</div>
+
+<!-- ═══ 1. 價格種類 vs 租金種類 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">1</div>
+    <h2>價格四種 vs 租金兩種<span class="stars">★★★★★</span><span class="lesson-tag">L1 × L7</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:11%;">種類</th><th style="width:31%;">價格 <span class="law" style="color:#cbd5e1">§2(1)～(4)</span></th><th style="width:25%;">租金 <span class="law" style="color:#cbd5e1">§2(5)(6)</span></th><th style="width:33%;">考古題怎麼出（情境 → 答案）</th></tr></thead>
+    <tbody>
+      <tr><td class="term">正常</td><td>具市場性、有意願雙方、謹慎行動、不受脅迫、適當市場行銷及正常交易條件</td><td>正常租金：同樣邏輯，買賣換成租賃<br>（又稱<b>經濟租金／市場租金</b>）</td><td>通常當對照組，不太單獨考</td></tr>
+      <tr class="hit"><td class="term">限定</td><td>具市場性，限定條件之一，共<b>3 個</b>：<br>(一) 所有權以外其他權利與所有權<b>合併</b><br>(二) 不動產<b>合併</b><br>(三) <b>違反經濟合理性</b>之不動產分割</td><td>共<b>2 個</b>：<br>(一) <b>續訂租約</b><br>(二) 不動產<b>合併</b><br><span class="trap">租金沒有「分割」這一款</span></td><td>價格：相鄰兩地合併建築<span class="examhit">108測1</span>、違反經濟合理性分割<span class="examhit">108測24</span>、承租人買下承租地<span class="examhit">110測16</span><br>租金：捷運地下街擴大承租<span class="examhit">106測4</span>、私校校舍續租<span class="examhit">106測24</span>、超商承租隔壁店面合併<span class="examhit">107測1</span></td></tr>
+      <tr><td class="term">特定</td><td>具市場性，基於<b>特定條件</b>（通常是「未來可能…」尚未實現的前提）<br><span class="trap">§6：要敘明估價條件，並同時估計正常價格</span></td><td class="na">— 規則沒有「特定租金」</td><td>素地假設變更為住宅區<span class="examhit">105測12</span>、都市邊緣農地可能變建地<span class="examhit">107測16</span>、科學園區旁農地<span class="examhit">111測22</span>；同時估正常價格<span class="examhit">105測7</span><span class="examhit">111測13</span></td></tr>
+      <tr><td class="term">特殊</td><td><b>不具市場性</b>之不動產所估計之價值</td><td class="na">— 規則沒有「特殊租金」</td><td>總統府<span class="examhit">105測3</span><span class="examhit">112測2</span>、太平島<span class="examhit">106測1</span>、東沙島<span class="examhit">109測24</span>、龜山島<span class="examhit">111測2</span>、大甲鎮瀾宮<span class="examhit">113測17</span>、臺南孔廟<span class="examhit">114測16</span></td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box hi">
+    <strong>一眼判斷：</strong>題目出現「<b>合併／分割／續租</b>」→ 限定；「<b>未來可能變更、假設…為前提</b>」→ 特定；「<b>離島、古蹟、宗教建築、總統府</b>」這種根本沒人買賣的 → 特殊。§6 明寫<b>價格 4 種、租金只有 2 種</b>，看到「特定租金」「特殊租金」直接判錯。
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══ 2. 數字門檻總表 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">2</div>
+    <h2>數字門檻總表<span class="stars">★★★★★</span><span class="lesson-tag">L1～L5</span></h2>
+  </div>
+  <div class="highlight-box">不分堂次，依數字大小排序。<b>陶紅底</b>＝考古題直接考「這個數字本身」（填空、誤植陷阱或代入計算）。</div>
+  <table>
+    <thead><tr><th style="width:13%;">數字</th><th style="width:47%;">規定</th><th style="width:40%;">陷阱／考古題</th></tr></thead>
+    <tbody>
+      <tr class="hit"><td class="term">× 1/2</td><td>§79 資本利息綜合利率：<b>建物</b>價值比率 × 1/2（土地 × 1）<span class="law">L5</span></td><td>公式甲乙丙丁配對<span class="examhit">114測12</span>；代入計算<span class="examhit">105申二</span><span class="examhit">105測29</span><span class="examhit">107測10</span>；反推年利率<span class="examhit">109測10</span></td></tr>
+      <tr class="hit"><td class="term">0.7</td><td>§20 計量模型：迴歸分析調整後判定係數<b>不得低於 0.7</b><span class="law">L2</span></td><td><span class="trap">常改成 0.8</span><span class="examhit">106測9</span><span class="examhit">108測21</span></td></tr>
+      <tr class="hit"><td class="term">未來 1 年</td><td>§29 直接資本化法：<b>未來</b>平均一年期間之客觀淨收益<span class="law">L3</span></td><td><span class="trap">誤植「過去」</span><span class="examhit">105測19</span><span class="examhit">108測17</span></td></tr>
+      <tr class="hit"><td class="term">活存 ≤ 利率 ≤ 1 年期定存</td><td>§59 自有資金計息利率；借款用<b>銀行短期放款利率</b>；<b>預售收入不計息</b><span class="law">L4・L5 共用</span></td><td><span class="trap">誤植「預售收入以定存利率計息」</span><span class="examhit">109測17</span></td></tr>
+      <tr class="hit"><td class="term">2 種以上</td><td>§14 應兼採二種以上估價方法；情況特殊並於報告書敘明者不在此限<span class="law">L1</span></td><td>5 年：108・109・111・113・114</td></tr>
+      <tr><td class="term">2%～3%</td><td>§57 規劃設計費＝實際營造施工費 × 2%～3%（或依建築師酬金標準表）<span class="law">L4・L5 共用（§78）</span></td><td>乘的是<b>營造施工費</b>，不是總成本、也不是總銷售金額</td></tr>
+      <tr class="hit"><td class="term">3 件以上</td><td>§27 決定比較價格應採用三件以上比較標的<span class="law">L2</span></td><td><span class="trap">誤植「五件以上」</span><span class="examhit">105測24</span>；申論房仲只用 2 戶比較<span class="examhit">108申一</span></td></tr>
+      <tr class="hit"><td class="term">最近 3 年</td><td>§35 收益法蒐集最近三年間總收入、總費用及收益資本化率等資料<span class="law">L3</span></td><td><span class="examhit">107測7</span></td></tr>
+      <tr><td class="term">3%～7% 等</td><td>廣告銷售／管理／稅捐費率（全聯會公告）<span class="law">L4・L5</span></td><td>數字兩法相同，<b>乘的基數不同</b> → 見第 4 節</td></tr>
+      <tr><td class="term">5 倍以上</td><td>§20 計量模型：比較標的數量須為自變數個數五倍以上<span class="law">L2</span></td><td>§20 三條件同組出題（6 年：106・107・108・109・111・112）</td></tr>
+      <tr><td class="term">5%</td><td>§20 計量模型：係數同時為零之顯著機率<b>不得大於</b> 5%<span class="law">L2</span></td><td>同上</td></tr>
+      <tr class="hit"><td class="term">10%</td><td>§67 殘餘價格率由全聯會公告，<b>不超過 10% 為原則</b>；指<b>經濟</b>耐用年數屆滿後賸餘價值占建物總成本比率<span class="law">L4</span></td><td><span class="examhit">112測7</span><span class="examhit">114測11</span>；<span class="trap">誤植「物理耐用年數屆滿」</span><span class="examhit">105測21</span></td></tr>
+      <tr class="hit"><td class="term">15%</td><td>§25 區域因素、個別因素或其中<b>任一單獨項目</b>調整率 &gt; 15% → 排除該比較標的<span class="law">L2</span></td><td>甲乙填空<span class="examhit">107測5</span><span class="examhit">112測23</span>；<span class="examhit">108測15</span></td></tr>
+      <tr class="hit"><td class="term">20%</td><td>§26 試算價格之間差距 ≥ 20% → 排除該試算價格；差距＝<span class="frac"><span class="num">高－低</span><span class="den">(高＋低)÷2</span></span><span class="law">L2</span></td><td><span class="examhit">105測37</span><span class="examhit">106測31</span><span class="examhit">107測6</span><span class="examhit">108測7</span><span class="examhit">111測11</span><span class="examhit">113測8</span></td></tr>
+      <tr class="hit"><td class="term">30%</td><td>§25 情況＋價格日期＋區域＋個別<b>四項總調整率</b> &gt; 30% → 排除該比較標的<span class="law">L2</span></td><td><span class="examhit">107測5</span><span class="examhit">109測19</span><span class="examhit">112測23</span>；<span class="trap">誤植成 20%</span><span class="examhit">113測23</span></td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box hi2"><strong>15 / 20 / 30 三兄弟別混：</strong>15%、30% 都在 §25，管的是「<b>比較標的</b>調太多」→ 排除比較標的；20% 在 §26，管的是「<b>試算價格</b>彼此差太多」→ 排除試算價格。15% 看<b>單項</b>、30% 看<b>四項總和</b>。</div>
+
+  <div class="card" style="margin-top:10px;">
+    <div class="card-title">附：「幾種／幾款」速查（選擇題「下列何者非」最愛）</div>
+    <table>
+      <thead><tr><th style="width:30%;">項目</th><th style="width:10%;">數量</th><th style="width:60%;">內容</th></tr></thead>
+      <tbody>
+        <tr><td class="term">確定估價基本事項 §9</td><td><b>4</b></td><td>勘估標的內容、價格日期、價格種類及條件、估價目的　<span class="trap">不含「估價方法」</span><span class="examhit">105測4</span></td></tr>
+        <tr><td class="term">限定價格 vs 限定租金 §2</td><td><b>3 vs 2</b></td><td>見第 1 節</td></tr>
+        <tr><td class="term">收益資本化率決定方法 §43</td><td><b>5</b></td><td>風險溢酬法、市場萃取法、加權平均資金成本法、債務保障比率法、有效總收入乘數法　<span class="trap">DCF 不是決定方法</span><span class="examhit">112測22</span></td></tr>
+        <tr><td class="term">營造施工費求取 §54～56</td><td><b>2＋2</b></td><td>直接法（淨計法、單位工程法）＋間接法（工程造價比較法、單位面積（體積）比較法）<span class="examhit">111測7</span></td></tr>
+        <tr><td class="term">折舊路徑 §68</td><td><b>3</b></td><td>等速折舊、初期加速折舊、初期減速折舊</td></tr>
+        <tr><td class="term">新訂 vs 續訂租金方法 §132・133</td><td><b>3 vs 4</b></td><td>見第 8 節</td></tr>
+        <tr><td class="term">估價經濟原則</td><td><b>12</b></td><td>替代、外部性、貢獻、最有效使用、供需、競爭、變動、預測、均衡、適合、收益分配、收益遞增遞減（條文未列，概念題）</td></tr>
+        <tr><td class="term">情況調整特殊交易 §23</td><td><b>13</b></td><td>無法有效掌握及量化調整時，<b>應不予採用</b></td></tr>
+        <tr><td class="term">權利估價種類 §114</td><td><b>11</b></td><td>地上權、典權、永佃權、農育權、不動產役權、耕作權、抵押權、租賃權、市地重劃、容積移轉、都市更新權利變換</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══ 3. 兩種折舊 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">3</div>
+    <h2>成本法「累積折舊額」vs 收益法「折舊提存費／提存率」<span class="stars">★★★★</span><span class="lesson-tag">L4 × L3</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:14%;"></th><th style="width:29%;">成本法：建物累積折舊額 <span class="law" style="color:#cbd5e1">§65～68</span></th><th style="width:28%;">收益法：折舊提存費 <span class="law" style="color:#cbd5e1">§40・40-1</span></th><th style="width:29%;">收益法：折舊提存率 <span class="law" style="color:#cbd5e1">§40・41</span></th></tr></thead>
+    <tbody>
+      <tr><td class="term">在算什麼</td><td>建物從新到現在<b>已經折掉多少</b>（過去累積）</td><td>每年要<b>存起來</b>多少錢，未來才能換新（每年金額）</td><td>同一件事改用「<b>比率</b>」表示</td></tr>
+      <tr><td class="term">放在哪裡</td><td>建物成本價格＝建物總成本 <b>－</b> 累積折舊額</td><td>加進<b>總費用</b>（淨收益變小）</td><td>加在<b>建物收益資本化率</b>上（分母變大）</td></tr>
+      <tr><td class="term">以誰為基礎</td><td>總成本 C</td><td>總成本 C</td><td><b>價格日期當時建物價值</b>（所以分母要先扣掉已折舊部分）</td></tr>
+      <tr><td class="term">等速型</td><td>定額法：C × (1－s) × <span class="frac"><span class="num">n</span><span class="den">N</span></span></td><td>C × (1－s) × <span class="frac"><span class="num">1</span><span class="den">N</span></span></td><td>d ＝ <span class="frac"><span class="num">(1－s) ÷ N</span><span class="den">1 － (1－s) × n ÷ N</span></span></td></tr>
+      <tr><td class="term">償債基金型</td><td>償債基金法：C(1－s) × <span class="frac"><span class="num">(1+i)ⁿ－1</span><span class="den">(1+i)ᴺ－1</span></span></td><td>C × (1－s) × <span class="frac"><span class="num">i</span><span class="den">(1+i)ᴺ－1</span></span></td><td>d ＝ <span class="frac"><span class="num">i</span><span class="den">(1+i)<sup>n′</sup>－1</span></span>　n′＝剩餘可收益年數</td></tr>
+      <tr><td class="term">其他路徑</td><td>另有定率法（初期加速）：C × [1－(1－d)ⁿ]</td><td colspan="2">條文只列等速型、償債基金型兩種</td></tr>
+      <tr><td class="term">考古題</td><td>定額法計算 10 年幾乎全中：<span class="examhit">105測33</span><span class="examhit">106測17</span><span class="examhit">106測27</span><span class="examhit">109測2</span><span class="examhit">110測5</span><span class="examhit">111測15</span><span class="examhit">113測21</span><span class="examhit">114測3</span>；三路徑申論<span class="examhit">111申一</span></td><td colspan="2">5 年：105・106・107・108・109<br>提存率代入計算<span class="examhit">106測11</span><span class="examhit">109測15</span>；兩型公式判斷<span class="examhit">108測11</span>；已扣除 vs 未扣除提存費<span class="examhit">107測8</span></td></tr>
+    </tbody>
+  </table>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="highlight-box hi" style="margin:0;"><strong>兩法其實是同一筆錢：</strong>收益法每年的「折舊提存費」存 n 年，剛好等於成本法的「累積折舊額」。等速型最好記：每年 C(1－s)/N，乘上已經歷 n 年 ＝ 定額法 C(1－s)·n/N。</div>
+    <div class="highlight-box hi2" style="margin:0;"><strong>二擇一，不能重複扣：</strong>總費用裡<b>已扣</b>折舊提存費 → 資本化率不加提存率；<b>沒扣</b> → 才在建物資本化率加上提存率（§40、§44～46）。土地不折舊，只有建物端要處理。認字口訣：有小 n → 率；有 i → 償債基金型。</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══ 4. 兩種資本利息 + 費率基數 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">4</div>
+    <h2>成本法 vs 土地開發分析法：資本利息、利潤、費率<span class="stars">★★★★</span><span class="lesson-tag">L4 × L5</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:16%;"></th><th style="width:42%;">成本法（由成本往上加）</th><th style="width:42%;">土地開發分析法（由售價往下扣）</th></tr></thead>
+    <tbody>
+      <tr><td class="term">資本利息怎麼算</td><td>§58：（營＋規＋廣＋管＋稅）× 利率，含土地者另加土地價格；自有／借貸資金分別計息，比例依銀行一般放款成數</td><td>§79：資本利息綜合利率 ＝ 年利率 × (土地價值比率 ＋ 建物價值比率 × <b>1/2</b>) × 開發年數<br>建物價值＝營造施工費＋規劃設計費</td></tr>
+      <tr><td class="term">利率規則</td><td colspan="2">§59 兩法共用（§79 明文準用 §58、§59）：自有資金 活存 ≤ 利率 ≤ 一年期定存；借款用銀行短期放款利率；<b>預售收入不計息</b></td></tr>
+      <tr><td class="term">利潤怎麼算</td><td>§60：（營＋規＋廣＋管＋<b>資</b>＋稅）× 利潤率 → 基數<b>含</b>資本利息</td><td>§78 利潤率依 §60；在公式裡用 ÷(1＋R)</td></tr>
+      <tr><td class="term">放進公式的方式</td><td><b>加法</b>：總成本＝營＋規＋廣＋管＋稅＋資＋利潤（§52）</td><td><b>除法再減</b>：V ＝ S ÷ (1＋R) ÷ (1＋i) － (C＋M)（§81）</td></tr>
+      <tr><td class="term">順序</td><td>先算息 → 再算潤（利潤的基數要含息）</td><td>先除潤 → 再除息 → 最後減直接＋間接成本</td></tr>
+      <tr><td class="term">考古題</td><td>預售收入不計息<span class="examhit">109測17</span>；2 年：109・112</td><td>§79 約 6 年：<span class="examhit">105申二</span><span class="examhit">105測29</span><span class="examhit">107測10</span><span class="examhit">109測10</span><span class="examhit">114測12</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="card" style="margin-top:10px;">
+    <div class="card-title">費率一樣、基數不同（全聯會公告費率）</div>
+    <table>
+      <thead><tr><th style="width:28%;">費用項目</th><th style="width:36%;">成本法 §61（× 總成本）</th><th style="width:36%;">土開法 §77（× 總銷售金額）</th></tr></thead>
+      <tbody>
+        <tr><td class="term">廣告費、銷售費</td><td>3%～7%</td><td>3%～7%</td></tr>
+        <tr><td class="term">管理費（含公共基金）</td><td>4%～5%</td><td>4%～5%</td></tr>
+        <tr><td class="term">管理費（不含公共基金）</td><td>1.5%～3%</td><td>1.5%～3%</td></tr>
+        <tr><td class="term">稅捐</td><td>0.5%～1.2%</td><td>0.5%～1.2%</td></tr>
+        <tr><td class="term">規劃設計費</td><td colspan="2">兩法都是 × <b>營造施工費</b> 2%～3%（§57、§78）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="highlight-box hi"><strong>另一個陷阱：「營造施工費」本身也含管理費、稅捐、資本利息、利潤</strong>（§53，是營造廠自己的），但<b>不含廣告費、銷售費</b>（那是建商層級的間接成本）。<span class="examhit">110測8</span><span class="examhit">113測9</span></div>
+</div>
+
+<hr>
+
+<!-- ═══ 5. 程序口訣對照 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">5</div>
+    <h2>五套程序口訣並排<span class="stars">★★★★</span><span class="lesson-tag">L1～L5</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:15%;">程序</th><th style="width:7%;">步數</th><th style="width:15%;">口訣</th><th style="width:43%;">完整步驟</th><th style="width:20%;">考古題</th></tr></thead>
+    <tbody>
+      <tr><td class="term">估價作業程序 §8</td><td>8</td><td><b>機計收狀整運決製</b></td><td>確定基本事項 → 擬定計畫 → 蒐集資料 → 確認勘估標的狀態 → 整理比較分析資料 → 運用方法推算 → 決定價格 → 製作報告書</td><td>5 年：105・108・109・111・114；第七步是「決定價格」<span class="examhit">111測8</span></td></tr>
+      <tr><td class="term">比較法 §21</td><td>6</td><td><b>蒐選對比計決</b></td><td>蒐集查證比較標的 → 選擇條件相同相似者 → 情況＋價格日期調整 → 區域＋個別因素比較求調整率 → 計算試算價格 → 決定比較價格</td><td><span class="examhit">106申一</span></td></tr>
+      <tr><td class="term">收益法 §34</td><td>6</td><td><b>收推推計決計</b></td><td>蒐集總收入、總費用、資本化率等資料 → 推算有效總收入 → 推算總費用 → 計算淨收益 → 決定收益資本化率或折現率 → 計算收益價格</td><td>排序題<span class="examhit">107測19</span></td></tr>
+      <tr><td class="term">成本法 §49</td><td>8</td><td><b>收況調選推總累計</b></td><td>蒐集資料 → 現況勘察 → 調查整理比較分析成本資料 → 選擇方法推算營造施工費 → 推算其他費用及利潤 → 計算總成本 → 計算累積折舊額 → 計算成本價格</td><td><span class="examhit">111申二</span></td></tr>
+      <tr><td class="term">土開法 §71</td><td>8</td><td><b>確調現估估估選計</b></td><td>確定開發內容及時間 → 調查成本費用及市場行情 → 現況勘察及環境調查 → 估算可銷售面積 → 估算總銷售金額 → 估算成本費用 → 選擇利潤率及資本利息綜合利率 → 計算土地開發分析價格</td><td><span class="examhit">106申一</span></td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box hi2"><strong>對照著背比較不會混：</strong>比較法、收益法、成本法第一步都是「<b>蒐集資料</b>」，土開法第一步是「<b>確定</b>開發內容」（跟 §8 總程序一樣從「確定」開始）。最後一步只有比較法是「<b>決定</b>」比較價格，其他三法都是「<b>計算</b>」○○價格；比較法的「計算」是倒數第二步的<b>試算價格</b>。</div>
+</div>
+
+<hr>
+
+<!-- ═══ 6. 三貢獻說 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">6</div>
+    <h2>三貢獻說：收益法 vs 房地估價<span class="stars">★★★</span><span class="lesson-tag">L3 × L6</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:14%;">學說</th><th style="width:20%;">觀念</th><th style="width:33%;">收益法（在「淨收益」層級拆）</th><th style="width:33%;">房地估價（在「價格」層級拆）</th></tr></thead>
+    <tbody>
+      <tr><td class="term">土地貢獻說</td><td>超額利潤歸<b>土地</b>：先把建物那份扣掉，剩下都算土地的</td><td>§44：土地收益價格 ＝ (房地淨收益 <b>－</b> 建物淨收益) ÷ 土地收益資本化率</td><td>§99Ⅰ：基地價格 ＝ 房地價格 <b>－</b> 建物成本價格<br>§100：區分所有建物版（同樣用減法）</td></tr>
+      <tr><td class="term">建物貢獻說</td><td>超額利潤歸<b>建物</b>（較缺理論支持）</td><td>§45：建物收益價格 ＝ (房地淨收益 <b>－</b> 土地淨收益) ÷ 建物收益資本化率</td><td class="na">— 沒有對應條文</td></tr>
+      <tr><td class="term">聯合貢獻說</td><td>土地、建物按<b>價值比例</b>分</td><td>§46：房地綜合收益資本化率 ＝ 土地 R × 土地價值比率 ＋ 建物 R × 建物價值比率</td><td>§99Ⅱ：基地價格 ＝ 房地價格 <b>×</b> 土地價值比率<br>§101：區分所有建物版（配樓層別效用比）<br>§101-1：建物價格 ＝ 房地價格 × 建物價值比率</td></tr>
+      <tr><td class="term">考古題</td><td></td><td>土地貢獻說計算<span class="examhit">110測20</span>；§44～46 四公式何者錯<span class="examhit">113測14</span></td><td>§99 減法<span class="examhit">108測16</span>；基地單價計算<span class="examhit">109測25</span>；地價分配率<span class="examhit">110測25</span></td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box hi2"><strong>一句話分：</strong>看到「<b>減</b>」→ 土地或建物貢獻說（誰被減、剩下歸誰）；看到「<b>× 價值比率</b>」→ 聯合貢獻說。樓層別效用比也是從聯合貢獻說延伸出來的。</div>
+</div>
+
+<hr>
+
+<!-- ═══ 7. 標的選方法 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">7</div>
+    <h2>什麼標的用什麼方法<span class="stars">★★★★</span><span class="lesson-tag">L1・L3・L6</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:24%;">標的／情境</th><th style="width:22%;">方法</th><th style="width:30%;">補充</th><th style="width:24%;">考古題</th></tr></thead>
+    <tbody>
+      <tr><td class="term">農場、牧場 §93<br>鹽田 §94<br>池沼、墓地 §95<br>公設用地、公設保留地 §97</td><td><b>比較法為原則</b></td><td>無買賣實例 → 以附近（毗鄰）土地價格為基礎比較推估</td><td>鹽田<span class="examhit">106測33</span><span class="examhit">112測15</span>；公設地<span class="examhit">106測13</span><span class="examhit">112測19</span><span class="examhit">113測15</span></td></tr>
+      <tr class="hit"><td class="term">林地 §92</td><td>視林木成長情形，<b>比較法、收益法、成本法</b>分別採用</td><td>採成本法時總費用考量造林費、林地改良費、道路開挖費（<span class="trap">不含營運費用</span>）</td><td><span class="trap">誤植「林地以比較法為原則」</span><span class="examhit">110測15</span>；總費用<span class="examhit">105測28</span></td></tr>
+      <tr><td class="term">建物 §108</td><td><b>成本法為原則</b></td><td>附屬設施得一併估計</td><td></td></tr>
+      <tr><td class="term">工事、水利土壤改良 §112</td><td><b>成本法為原則</b></td><td>得斟酌比較法及收益法結果決定</td><td><span class="examhit">105測39</span><span class="examhit">107測22</span><span class="examhit">114測9</span></td></tr>
+      <tr><td class="term">以開發為前提之宗地 §87</td><td>得採<b>土地開發分析法</b></td><td>並參酌比較法或收益法結果決定</td><td></td></tr>
+      <tr><td class="term">以投資為目的之不動產 §31Ⅱ</td><td>得適用 <b>DCF</b></td><td></td><td><span class="examhit">114測7</span></td></tr>
+      <tr><td class="term">不動產證券化（契約約定租金為分配基礎）§15Ⅱ</td><td>DCF 收益價格給<b>較大權重</b></td><td>標的進行<b>清算</b>時不在此限；DCF 各期淨收益以契約租金為原則（§33Ⅱ）</td><td>5 年：108・109・110・111・113</td></tr>
+      <tr><td class="term">土地價格求取有困難 §69Ⅱ</td><td>成本法中得改以比較法或收益法計算</td><td>應於報告書敘明</td><td></td></tr>
+      <tr><td class="term">溫泉地 §90、高爾夫球場 §91</td><td class="na">條文沒指定方法</td><td>只列應考量因素（水權、水量水質水溫／會員制度、收益及營運費用）</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box hi"><strong>考法幾乎固定：</strong>「下列何者<b>不是</b>以比較法估價為原則？」→ 答案通常是<b>林地</b>（三法皆可），或建物、水利土壤改良（成本法為原則）。</div>
+</div>
+
+<hr>
+
+<!-- ═══ 8. 新訂 vs 續訂 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">8</div>
+    <h2>新訂租金 3 法 vs 續訂租金 4 法<span class="stars">★★★</span><span class="lesson-tag">L7 × L2・L3</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:17%;">背後邏輯</th><th style="width:30%;">新訂租約 §132</th><th style="width:33%;">續訂租約 §133</th><th style="width:20%;">考古題</th></tr></thead>
+    <tbody>
+      <tr><td class="term">比較法（L2）</td><td>① 租賃實例比較法：以<b>新訂</b>租約實例比較</td><td>① 租賃實例比較法：以<b>續訂</b>租約實例比較</td><td></td></tr>
+      <tr><td class="term">P＝A÷R 倒過來<br>A＝P×R（L3）</td><td>② 積算法：<b>勘估標的價格</b> × 租金收益率 ＋ 必要費用</td><td>② 利率法：<b>正常價格</b> × <b>續租</b>租金收益率 ＋ 必要費用</td><td>積算法計算<span class="examhit">110測22</span></td></tr>
+      <tr><td class="term">從收入推（L3）</td><td>③ 收益分析法：分析<b>企業經營總收入</b>推淨收益 ＋ 必要費用</td><td class="na">—</td><td></td></tr>
+      <tr><td class="term">從舊租金調</td><td class="na">—（新訂沒有舊租金可用）</td><td>③ 推算法：<b>原契約租金</b>之淨收益 × 租金變動趨勢調整 ＋ 必要費用</td><td></td></tr>
+      <tr class="hit"><td class="term">新舊差額分一分</td><td class="na">—</td><td>④ 差額分配法：(市場經濟租金 － 原契約租金) × <b>歸屬出租人比例</b> ＋ 原契約租金</td><td>計算<span class="examhit">106測18</span>；差額定義<span class="examhit">110測23</span></td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box hi2"><strong>串回第 1 節：</strong>續訂租約形成的租金就是<b>限定租金</b>，所以續訂多了兩個「看舊契約」的方法（推算法、差額分配法）。§131：新訂、續訂<b>應分別估計</b><span class="examhit">105測20</span>；兩者方法全列是申論題<span class="examhit">110申二</span>。</div>
+</div>
+
+<hr>
+
+<!-- ═══ 9. 易混淆用語 ═══ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">9</div>
+    <h2>易混淆用語對照<span class="stars">★★★★</span><span class="lesson-tag">L1～L7</span></h2>
+  </div>
+  <table>
+    <thead><tr><th style="width:15%;">A</th><th style="width:15%;">B</th><th style="width:48%;">分辨關鍵</th><th style="width:22%;">考古題</th></tr></thead>
+    <tbody>
+      <tr class="hit"><td class="term">重建成本 §48</td><td class="term">重置成本 §48</td><td>重建＝相同或極類似建材<b>重新複製</b>（原則）；重置＝<b>相同效用</b>、用現代建材（材料已停產或工法改變才用）</td><td>約 8 年：<span class="examhit">105測16</span><span class="examhit">106測38</span><span class="examhit">107測9</span><span class="examhit">108測10</span><span class="examhit">109測21</span></td></tr>
+      <tr><td class="term">經濟耐用年數 §65</td><td class="term">物理耐用年數 §65</td><td>經濟＝效益衰退到<b>不值得</b>使用；物理＝結構脆弱到<b>不堪</b>使用。折舊以<b>經濟</b>為主；經歷年數超過經濟耐用年數要重新調整</td><td><span class="examhit">105測30</span><span class="examhit">106測12</span></td></tr>
+      <tr><td class="term">部分估價 §86本文</td><td class="term">獨立估價（素地）§86但書・§106</td><td>部分估價＝有建物的宗地要考慮建物對地價的影響；獨立估價＝當作沒有建物來估。§86 是<b>委託人指定</b>前提；§106 是<b>建物已無使用價值</b>，而且要扣拆除成本</td><td><span class="examhit">106測30</span><span class="examhit">107測15</span></td></tr>
+      <tr><td class="term">價格日期 §2(7)</td><td class="term">勘察日期 §2(8)</td><td>價格日期＝價格的<b>基準日</b>；勘察日期＝實際到現場的日子，兩者可以不同</td><td><span class="examhit">109測11</span></td></tr>
+      <tr><td class="term">總收入 §36</td><td class="term">有效總收入 §36</td><td>有效總收入＝總收入 － 閒置等收入損失 → 總收入<b>一定 ≥</b> 有效總收入</td><td><span class="examhit">113測12</span></td></tr>
+      <tr><td class="term">實質租金 §130</td><td class="term">支付租金</td><td>實質＝每期支付租金 <b>＋</b> 押金、保證金、權利金等運用收益；租金估計以<b>實質租金</b>為原則</td><td>7 年：105・106・107・110・112・113・114</td></tr>
+      <tr><td class="term">經濟租金</td><td class="term">支付租金</td><td>經濟租金＝正常（市場）租金；支付租金＝契約上實際付的。兩者<b>大小不一定</b></td><td><span class="examhit">114測24</span></td></tr>
+      <tr><td class="term">收益資本化率</td><td class="term">折現率</td><td>資本化率用於直接資本化法（P＝A÷R）；折現率用於 DCF 各期折現。兩者<b>高低不一定</b></td><td><span class="examhit">114測19</span></td></tr>
+      <tr><td class="term">近鄰地區 §2(12)</td><td class="term">類似地區 §2(13)</td><td>近鄰＝勘估標的<b>周圍</b>、同質性高；類似＝同一供需圈內、近鄰<b>以外</b>但使用性質相近。兩者都在同一供需圈（§2(11)）裡，彼此不重疊</td><td>區域因素調整情境<span class="examhit">105測36</span></td></tr>
+      <tr class="hit"><td class="term">一般因素 §2(14)</td><td class="term">區域／個別因素 §2(15)(16)</td><td>一般＝影響<b>全面</b>市場（政策、利率、疫情、高齡化）；區域＝影響<b>近鄰地區</b>（捷運、道路、淹水）；個別＝<b>本身條件</b>（面公園第一排、距公園 50 公尺）</td><td>8 年：105・106・108・110・111・112・113・114</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">估價跨堂比較總表｜L1～L7｜條文對照全國法規資料庫《不動產估價技術規則》現行條文（2026-09-25 查閱）｜費率為全聯會公告數字（非條文）</div>
+
+</body>
+</html>
