@@ -179,7 +179,7 @@
 
   /* 直式分數 */
   .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
-  .frac .num { border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
+  .frac .num { align-self: stretch; border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
   .frac .den { padding-top: 2px; text-align: center; white-space: nowrap; }
 
   /* 計算範例卡 */
@@ -459,7 +459,7 @@
   <h2 class="sec-title"><span class="star">★★★</span> ⑩ 累積折舊額三路徑（累｜計算題最難） <span class="law-tag hi">§68</span><span class="examhit">105-114年10/10年幾乎全中・105・107・111・112申</span></h2>
   <div class="card hi">
     <div class="card-title">折舊方法選擇</div>
-    <p>建物累積折舊額之計算，應視建物特性及市場動態，選擇<b>等數折舊、初期加速折舊或初期減速折舊</b>之折舊方法。</p>
+    <p>建物累積折舊額之計算，應視建物特性及市場動態，選擇<b>等速折舊、初期加速折舊或初期減速折舊</b>之折舊方法。</p>
   </div>
 
   <div class="depre-chart-wrap">
@@ -490,7 +490,7 @@
 
   <div class="grid-3" style="margin-top:8px;">
     <div class="card hi">
-      <div class="card-title">等數折舊（定額法）</div>
+      <div class="card-title">等速折舊（定額法）</div>
       <p>每年折舊<b>固定金額</b>——像每年都折 18 萬，折到耐用年數屆滿。<span class="badge">最常考，務必背</span></p>
     </div>
     <div class="card hi2">
@@ -516,6 +516,7 @@
     <div class="card">
       <div class="card-title">償債基金法</div>
       <div class="formula-box" style="font-size:14.5px;">D<sub>n</sub> ＝ C(1−s) × <span class="frac"><span class="num">(1+i)<sup>n</sup> − 1</span><span class="den">(1+i)<sup>N</sup> − 1</span></span></div>
+      <p style="margin-top:6px; color:var(--sub); font-size:12.5px;">白話：累積折舊＝總折舊額 ×「存錢筒已存到的比例」——每年存一樣多、複利越後面滾越快，所以前期折得慢（初期減速）；每年存的那一筆就是 L3 收益法的償債基金型提存費。</p>
     </div>
   </div>
   <div class="var-list">
@@ -526,6 +527,13 @@
     <span><b>s</b>：殘餘價格率</span>
     <span><b>d</b>：定率法之折舊率</span>
     <span><b>i</b>：利率</span>
+  </div>
+  <div class="example-box" style="margin-top:8px;">
+    <b>📐 償債基金法公式由來（存錢筒概念）</b><br>
+    <b>第 1 步・存錢目標：</b>建物總共要折掉 C(1−s)，要在耐用年數 N 年後存滿。<br>
+    <b>第 2 步・每年存多少：</b>每年年底存 A、利率 i 複利，N 年後總額＝A × <span class="frac"><span class="num">(1+i)<sup>N</sup> − 1</span><span class="den">i</span></span>（等比級數加總）。要剛好等於 C(1−s)，所以 A ＝ C(1−s) × <span class="frac"><span class="num">i</span><span class="den">(1+i)<sup>N</sup> − 1</span></span> → 這就是 <b>L3 償債基金型折舊提存費</b>。<br>
+    <b>第 3 步・第 n 年存到多少：</b>只存了 n 年，D<sub>n</sub>＝A × <span class="frac"><span class="num">(1+i)<sup>n</sup> − 1</span><span class="den">i</span></span>，把 A 代進去，<b>分子分母的 i 互相抵消</b>，就得到上面的償債基金法公式。→ 公式本質是「存 n 年的終值 ÷ 存滿 N 年的終值」。<br>
+    <b>數字驗證：</b>C(1−s)＝100、N＝3、i＝10% → 每年存 30.21；累積折舊第 1 年 30.21、第 2 年 63.44、第 3 年 100。每年新增 30.21 → 33.23 → 36.56，越後面折越多，所以叫<b>初期減速</b>。
   </div>
   <div class="info-box">§68 建物累積折舊額之計算，除考量物理與功能因素外，並得按個別建物之實際構成部分與使用狀態，考量經濟因素、觀察維修及整建情形，推估建物之<b>剩餘經濟耐用年數</b>，加計已經歷年數，求算耐用年數，並於估價報告書中<b>敘明</b>。</div>
 </section>
@@ -558,7 +566,7 @@
   <div class="calc-card">
     <div class="q">精選題：某建物面積共 100 坪，重新蓋每坪需花費 8 萬元，經濟耐用年數 50 年，已經歷年數 20 年，殘餘價格率 10%。若每年折舊額固定，試問目前建物「累積折舊額」為多少？</div>
     <div class="steps">
-      關鍵字「<b>每年折舊額固定</b>」→ 定額法（等數折舊）。<br>
+      關鍵字「<b>每年折舊額固定</b>」→ 定額法（等速折舊）。<br>
       總成本 C＝8 萬 × 100 坪 ＝ <b>800 萬</b>；殘餘價格率 s ＝ 10%；經濟耐用年數 N ＝ 50；經歷年數 n ＝ 20。<br>
       D<sub>n</sub> ＝ <span class="frac"><span class="num">C × (1−s)</span><span class="den">N</span></span> × n ＝
       <span class="frac"><span class="num">800 × 0.9</span><span class="den">50</span></span> × 20 ＝ 14.4 × 20 ＝ <b>288 萬</b>
@@ -570,7 +578,7 @@
     <div class="q">觀念解對照：建物總成本 1000 萬，經濟耐用年數 50 年，殘餘價格率 10%，屋齡（已經歷年數）20 年，求累積折舊額（不套公式，用觀念直接算）。</div>
     <div class="steps">
       ① 求殘值：1000 × 10% ＝ 100 萬 → 50 年內「總折舊額」＝ 1000 − 100 ＝ <b>900 萬</b>。<br>
-      ② 求每年折舊額：900 ÷ 50 ＝ <b>18 萬／年</b>（等數折舊，每年金額固定）。<br>
+      ② 求每年折舊額：900 ÷ 50 ＝ <b>18 萬／年</b>（等速折舊，每年金額固定）。<br>
       ③ 求 20 年累積折舊額：18 × 20 ＝ <b>360 萬</b>。<br>
       套公式驗證：D<sub>n</sub> ＝ <span class="frac"><span class="num">1000 × 0.9</span><span class="den">50</span></span> × 20 ＝ 18 × 20 ＝ 360 萬，結果一致。
     </div>
@@ -603,7 +611,7 @@
   </div>
   <div class="qa-item">
     <div class="qa-q">Q. 三種累積折舊路徑的考試優先順序？</div>
-    <div class="qa-a"><b>定額法（等數折舊）</b>近十年最常考，一定要背；<b>定律法（初期加速）</b>次之，有時間要背；<b>償債基金法（初期減速）</b>近十年考計算的機率極低，時間有限時可以先略過，只記定義與公式默寫。</div>
+    <div class="qa-a"><b>定額法（等速折舊）</b>近十年最常考，一定要背；<b>定律法（初期加速）</b>次之，有時間要背；<b>償債基金法（初期減速）</b>近十年考計算的機率極低，時間有限時可以先略過，只記定義與公式默寫。</div>
   </div>
   <div class="qa-item">
     <div class="qa-q">Q. 計算題最常見的文字陷阱？</div>

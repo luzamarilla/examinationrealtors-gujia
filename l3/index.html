@@ -175,7 +175,7 @@
 
   /* 直式分數 */
   .frac { display: inline-flex; flex-direction: column; align-items: stretch; vertical-align: middle; margin: 0 4px; line-height: 1.2; }
-  .frac .num { border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
+  .frac .num { align-self: stretch; border-bottom: 2px solid currentColor; padding-bottom: 2px; text-align: center; white-space: nowrap; }
   .frac .den { padding-top: 2px; text-align: center; white-space: nowrap; }
 
   /* Σ 堆疊上下限 */
@@ -253,6 +253,12 @@
 <section>
   <h2 class="sec-title">③ DCF 折現觀念與精選題示範</h2>
   <div class="info-box">📖 折現觀念：未來的錢≠現在的錢。第幾期發生的收益，就要折現幾次；期末出售的價金（Pn′）跟出售當期的收益，折現次數<b>相同</b>。</div>
+  <div class="example-box" style="margin-top:8px;">
+    <b>📐 公式由來（貨幣的時間價值）</b><br>
+    今天的 100 元存起來，1 年後變 100×(1＋y)、2 年後變 100×(1＋y)²。<b>倒過來算就是折現</b>：第 k 期拿到的錢 ÷ (1＋y)ᵏ，才是它「今天值多少」。<br>
+    把每期淨收益 CFₖ、期末賣掉的 Pn′ 都換成今天的價值再加總，就是 DCF 公式（Σ 只是「全部加起來」的簡寫）。<br>
+    <b>與直接資本化法的關係：</b>若每年收益都一樣是 A、收到永遠、不出售，<span class="frac"><span class="num">A</span><span class="den">(1＋y)</span></span>＋<span class="frac"><span class="num">A</span><span class="den">(1＋y)²</span></span>＋…無限加總剛好＝<span class="frac"><span class="num">A</span><span class="den">y</span></span>，即 P＝A/R。→ 直接資本化法是 DCF 的<b>特例</b>（簡化成平均、永續）；DCF 則照實際分期、有限期數、加上期末出售價金。
+  </div>
   <div class="calc-card" style="margin-top:8px;">
     <div class="q">L 哥是著名的房產投資客，預計購買一棟別墅，每年可獲得 200 萬元淨收益，預計在第二年底出手，屆時可賣得 2000 萬元。若折現率為 10%，請問合理價格為多少？</div>
     <div class="steps">
@@ -335,7 +341,7 @@
   <div class="warn-box">勘估標的包含<b>建物</b>者才需考慮折舊（土地不會折舊）。總費用中<b>已扣除</b>折舊提存費者，後面決定 R 時不用再加；<b>未扣除</b>者，則要在 R 上加計折舊提存率——<b>費、率二擇一</b>，不會同時出現（§40）。</div>
   <div class="grid-2" style="margin-top:10px;">
     <div class="card hi">
-      <div class="card-title">折舊提存費・等數折舊型 <span class="badge">最愛考</span></div>
+      <div class="card-title">折舊提存費・等速折舊型 <span class="badge">最愛考</span></div>
       <div class="example-box" style="margin-top:6px;">
         C × (1－s) × <span class="frac"><span class="num">1</span><span class="den">N</span></span>
       </div>
@@ -346,10 +352,11 @@
       </div>
     </div>
     <div class="card hi2">
-      <div class="card-title">折舊提存率・等數折舊型 <span class="badge">熱門中的冷門</span></div>
+      <div class="card-title">折舊提存率・等速折舊型 <span class="badge">熱門中的冷門</span></div>
       <div class="example-box" style="margin-top:6px;">
         d ＝ <span class="frac"><span class="num">(1－s)×1/N</span><span class="den">1－(1－s)×n/N</span></span>
       </div>
+      <p style="margin-top:6px; color:var(--sub); font-size:12.5px;">白話：提存率 ＝ 每年提存的錢 ÷ 房子現在值多少；分子是每年折掉新建成本的幾 %，分母是現在還剩幾 %，所以有屋齡 n。</p>
       <p style="margin-top:6px;">比提存費多一個 <b>n＝已經歷年數（屋齡）</b>——有 n 的是提存率，只有 N（沒有 n）的是提存費。加在<b>收益資本化率／折現率</b>上。</p>
     </div>
   </div>
@@ -359,17 +366,18 @@
       <div class="example-box" style="margin-top:6px;">
         C × (1－s) × <span class="frac"><span class="num">i</span><span class="den">(1＋i)ᴺ－1</span></span>
       </div>
-      <p style="margin-top:6px;">比等數折舊型多一個 <b>i＝利率</b>（複利概念）。老師：近十年沒考過計算題，會考也只是默寫公式。</p>
+      <p style="margin-top:6px;">比等速折舊型多一個 <b>i＝利率</b>（複利概念）。老師：近十年沒考過計算題，會考也只是默寫公式。</p>
     </div>
     <div class="card">
       <div class="card-title">折舊提存率・償債基金型 <span class="badge">最冷門</span></div>
       <div class="example-box" style="margin-top:6px;">
         d ＝ <span class="frac"><span class="num">i</span><span class="den">(1＋i)ⁿ′－1</span></span>
       </div>
+      <p style="margin-top:6px; color:var(--sub); font-size:12.5px;">白話：存錢筒係數：剩下 n′ 年要把房子現值存回來，每年存現值的幾 %。</p>
       <p style="margin-top:6px;">同時有 <b>i</b> 與 <b>n′</b>（注意不是 N）。四個公式中最不愛考，時間不夠可以放到最後準備。</p>
     </div>
   </div>
-  <div class="info-box">📖 老師的背誦口訣：先判斷「費」還是「率」（看有沒有小 n）；再判斷「等數折舊型」還是「償債基金型」（看有沒有 i）。</div>
+  <div class="info-box">📖 老師的背誦口訣：先判斷「費」還是「率」（看有沒有小 n）；再判斷「等速折舊型」還是「償債基金型」（看有沒有 i）。</div>
 </section>
 
 <!-- ⑨ 淨收益 -->
@@ -405,6 +413,7 @@
       <div class="card-title">④ 債務保障比率法</div>
       <div class="example-box" style="margin-top:6px;">R ＝ 債務保障比率 × 貸款常數 × 貸款資金佔不動產價格之比率</div>
       <div class="example-box" style="margin-top:6px;">◆ 補充｜貸款常數公式：貸款常數 ＝ <span class="frac"><span class="num">(1＋r)ⁿ × r</span><span class="den">(1＋r)ⁿ－1</span></span>　　n＝每期期數；r＝貸款利率</div>
+      <p style="margin-top:6px; color:var(--sub); font-size:12.5px;">白話：存錢筒反過來：先拿到 1 元，之後每年本息平均攤還要繳多少。</p>
       <p style="margin-top:6px; color:var(--sub); font-size:12.5px;">白話：收益資本化率＝「收入還款比（DSCR）」×「還款壓力（貸款常數）」×「借多少（貸款成數）」——賺的錢是要還的錢的幾倍、每年還款壓力多重、用多少借來的錢，三者相乘就是收益資本化率。</p>
       <p style="margin-top:6px;">題目通常給其中三項，代入求剩下一項。</p>
     </div>
@@ -467,7 +476,7 @@
     </div>
   </div>
   <div class="warn-box hi">⭐ 核心提醒：折舊只發生在<b>建物</b>，折舊提存率一律加在<b>建物端的收益資本化率</b>旁，土地端不加。§44–46 三條公式全部是 P＝A/R 的變形，記熟這個公式原則，題目怎麼問都能推出來。</div>
-  <div class="info-box">§47：另有「一定期間收益價格」公式（結構近似 DCF），老師明講近十年幾乎沒考過，時間不夠可略過，有餘力再背公式即可。</div>
+  <div class="info-box">§47：另有「一定期間收益價格」公式（結構近似 DCF），老師明講近十年幾乎沒考過，時間不夠可略過，有餘力再背公式即可。<br><span style="color:var(--sub); font-size:12.5px;">白話：一定期間收益價格 ＝ 每年收益 ÷ 貸款常數，把買收益權想成自己當銀行借錢出去。</span></div>
 </section>
 
 <!-- ⑫ 高頻考點速查卡 -->
@@ -487,7 +496,7 @@
   </div>
   <div class="qa-item">
     <div class="qa-q">Q. 四個折舊公式怎麼分辨？</div>
-    <div class="qa-a">看有沒有 C／n／i：提存費有 C、提存率沒有 C；等數折舊型沒有 i、償債基金型有 i；提存費公式只有 N，提存率公式多一個 n（或 n′）。最愛考的是提存費等數折舊型 C×(1－s)×1/N。</div>
+    <div class="qa-a">看有沒有 C／n／i：提存費有 C、提存率沒有 C；等速折舊型沒有 i、償債基金型有 i；提存費公式只有 N，提存率公式多一個 n（或 n′）。最愛考的是提存費等速折舊型 C×(1－s)×1/N。</div>
   </div>
   <div class="qa-item">
     <div class="qa-q">Q. 土地貢獻說、建物貢獻說、聯合貢獻說差在哪？</div>
